@@ -67,3 +67,6 @@ Route::get('/fb-callback', [CustomerController::class, 'callback_facebook']);
 Route::get('/login-google', [CustomerController::class, 'login_google']);
 
 Route::get('/google-callback', [CustomerController::class, 'callback_google']);
+
+//Checkout
+Route::post('/confirm-order',[CartController::class, 'confirm_order']);
