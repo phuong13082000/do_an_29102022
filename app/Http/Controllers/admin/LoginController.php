@@ -26,7 +26,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
             return redirect('admin/home');
         }
-        return redirect('admin/login')->with('error', 'Sai thông tin');
+        return redirect('admin/login')->with('error', 'You not admin!');
     }
 
     public function getLogout()

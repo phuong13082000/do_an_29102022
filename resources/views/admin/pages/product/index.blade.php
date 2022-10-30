@@ -21,17 +21,6 @@
                                         <th>Number</th>
                                         <th>Price</th>
                                         <th>Price Sale</th>
-                                        <th>Màn hình</th>
-                                        <th>Màu sắc</th>
-                                        <th>Camera sau</th>
-                                        <th>Camera trước</th>
-                                        <th>CPU</th>
-                                        <th>Bộ nhớ</th>
-                                        <th>Ram</th>
-                                        <th>Kết nối</th>
-                                        <th>Pin Sạc</th>
-                                        <th>Tiện ích</th>
-                                        <th>Thông tin chung</th>
                                         <th>Brand</th>
                                         <th>Category</th>
                                         <th>Status</th>
@@ -39,7 +28,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($list_Product as $key => $product )
+                                    @foreach ($list_Product as $key => $product)
                                         <tr>
                                             <td>
                                                 <img width="100px" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}">
@@ -48,17 +37,6 @@
                                             <td>{{$product->number}}</td>
                                             <td>{{$product->price}}</td>
                                             <td>{{$product->price_sale}}</td>
-                                            <td>{{$product->manhinh}}</td>
-                                            <td>{{$product->mausac}}</td>
-                                            <td>{{$product->camera_sau}}</td>
-                                            <td>{{$product->camera_truoc}}</td>
-                                            <td>{{$product->cpu}}</td>
-                                            <td>{{$product->bonho}}</td>
-                                            <td>{{$product->ram}}</td>
-                                            <td>{{$product->ketnoi}}</td>
-                                            <td>{{$product->pin_sac}}</td>
-                                            <td>{{$product->tienich}}</td>
-                                            <td>{{$product->thongtin_chung}}</td>
                                             <td>{{$product->reBrand->title}}</td>
                                             <td>{{$product->reCategory->title}}</td>
                                             <td>
@@ -70,6 +48,8 @@
                                             </td>
                                             <td>
                                                 <div class="row">
+                                                    <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-product_{{$product->id}}">View</button>
+
                                                     <a href="{{route('product.edit', [$product->id])}}"
                                                        class="btn btn-sm btn-primary">Edit</a>
 
@@ -77,14 +57,37 @@
                                                           method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button
-                                                            onclick="return confirm('Bạn có muốn xóa Product này?');"
-                                                            class="btn btn-sm btn-danger">Xóa
-                                                        </button>
+                                                        <button onclick="return confirm('Bạn có muốn xóa Product này?');" class="btn btn-sm btn-danger">Delete</button>
                                                     </form>
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <div class="modal fade" id="modal-product_{{$product->id}}" tabindex="-1" aria-labelledby="modallable_{{$product->id}}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modallable_{{$product->id}}">Chi tiết</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Màn hình: {{$product->manhinh}}<br>
+                                                        Màu sắc: {{$product->mausac}}<br>
+                                                        Camera sau: {{$product->camera_sau}}<br>
+                                                        Camera trước: {{$product->camera_truoc}}<br>
+                                                        CPU: {{$product->cpu}}<br>
+                                                        Bộ nhớ: {{$product->bonho}}<br>
+                                                        Ram: {{$product->ram}}<br>
+                                                        Kết nối: {{$product->ketnoi}}<br>
+                                                        Pin Sạc: {{$product->pin_sac}}<br>
+                                                        Tiện ích: {{$product->tienich}}<br>
+                                                        Thông tin chung: {{$product->thongtin_chung}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     @endforeach
                                     </tbody>
@@ -95,17 +98,6 @@
                                         <th>Number</th>
                                         <th>Price</th>
                                         <th>Price Sale</th>
-                                        <th>Màn hình</th>
-                                        <th>Màu sắc</th>
-                                        <th>Camera sau</th>
-                                        <th>Camera trước</th>
-                                        <th>CPU</th>
-                                        <th>Bộ nhớ</th>
-                                        <th>Ram</th>
-                                        <th>Kết nối</th>
-                                        <th>Pin Sạc</th>
-                                        <th>Tiện ích</th>
-                                        <th>Thông tin chung</th>
                                         <th>Brand</th>
                                         <th>Category</th>
                                         <th>Status</th>

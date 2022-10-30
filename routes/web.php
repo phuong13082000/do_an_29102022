@@ -13,7 +13,6 @@ use App\Http\Controllers\frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("admin")->group(function () {
-
     Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
 
     Route::post('/postLogin', [LoginController::class, 'postLogin']);
@@ -31,7 +30,6 @@ Route::prefix("admin")->group(function () {
     Route::resource('/product', ProductController::class)->middleware('auth');
 
     Route::resource('/slider', SliderController::class)->middleware('auth');
-
 });
 
 Route::get('/', [IndexController::class, 'index']);
@@ -58,7 +56,7 @@ Route::post('/add-customer', [CustomerController::class, 'add_customer']);
 
 Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 
-Route::post('/logout', [CustomerController::class, 'logout']);
+Route::post('/dang-xuat', [CustomerController::class, 'logout']);
 
 //facebook
 Route::get('/login-facebook', [CustomerController::class, 'login_facebook']);

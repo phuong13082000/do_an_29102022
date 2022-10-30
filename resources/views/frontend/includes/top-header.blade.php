@@ -28,8 +28,8 @@
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#" >Profile</a>
-                        <a class="dropdown-item" href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
-                        <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">
+                        <a class="dropdown-item" href="{{ url('dang-xuat') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ url('dang-xuat') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>

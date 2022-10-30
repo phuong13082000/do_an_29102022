@@ -10,7 +10,7 @@ class DetailController extends Controller
 {
     public function index($id)
     {
-        $product = Product::find($id)->first();
+        $product = Product::find($id);
         $title = $product->title;
         $list_brand = Brand::take(5)->get();
         $list_recommend = Product::where('brand_id', '=', $product->brand_id)->get();
