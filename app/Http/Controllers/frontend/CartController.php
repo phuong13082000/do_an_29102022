@@ -9,7 +9,6 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller

@@ -22,10 +22,9 @@ class CustomerController extends Controller
 
     public function login_customer(Request $request)
     {
-        $email = $request->email;
-        $customer = Customer::where('email', $email)->first();
+        $customer = Customer::where('email', $request->email_login)->first();
 
-        $check_password = Hash::check($request->password, $customer->password);
+        $check_password = Hash::check($request->password_login, $customer->password);
 
         if ($customer && $check_password) {
             Session::put('id', $customer->id);

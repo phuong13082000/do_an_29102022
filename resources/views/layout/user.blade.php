@@ -30,8 +30,9 @@
     @include('frontend.includes.footer')
 
 </div>
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
@@ -63,35 +64,40 @@
 
 <!--script-diachi-->
 <script type="text/javascript">
+    const token = "{{env('TOKEN_GHN')}}";
+
     $.ajax({
         url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province',
         method: 'GET',
-        headers: {'token': 'ba8ec0ca-586b-11ed-b824-262f869eb1a7'},
+        headers: {'token': token},
         success: function (province) {
-            let i_province = 0;
-            for (i_province; i_province <= province.data.length; i_province++) {
-                let id_province = province.data[i_province]['ProvinceID'];
-                let name_province = province.data[i_province]['ProvinceName'];
 
-                $('#province').append('<option name="id_province" value=' + id_province + '>' + name_province + '</option>');
+            for (let i_province = 0; i_province <= province.data.length; i_province++) {
+                let id_province = province.data[i_province].ProvinceID
+                let name_province = province.data[i_province].ProvinceName
+
+                $('#province').append('<option id="id_province" name="id_province" value=' + id_province + '>' + name_province + '</option>');
+
             }
         }
     });
     $(document).ready(function () {
         $('#province').on('change', function () {
-            var id_district = $(this).val();
+            var id_province = $(this).val();
             $.ajax({
                 url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district',
                 method: 'GET',
-                headers: {'token': 'ba8ec0ca-586b-11ed-b824-262f869eb1a7'},
-                data: {province_id: id_district},
+                headers: {'token': token},
+                data: {province_id: id_province},
                 success: function (district) {
-                    let i_district = 0;
-                    for (i_district; i_district <= district.data.length; i_district++) {
+                    $('#district').append('<option selected>Quận Huyện</option>');
+
+                    for (let i_district = 0; i_district <= district.data.length; i_district++) {
                         let id_district = district.data[i_district]['DistrictID'];
                         let name_district = district.data[i_district]['DistrictName'];
 
-                        $('#district').append('<option name="id_district" value=' + id_district + '>' + name_district + '</option>');
+                        $('#district').append('<option id="id_district" name="id_district" value=' + id_district + '>' + name_district + '</option>');
+
                     }
                 }
             });
@@ -100,24 +106,39 @@
 
     $(document).ready(function () {
         $('#district').on('change', function () {
-            var id_ward = $(this).val();
+            var id_district = $(this).val();
             $.ajax({
                 url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward',
                 method: 'GET',
-                headers: {'token': 'ba8ec0ca-586b-11ed-b824-262f869eb1a7'},
-                data: {district_id: id_ward},
+                headers: {'token': token},
+                data: {district_id: id_district},
                 success: function (ward) {
-                    let i_ward = 0;
-                    for (i_ward; i_ward <= ward.data.length; i_ward++) {
+                    $('#ward').append('<option selected>Phưòng Xã</option>');
+
+                    for (let i_ward = 0; i_ward <= ward.data.length; i_ward++) {
                         let id_ward = ward.data[i_ward]['WardCode'];
                         let name_ward = ward.data[i_ward]['WardName'];
 
-                        $('#ward').append('<option name="id_ward" value=' + id_ward + '>' + name_ward + '</option>');
+                        $('#ward').append('<option id="id_ward" name="id_ward" value=' + id_ward + '>' + name_ward + '</option>');
                     }
                 }
             });
         });
     });
+
+    $(document).ready(function () {
+        $('#province').on('change', function () {
+            $('#district').empty();
+            $('#ward').empty();
+
+            $('#district').append('<option selected>Quận Huyện</option>');
+            $('#ward').append('<option selected>Phưòng Xã</option>');
+        });
+        $('#district').on('change', function () {
+            $('#ward').empty();
+        });
+    });
+
 
 </script>
 

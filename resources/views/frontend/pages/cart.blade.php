@@ -92,7 +92,7 @@
                                     </button>
                                     <a class="btn btn-success" href="{{url('/')}}">Home</a>
                                 @else
-                                    <button type="button" class="btn btn-primary">Đăng nhập</button>
+                                    <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Đăng nhập</a>
                                     <a class="btn btn-primary" href="{{url('/')}}">Home</a>
                                 @endif
 
@@ -166,7 +166,30 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mt-3">
+                        <b>Địa chỉ nhận hàng</b><br>
+                        <form>
+                            <label for='province'>Thành Phố
+                                <select id='province' class="form-control">
+                                    <option selected>Thành Phố</option>
+                                </select>
+                            </label>
+
+                            <label for='district'>Quận Huyện
+                                <select id='district' class="form-control">
+                                    <option selected>Quận Huyện</option>
+                                </select>
+                            </label>
+
+                            <label for='ward'>Phường Xã
+                                <select id='ward' class="form-control">
+                                    <option selected>Phường Xã</option>
+                                </select>
+                            </label>
+                        </form>
+                    </div>
+
+                    <div class="mt-3">
                         <div class="form-group">
                             {!! Form::label('payment_method', 'Chọn hình thức', []) !!}
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -175,50 +198,27 @@
                                         ["class" => "nav-link active", "id" => "home-tab", "data-bs-toggle" => "tab" ,
                                        "data-bs-target" => "#home", "type" => "radio", "role" => "tab", "aria-controls"=>"home",
                                         "aria-selected" => "true"]) !!}
-                                    {!! Form::label('payment_method', 'Giao tận nơi', []) !!}
+                                    {!! Form::label('payment_method', 'Tiền mặt', []) !!}
                                 </li>
                                 <li class="nav-item p-3" role="presentation">
                                     {!! Form::radio('payment_method', 0 , '',
                                         ["class" => "nav-link", "id" => "profile-tab", "data-bs-toggle" => "tab" ,
                                        "data-bs-target" => "#profile", "type" => "radio", "role" => "tab", "aria-controls"=>"profile",
                                         "aria-selected" => "false"]) !!}
-                                    {!! Form::label('payment_method', 'Nhận tại cửa hàng', []) !!}
+                                    {!! Form::label('payment_method', 'Thanh toán trực tiếp', []) !!}
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel"
                                      aria-labelledby="home-tab">
-                                    <div class="container">
-                                        <div class="mt-3">
-                                            <label for='province'>Thành Phố
-                                                <select id='province' class="form-control">
-                                                    <option selected>Thành Phố</option>
-                                                </select>
-                                            </label>
-
-                                            <label for='district'>Quận Huyện
-                                                <select id='district' class="form-control">
-                                                    <option selected>Quận Huyện</option>
-
-                                                </select>
-                                            </label>
-
-                                            <label for='ward'>Phường Xã
-                                                <select id='ward' class="form-control">
-                                                    <option selected>Xã</option>
-                                                </select>
-                                            </label>
-
-                                        </div>
+                                    <div class="mt-3">
+                                        Tổng tiền
                                     </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="container">
-                                        <div class="mt-3">
-                                            Địa chỉ cửa hàng
-                                            {!! Form::hidden('diachi_cuahang', 'Thành Phố Hồ Chí Minh') !!}
-                                        </div>
+                                    <div class="mt-3">
+                                        Tổng tiền
                                     </div>
                                 </div>
                             </div>

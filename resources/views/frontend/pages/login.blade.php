@@ -11,15 +11,15 @@
                         {!! Form::open(['url'=>'/login-customer', 'method'=>'POST']) !!}
                         <div class="mb-3">
                             <div class="form-group">
-                                {!! Form::label('email', 'Email', []) !!}
-                                {!! Form::email('email',  old('email_account') , ['class'=>'form-control']) !!}
+                                {!! Form::label('email_login', 'Email', []) !!}
+                                {!! Form::email('email_login',  old('email_account') , ['class'=>'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <div class="form-group">
-                                {!! Form::label('password', 'Password', []) !!}
-                                {!! Form::password('password', ['class'=>'form-control']) !!}
+                                {!! Form::label('password_login', 'Password', []) !!}
+                                {!! Form::password('password_login', ['class'=>'form-control']) !!}
                             </div>
                         </div>
 
