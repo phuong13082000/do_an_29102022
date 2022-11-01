@@ -71,13 +71,11 @@
         method: 'GET',
         headers: {'token': token},
         success: function (province) {
-
-            for (let i_province = 0; i_province <= province.data.length; i_province++) {
-                let id_province = province.data[i_province].ProvinceID
-                let name_province = province.data[i_province].ProvinceName
+            for (let i = 0; i <= province.data.length; i++) {
+                let id_province = province.data[i]['ProvinceID'];
+                let name_province = province.data[i]['ProvinceName'];
 
                 $('#province').append('<option id="id_province" name="id_province" value=' + id_province + '>' + name_province + '</option>');
-
             }
         }
     });
@@ -103,7 +101,6 @@
             });
         });
     });
-
     $(document).ready(function () {
         $('#district').on('change', function () {
             var id_district = $(this).val();
@@ -125,13 +122,12 @@
             });
         });
     });
-
     $(document).ready(function () {
         $('#province').on('change', function () {
             $('#district').empty();
             $('#ward').empty();
 
-            $('#district').append('<option selected>Quận Huyện</option>');
+            //$('#district').append('<option selected>Quận Huyện</option>');
             $('#ward').append('<option selected>Phưòng Xã</option>');
         });
         $('#district').on('change', function () {

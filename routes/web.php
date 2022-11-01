@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\SliderController;
 use App\Http\Controllers\frontend\CartController;
+use App\Http\Controllers\frontend\CheckoutController;
 use App\Http\Controllers\frontend\DetailController;
 use App\Http\Controllers\frontend\IndexController;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +70,6 @@ Route::get('/login-google', [CustomerController::class, 'login_google']);
 Route::get('/google-callback', [CustomerController::class, 'callback_google']);
 
 //Checkout
-Route::post('/confirm-order',[CartController::class, 'confirm_order']);
+Route::get('/checkout', [CheckoutController::class, 'checkout']);
+
+Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
