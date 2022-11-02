@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\LoginController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\SliderController;
 use App\Http\Controllers\frontend\CartController;
@@ -31,6 +32,14 @@ Route::prefix("admin")->group(function () {
     Route::resource('/product', ProductController::class)->middleware('auth');
 
     Route::resource('/slider', SliderController::class)->middleware('auth');
+
+    Route::get('/order', [OrderController::class, 'view_order'])->middleware('auth');
+
+    Route::post('/update-status-order', [OrderController::class, 'update_status_order'])->middleware('auth');
+
+    Route::get('/print-order/{id}', [OrderController::class, 'print_order'])->middleware('auth');
+
+    Route::get('/order-detail/{id}', [OrderController::class, 'view_order_detail'])->middleware('auth');
 });
 
 Route::get('/', [IndexController::class, 'index']);

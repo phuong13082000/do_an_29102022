@@ -4,9 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -14,14 +12,9 @@ class BrandController extends Controller
     public function index()
     {
         $title = 'Brand';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $list_Brand = Brand::all();
 
-        return view('admin.pages.brand.index')->with(compact('title', 'list_Brand', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.brand.index')->with(compact('title', 'list_Brand'));
     }
 
     public function create()
@@ -44,14 +37,9 @@ class BrandController extends Controller
     public function edit($id)
     {
         $title = 'Edit Brand';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $brand = Brand::find($id);
 
-        return view('admin.pages.brand.form')->with(compact('title', 'brand', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.brand.form')->with(compact('title', 'brand'));
     }
 
     public function update(Request $request, $id)
@@ -83,6 +71,7 @@ class BrandController extends Controller
     public function update_Status_Brand(Request $request)
     {
         $data = $request->all();
+
         $brand = Brand::find($data['id']);
         $brand->status = $data['status'];
 

@@ -14,14 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $title = 'Category';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $list_Category = Category::all();
 
-        return view('admin.pages.category.index')->with(compact('title', 'list_Category', 'count_category', 'count_brand', 'count_slider', 'count_product'));
+        return view('admin.pages.category.index')->with(compact('title', 'list_Category'));
     }
 
     public function create()
@@ -44,14 +39,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $title = 'Edit Category';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $category = Category::find($id);
 
-        return view('admin.pages.category.form')->with(compact('title', 'category', 'count_category', 'count_brand', 'count_slider', 'count_product'));
+        return view('admin.pages.category.form')->with(compact('title', 'category'));
     }
 
     public function update(Request $request, $id)

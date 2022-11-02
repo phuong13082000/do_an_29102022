@@ -40,7 +40,6 @@
                     <a href="{{route('brand.index')}}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>Brand</p>
-                        <span class="badge badge-info right">{{$count_brand}}</span>
                     </a>
                 </li>
 
@@ -48,7 +47,6 @@
                     <a href="{{route('category.index')}}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>Category</p>
-                        <span class="badge badge-info right">{{$count_category}}</span>
                     </a>
                 </li>
 
@@ -56,7 +54,13 @@
                     <a href="{{route('slider.index')}}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>Slider</p>
-                        <span class="badge badge-info right">{{$count_slider}}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{url('/admin/order')}}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>Order</p>
                     </a>
                 </li>
 
@@ -66,7 +70,6 @@
                         <p>
                             Product
                             <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right">{{$count_product}}</span>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">

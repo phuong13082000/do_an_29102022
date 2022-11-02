@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,28 +13,18 @@ class ProductController extends Controller
     public function index()
     {
         $title = 'Product';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $list_Product = Product::with('reBrand', 'reCategory')->get();
 
-        return view('admin.pages.product.index')->with(compact('title', 'list_Product', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.product.index')->with(compact('title', 'list_Product'));
     }
 
     public function create()
     {
         $title = 'Create Product';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');
 
-        return view('admin.pages.product.form')->with(compact('title', 'count_brand', 'count_category', 'list_brand', 'list_category', 'count_slider', 'count_product'));
+        return view('admin.pages.product.form')->with(compact('title', 'list_brand', 'list_category'));
     }
 
     public function store(Request $request)
@@ -84,17 +73,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $title = 'Edit Product';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
 
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');
 
         $product = Product::find($id)->first();
 
-        return view('admin.pages.product.form')->with(compact('title', 'product', 'count_brand', 'count_category', 'list_brand', 'list_category', 'count_slider', 'count_product'));
+        return view('admin.pages.product.form')->with(compact('title', 'product', 'list_brand', 'list_category'));
     }
 
     public function update(Request $request, $id)

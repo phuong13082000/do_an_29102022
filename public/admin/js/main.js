@@ -175,19 +175,3 @@ $(function () {
     });
 });
 
-<!-- Update Brand Status -->
-$('.brand-status').change(function () {
-    var id = $(this).attr('id');
-    var status = $(this).find(':selected').val();
-    var _token = $('input[name="_token"]').val();
-    $.ajax({
-        url: "{{url('admin/update-status-brand')}}",
-        method: "POST",
-        data: {id: id, status: status, _token: _token},
-        success: function () {
-            alert('Change status success!');
-        }
-    });
-});
-
-

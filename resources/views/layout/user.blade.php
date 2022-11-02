@@ -74,8 +74,8 @@
             for (let i = 0; i <= province.data.length; i++) {
                 let id_province = province.data[i]['ProvinceID'];
                 let name_province = province.data[i]['ProvinceName'];
-
-                $('#province').append('<option id="id_province" name="id_province" value=' + id_province + '>' + name_province + '</option>');
+                $('#province').append('<option id="id_province" name="id_province" value=' + id_province + '>' + name_province + '</option>' +
+                    '<input type="hidden" id="name_province" value="' + name_province + '">');
             }
         }
     });
@@ -89,12 +89,11 @@
                 data: {province_id: id_province},
                 success: function (district) {
                     $('#district').append('<option selected>Quận Huyện</option>');
-
                     for (let i_district = 0; i_district <= district.data.length; i_district++) {
                         let id_district = district.data[i_district]['DistrictID'];
                         let name_district = district.data[i_district]['DistrictName'];
-
-                        $('#district').append('<option id="id_district" name="id_district" value=' + id_district + '>' + name_district + '</option>');
+                        $('#district').append('<option id="id_district" name="id_district" value=' + id_district + '>' + name_district + '</option>' +
+                            '<input type="hidden" id="name_district" value="' + name_district + '">');
 
                     }
                 }
@@ -111,12 +110,11 @@
                 data: {district_id: id_district},
                 success: function (ward) {
                     $('#ward').append('<option selected>Phưòng Xã</option>');
-
                     for (let i_ward = 0; i_ward <= ward.data.length; i_ward++) {
                         let id_ward = ward.data[i_ward]['WardCode'];
                         let name_ward = ward.data[i_ward]['WardName'];
-
-                        $('#ward').append('<option id="id_ward" name="id_ward" value=' + id_ward + '>' + name_ward + '</option>');
+                        $('#ward').append('<option id="id_ward" name="id_ward" value=' + id_ward + '>' + name_ward + '</option>' +
+                            '<input type="hidden" id="name_ward" value="' + name_ward + '">');
                     }
                 }
             });
@@ -134,8 +132,6 @@
             $('#ward').empty();
         });
     });
-
-
 </script>
 
 </body>

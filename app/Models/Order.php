@@ -9,6 +9,9 @@ class Order extends Model
 {
     use HasFactory;
     public $timestamps = true;
+
+    public $incrementing = false;
+
     protected $fillable = [
         'price_ship',
         'note',
@@ -19,4 +22,9 @@ class Order extends Model
         'address_nguoinhan',
         'customer_id',
     ];
+
+    public function reCustomer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id');
+    }
 }

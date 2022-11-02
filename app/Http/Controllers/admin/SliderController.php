@@ -14,26 +14,16 @@ class SliderController extends Controller
     public function index()
     {
         $title = 'Slider';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
         $list_Slider = Slider::all();
 
-        return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.slider.index')->with(compact('title', 'list_Slider'));
     }
 
     public function create()
     {
         $title = 'Create Slider';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
 
-
-        return view('admin.pages.slider.form')->with(compact('title', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.slider.form')->with(compact('title'));
     }
 
     public function store(Request $request)
@@ -67,15 +57,9 @@ class SliderController extends Controller
     public function edit($id)
     {
         $title = 'Edit Slider';
-        $count_brand = Brand::count();
-        $count_category = Category::count();
-        $count_slider = Slider::count();
-        $count_product = Product::count();
-
-
         $slider = Slider::find($id)->first();
 
-        return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_brand', 'count_category', 'count_slider', 'count_product'));
+        return view('admin.pages.slider.form')->with(compact('title', 'slider'));
     }
 
     public function update(Request $request, $id)

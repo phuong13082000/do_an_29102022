@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -22,8 +23,6 @@ class CheckoutController extends Controller
 
     public function confirm_order(Request $request)
     {
-        dd($request);
-        /*
         $data = $request->all();
         $order_id = substr(md5(microtime()), rand(0, 26), 5);
 
@@ -36,9 +35,9 @@ class CheckoutController extends Controller
         $order->payment_method = $data['payment_method'];
         $order->customer_id = Session::get('id');
 
-        $order->name_nguoinhan = $data['name_nguoinhan'] ?? '';
-        $order->phone_nguoinhan = $data['name_nguoinhan'] ?? '';
-        $order->address_nguoinhan = $data['address_nguoinhan'] ?? '';
+        $order->name_nguoinhan = $data['name_nguoinhan'];
+        $order->phone_nguoinhan = $data['name_nguoinhan'];
+        $order->address_nguoinhan = $data['address_nguoinhan'];
 
         $order->save();
 
@@ -58,6 +57,5 @@ class CheckoutController extends Controller
 
         Cart::destroy();
         return redirect('/');
-        */
     }
 }

@@ -17,4 +17,9 @@ class OrderDetail extends Model
         'order_id',
         'product_id',
     ];
+
+    public function reProduct()
+    {
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }

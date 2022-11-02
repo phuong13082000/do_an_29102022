@@ -80,7 +80,7 @@
                 <div class="mb-3">
                     <div class="form-group">
                         {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
-                        {!! Form::select('payment_method', ['0'=>'Tiền mặt', '1'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control']) !!}
+                        {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control']) !!}
                     </div>
                 </div>
 
@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success', 'id'=>'checkout']) !!}
+        {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success']) !!}
         {!! Form::close() !!}
     </div>
 
