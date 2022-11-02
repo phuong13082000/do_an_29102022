@@ -9,14 +9,8 @@
                 <div class="row">
                     <!-- Grid column -->
                     <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">
-                            Company name
-                        </h6>
-                        <p>
-                            Here you can use rows and columns to organize your footer
-                            content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit.
-                        </p>
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Thông tin về chúng tôi</h6>
+                        <p>Chuyên kinh doanh điện thoại di động.</p>
                     </div>
                     <!-- Grid column -->
 
@@ -24,19 +18,11 @@
 
                     <!-- Grid column -->
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
-                        <p>
-                            <a class="text-white">MDBootstrap</a>
-                        </p>
-                        <p>
-                            <a class="text-white">MDWordPress</a>
-                        </p>
-                        <p>
-                            <a class="text-white">BrandFlow</a>
-                        </p>
-                        <p>
-                            <a class="text-white">Bootstrap Angular</a>
-                        </p>
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Liên hệ</h6>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
                     </div>
                     <!-- Grid column -->
 
@@ -44,21 +30,11 @@
 
                     <!-- Grid column -->
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">
-                            Useful links
-                        </h6>
-                        <p>
-                            <a class="text-white">Your Account</a>
-                        </p>
-                        <p>
-                            <a class="text-white">Become an Affiliate</a>
-                        </p>
-                        <p>
-                            <a class="text-white">Shipping Rates</a>
-                        </p>
-                        <p>
-                            <a class="text-white">Help</a>
-                        </p>
+                        <h6 class="text-uppercase mb-4 font-weight-bold"></h6>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
+                        <p><a class="text-white"></a></p>
                     </div>
 
                     <!-- Grid column -->
@@ -66,11 +42,11 @@
 
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                        <p><i class="fa fa-home mr-3"></i> New York, NY 10012, US</p>
-                        <p><i class="fa fa-envelope mr-3"></i> info@gmail.com</p>
-                        <p><i class="fa fa-phone mr-3"></i> + 01 234 567 88</p>
-                        <p><i class="fa fa-print mr-3"></i> + 01 234 567 89</p>
+                        <h6 class="text-uppercase mb-4 font-weight-bold"></h6>
+                        <p><i class="fa fa-home mr-3"></i></p>
+                        <p><i class="fa fa-envelope mr-3"></i></p>
+                        <p><i class="fa fa-phone mr-3"></i></p>
+                        <p><i class="fa fa-print mr-3"></i></p>
                     </div>
                     <!-- Grid column -->
                 </div>

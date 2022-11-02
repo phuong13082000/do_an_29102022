@@ -69,7 +69,7 @@ $(function () {
 
 <!-- Validate product -->
 $(function () {
-    $("#formproduct").validate({
+    $("#formproduct-create").validate({
         rules: {
             title: {
                 required: true,

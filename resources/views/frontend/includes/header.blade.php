@@ -18,52 +18,52 @@
             <div class="nav-item justify-content-end">
                 {{--<a class="nav-link" href="{{url('show-cart')}}">{{Cart::count()}} Cart</a>--}}
 
-                <div class="dropdown">
-                    <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="cart"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{Cart::count()}} Cart
+                <!-- Split dropstart button -->
+                <div class="btn-group">
+                    <div class="btn-group dropstart" role="group">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropstart</span>
+                        </button>
+                        <ul class="dropdown-menu" style="width: 500px">
+                            <li class="dropdown-item" href="#">
+                                @if(Cart::count() != 0)
+                                    <div class="container">
+                                        <div class="mt-3">
+                                            @foreach(Cart::content() as $content)
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <b>{{$content->name}}</b>
+                                                        <p>Price: {{number_format($content->price).' '.'vnđ'}}</p>
+                                                        <p>Number: {{$content->qty}}</p>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <p>Subtotal: {{Cart::total().' '.'vnđ'}}</p>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="container">
+                                        <div class="mt-3">
+                                            <a href="{{url('/')}}" style="text-decoration: none"> Cart empty</a>
+                                        </div>
+                                    </div>
+                                @endif
+                            </li>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <a type="button" class="btn btn-outline-info" href="{{url('show-cart')}}">Cart</a>
+                            </div>
+                        </ul>
+                    </div>
+                    <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">
+                        {{Cart::count()}} <i class="fa fa-shopping-cart"></i>
                     </a>
-
-                    <ul class="dropdown-menu" style="width: 400px" aria-labelledby="cart">
-                        <li class="dropdown-item" href="#">
-                            @if(Cart::count() != 0)
-                                <div class="container">
-                                    <div class="mt-3">
-                                        @foreach(Cart::content() as $v_content)
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <img src="{{asset('uploads/product/'.$v_content->options->image)}}"
-                                                         width="90" alt="{{$v_content->name}}"/>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <h4>Name: {{$v_content->name}}</h4>
-                                                    <p>Price: {{number_format($v_content->price).' '.'vnđ'}}</p>
-                                                    <p>Number: {{$v_content->qty}}</p>
-                                                    <hr>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                        <p>Subtotal: {{Cart::total().' '.'vnđ'}}</p>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="container">
-                                    <div class="mt-3">
-                                        <a href="{{url('/')}}" style="text-decoration: none"> Cart empty</a>
-                                    </div>
-                                </div>
-                            @endif
-                        </li>
-                        <a type="button" class="btn btn-default" href="{{url('show-cart')}}">Cart</a>
-
-                    </ul>
                 </div>
-            </div>
 
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </div>
         </div>
     </div>
 </nav>

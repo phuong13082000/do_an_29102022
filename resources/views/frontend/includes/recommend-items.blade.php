@@ -22,7 +22,15 @@
                             <b style="color: red">Hết Hàng</b><br>
                         @endif
                         <p>{{$recommend->title}}</p>
-                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
+
+                        {{--soluong--}}
+                        <input name="qty" type="hidden" min="1" max="{{$recommend->number}}" class="cart_product_qty_{{$recommend->id}}" value="1"/>
+                        {!! Form::hidden('productid_hidden', $recommend->id) !!}
+
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        {!! Form::close() !!}
+
                     </div>
                 </div>
             </div>

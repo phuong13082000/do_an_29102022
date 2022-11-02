@@ -77,7 +77,7 @@ class ProductController extends Controller
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');
 
-        $product = Product::find($id)->first();
+        $product = Product::find($id);
 
         return view('admin.pages.product.form')->with(compact('title', 'product', 'list_brand', 'list_category'));
     }

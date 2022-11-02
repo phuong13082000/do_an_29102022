@@ -57,7 +57,7 @@ class SliderController extends Controller
     public function edit($id)
     {
         $title = 'Edit Slider';
-        $slider = Slider::find($id)->first();
+        $slider = Slider::find($id);
 
         return view('admin.pages.slider.form')->with(compact('title', 'slider'));
     }

@@ -12,7 +12,7 @@
             <b style="font-size: 18px">{{$product->title}}</b><br>
         </div>
         <hr>
-        <div class="col-sm-6">
+        <div class="col-sm-7">
             <img class="img-fluid" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->title}}">
             <hr>
             galery
@@ -20,11 +20,15 @@
             <!-- Tab thong tin san van va danh gia san pham -->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Mô tả</button>
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Mô Tả
+                    </button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Đánh giá</button>
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Bình Luận
+                    </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -32,7 +36,7 @@
                     <div class="container">
                         <div class="mt-3">
                             <h4>Thông tin sản phẩm {{$product->title}}</h4>
-                            <p>{{$product->thongtin_chung}}</p>
+                            <p>{!! $product->thongtin_chung !!}</p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +44,7 @@
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="container">
                         <div class="mt-3">
-                            <h4>Đánh giá sản phẩm {{$product->title}}</h4>
+                            <h4>Bình luận về sản phẩm {{$product->title}}</h4>
                         </div>
                     </div>
                 </div>
@@ -48,7 +52,7 @@
 
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
 
             @if($product->number)
@@ -62,18 +66,6 @@
                 <b style="color: red">Hết Hàng</b><br>
             @endif
 
-            <!--Khuyến mãi-->
-            <div class="row justify-content-center mt-3 mb-3">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header"><b>Khuyến mãi: </b></div>
-                        <div class="card-body">
-                            <div class="mb-3"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {{--soluong--}}
             <span>
                 <label for="qty">Số lượng
@@ -82,7 +74,7 @@
                 {!! Form::hidden('productid_hidden', $product->id) !!}
             </span>
 
-            <input type="submit" value="Thêm giỏ hàng" class="btn btn-primary add-to-cart">
+            <input type="submit" value="Thêm giỏ hàng" class="btn btn-primary">
 
             <!--Cấu hình-->
             <div class="row justify-content-center mt-3 mb-3">

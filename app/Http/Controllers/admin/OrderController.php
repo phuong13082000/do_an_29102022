@@ -44,11 +44,11 @@ class OrderController extends Controller
         if ($status > $order->status) {
             $order->status = $status;
             $order->save();
-            $msg = "Thanh cong";
+            return response()->json(['message' => 'Cập nhật thành công.']);
         } elseif ($status < $order->status || $status == '') {
-            $msg = "That bai";
+            return response()->json(['message' => 'Cập nhật thất bại.']);
         }
-        return response()->json(array('msg' => $msg), 200);
+        return response()->json(['message' => 'Cập nhật thất bại.']);
     }
 
     public function print_order($id)
@@ -113,7 +113,7 @@ class OrderController extends Controller
 						<td>' . $order->name_nguoinhan . '</td>
 						<td>' . $order->address_nguoinhan . '</td>
 						<td>' . $order->phone_nguoinhan . '</td>
-						<td>' . $order->notes . '</td>
+						<td>' . $order->note . '</td>
 					</tr>
 				</tbody>
 		    </table>

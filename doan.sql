@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 29, 2022 at 11:07 AM
+-- Generation Time: Nov 02, 2022 at 07:28 AM
 -- Server version: 8.0.27
--- PHP Version: 7.4.26
+-- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,8 +35,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -44,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'hoangphuong0813@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '0356929673', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `token`) VALUES
+(1, 'Admin', 'hoangphuong0813@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '0356929673', '');
 
 -- --------------------------------------------------------
 
@@ -106,25 +104,33 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `fullname` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` int NOT NULL,
-  `birthday` date NOT NULL,
+  `gender` int DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int NOT NULL,
-  `customer_token` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `google_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `facebook_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `customer_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `fullname`, `email`, `password`, `gender`, `birthday`, `phone`, `address`, `status`, `customer_token`, `google_id`, `facebook_id`, `provider`) VALUES
+(1, 'Phuong', 'hoangphuong0813@gmail.com', '$2y$10$PaLqY1iSU8psCcazbPMeeecdOLwTTsTjzZe6V7fxyAy31vETn72ku', NULL, NULL, '0356929673', NULL, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `feedbacks`
 --
 
-DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE IF NOT EXISTS `feedback` (
+DROP TABLE IF EXISTS `feedbacks`;
+CREATE TABLE IF NOT EXISTS `feedbacks` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -148,20 +154,27 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `price_ship` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int NOT NULL,
-  `payment_method` int NOT NULL,
-  `name_nguoinhan` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_nguoinhan` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address_nguoinhan` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price_ship` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT '1',
+  `payment_method` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_nguoinhan` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_nguoinhan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_nguoinhan` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_id` int NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `price_ship`, `note`, `status`, `payment_method`, `name_nguoinhan`, `phone_nguoinhan`, `address_nguoinhan`, `customer_id`, `created_at`, `updated_at`) VALUES
+('ba09d', '', 'sda', 3, 'Trả bằng thẻ ngân hàng', 'Admin', '0356919673', '', 1, '2022-11-01 09:39:34', '2022-11-02 00:26:34');
 
 -- --------------------------------------------------------
 
@@ -171,18 +184,26 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 DROP TABLE IF EXISTS `order_details`;
 CREATE TABLE IF NOT EXISTS `order_details` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `num` int NOT NULL,
   `price` int NOT NULL,
   `status` int NOT NULL,
-  `order_id` int NOT NULL,
+  `order_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_id` int NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `num`, `price`, `status`, `order_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(6, 2, 1, 1, 'ba09d', 21, '2022-11-01 09:39:34', '2022-11-01 09:39:34'),
+(7, 1, 1, 1, 'ba09d', 20, '2022-11-01 09:39:34', '2022-11-01 09:39:34');
 
 -- --------------------------------------------------------
 
@@ -217,14 +238,15 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   KEY `brands_id` (`brand_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `title`, `image`, `number`, `price`, `price_sale`, `manhinh`, `mausac`, `camera_sau`, `camera_truoc`, `cpu`, `bonho`, `ram`, `ketnoi`, `pin_sac`, `tienich`, `thongtin_chung`, `status`, `brand_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(20, 'dt', '\"oppo-reno8-pro-thumb-xanh-1-600x6006692.jpg\"', 1, 1, 0, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 0, 1, 1, '2022-10-26 06:49:58', '2022-10-26 06:49:58');
+(20, 'dt', '\"oppo-reno8-pro-thumb-xanh-1-600x6006692.jpg\"', 1, 1, 0, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 0, 1, 1, '2022-10-26 06:49:58', '2022-10-26 06:49:58'),
+(21, 'dt2', '\"iphone-13-pro-max-sierra-blue-600x6003530.jpg\"', 2, 2, 1, '2', 'Đen', '2', '2', '2', '16GB', '4GB', '2', '2', '2', '2', 0, 2, 1, '2022-10-30 02:42:31', '2022-10-30 02:42:31');
 
 -- --------------------------------------------------------
 
@@ -255,12 +277,12 @@ INSERT INTO `sliders` (`id`, `title`, `image`, `url`, `status`) VALUES
 --
 
 --
--- Constraints for table `feedback`
+-- Constraints for table `feedbacks`
 --
-ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `feedback_ibfk_3` FOREIGN KEY (`feedback_parent_id`) REFERENCES `feedback` (`id`);
+ALTER TABLE `feedbacks`
+  ADD CONSTRAINT `feedbacks_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `feedbacks_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `feedbacks_ibfk_3` FOREIGN KEY (`feedback_parent_id`) REFERENCES `feedbacks` (`id`);
 
 --
 -- Constraints for table `orders`

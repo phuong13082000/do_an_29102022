@@ -32,12 +32,41 @@
                                         <td>{{$order->name_nguoinhan}}</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td>
-                                            @if ($order->status==1)
-                                                Chưa xữ lý
+                                            @if($order->status==1)
+                                                <form>
+                                                    @csrf
+                                                    <select class="form-control order_details">
+                                                        <option value="">----Chọn hình thức đơn hàng-----</option>
+                                                        <option selected value="1">Chưa xử lý</option>
+                                                        <option value="2">Đã xử lý-Đã giao hàng</option>
+                                                        <option value="3">Hủy đơn hàng-tạm giữ</option>
+                                                        <input type="hidden" name="id_order" value="{{$order->id}}">
+                                                    </select>
+                                                </form>
                                             @elseif($order->status==2)
-                                                Đã xử lý-Đã giao hàng
+                                                <form>
+                                                    @csrf
+                                                    <select class="form-control order_details">
+                                                        <option value="">----Chọn hình thức đơn hàng-----</option>
+                                                        <option value="1">Chưa xử lý</option>
+                                                        <option selected value="2">Đã xử lý-Đã giao hàng</option>
+                                                        <option value="3">Hủy đơn hàng-tạm giữ</option>
+                                                        <input type="hidden" name="id_order" value="{{$order->id}}">
+                                                    </select>
+                                                </form>
+
                                             @else
-                                                Hủy đơn hàng-tạm giữ
+                                                <form>
+                                                    @csrf
+                                                    <select class="form-control order_details">
+                                                        <option value="">----Chọn hình thức đơn hàng-----</option>
+                                                        <option value="1">Chưa xử lý</option>
+                                                        <option value="2">Đã xử lý-Đã giao hàng</option>
+                                                        <option selected value="3">Hủy đơn hàng-tạm giữ</option>
+                                                        <input type="hidden" name="id_order" value="{{$order->id}}">
+                                                    </select>
+                                                </form>
+
                                             @endif
                                         </td>
                                         <td>{{$order->created_at}}</td>

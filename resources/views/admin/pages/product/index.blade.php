@@ -63,8 +63,8 @@
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="modal-product_{{$product->id}}" tabindex="-1" aria-labelledby="modallable_{{$product->id}}" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                        <div class="modal fade bd-example-modal-lg" id="modal-product_{{$product->id}}" tabindex="-1" aria-labelledby="modallable_{{$product->id}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="modallable_{{$product->id}}">Chi tiết</h5>
@@ -73,17 +73,17 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Màn hình: {{$product->manhinh}}<br>
-                                                        Màu sắc: {{$product->mausac}}<br>
-                                                        Camera sau: {{$product->camera_sau}}<br>
-                                                        Camera trước: {{$product->camera_truoc}}<br>
-                                                        CPU: {{$product->cpu}}<br>
-                                                        Bộ nhớ: {{$product->bonho}}<br>
-                                                        Ram: {{$product->ram}}<br>
-                                                        Kết nối: {{$product->ketnoi}}<br>
-                                                        Pin Sạc: {{$product->pin_sac}}<br>
-                                                        Tiện ích: {{$product->tienich}}<br>
-                                                        Thông tin chung: {{$product->thongtin_chung}}
+                                                        <b>Màn hình: </b>{{$product->manhinh}}<br>
+                                                        <b>Màu sắc: </b>{{$product->mausac}}<br>
+                                                        <b>Camera sau: </b>{{$product->camera_sau}}<br>
+                                                        <b>Camera trước: </b>{{$product->camera_truoc}}<br>
+                                                        <b>CPU: </b>{{$product->cpu}}<br>
+                                                        <b>Bộ nhớ: </b>{{$product->bonho}}<br>
+                                                        <b>Ram: </b>{{$product->ram}}<br>
+                                                        <b>Kết nối: </b>{{$product->ketnoi}}<br>
+                                                        <b>Pin Sạc: </b>{{$product->pin_sac}}<br>
+                                                        <b>Tiện ích: </b>{{$product->tienich}}<br>
+                                                        <b>Thông tin chung: </b>{!! $product->thongtin_chung !!}
                                                     </div>
                                                 </div>
                                             </div>

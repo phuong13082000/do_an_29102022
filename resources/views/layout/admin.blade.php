@@ -143,8 +143,14 @@
 <!-- AdminLTE App -->
 <script src="{{asset('admin/js/adminlte.js')}}"></script>
 
+<!-- CKEditor 4 -->
+<script src="//cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
+
 <script src="{{asset('admin/js/main.js')}}"></script>
 
+<script>
+    CKEDITOR.replace('thongtin_chung'); //create_product
+</script>
 
 <!-- Update Brand Status -->
 <script>
@@ -158,11 +164,13 @@
             data: {id: id, status: status, _token: _token},
             success: function () {
                 alert('Change status success!');
+                window.location.href = "{{route('brand.index')}}";
             }
         });
     });
 </script>
 
+<!-- Update Order Status -->
 <script>
     $('.order_details').change(function () {
         var id = $('input[name="id_order"]').val();
@@ -173,7 +181,8 @@
             method: "POST",
             data: {id: id, status: status, _token: _token},
             success: function (data) {
-                console.log(data);
+                alert(data.message);
+                window.location.href = "{{url('admin/order')}}";
             }
         });
     });

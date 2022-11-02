@@ -51,7 +51,7 @@
                         <td>{{$order->name_nguoinhan}}</td>
                         <td>{{$order->address_nguoinhan}}</td>
                         <td>{{$order->phone_nguoinhan}}</td>
-                        <td>{{$order->notes}}</td>
+                        <td>{{$order->note}}</td>
                         <td>{{$order->payment_method}}</td>
                     </tr>
                     </tbody>
@@ -73,11 +73,6 @@
                 <table class="table table-striped b-t b-light">
                     <thead>
                     <tr>
-                        <th style="width:20px;">
-                            <label class="i-checks m-b-none">
-                                <input type="checkbox"><i></i>
-                            </label>
-                        </th>
                         <th>Tên sản phẩm</th>
                         <th>Số lượng kho còn</th>
                         <th>Số lượng</th>
@@ -99,7 +94,6 @@
                             $total+=$subtotal;
                         @endphp
                         <tr class="color_qty_{{$details->product_id}}">
-                            <td><i>{{$i}}</i></td>
                             <td>{{$details->reProduct->title}}</td>
                             <td>{{$details->reProduct->number}}</td>
                             <td>{{$details->num}}</td>
@@ -215,7 +209,7 @@
                             <td>{{$order->name_nguoinhan}}</td>
                             <td>{{$order->address_nguoinhan}}</td>
                             <td>{{$order->phone_nguoinhan}}</td>
-                            <td>{{$order->notes}}</td>
+                            <td>{{$order->note}}</td>
                         </tr>
                         </tbody>
                     </table>
