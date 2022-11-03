@@ -62,6 +62,45 @@
     })
 </script>
 
+<!--binhluan-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        load_comment();
+
+        function load_comment() {
+            var product_id = $('.comment_product_id').val();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('/load-comment')}}",
+                method: "POST",
+                data: {product_id: product_id, _token: _token},
+                success: function (data) {
+                    $('#comment_show').html(data);
+                }
+            });
+        }
+
+        $('#send-comment').click(function () {
+            var customer_id = $('.comment_customer_id').val();
+            var product_id = $('.comment_product_id').val();
+            var title = $('.title').val();
+            var _token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url: "{{url('/send-comment')}}",
+                method: "POST",
+                data: {title: title, customer_id: customer_id, product_id: product_id, _token: _token},
+                success: function (data) {
+                    $('#thongbao-comment').html('<span class="text text-success">Thêm bình luận thành công, bình luận đang chời duyệt</span>')
+                    load_comment();
+                    $('#thongbao-comment').fadeOut(5000);
+                    $('.title').val('');
+                }
+            });
+        });
+    });
+</script>
+
 <!--script-diachi-->
 <script type="text/javascript">
     const token = "{{env('TOKEN_GHN')}}";

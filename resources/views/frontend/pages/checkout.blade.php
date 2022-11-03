@@ -1,6 +1,7 @@
 @extends('layout.user')
 
 @section('index')
+    @include('frontend.includes.alert')
     <div class="mt-3">
         <div class="row">
             {{--thong tin khach hang--}}

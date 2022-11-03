@@ -47,6 +47,8 @@ Route::prefix("admin")->group(function () {
 
     Route::get('/comment', [CommentController::class, 'show_comment'])->middleware('auth');
 
+    Route::post('/allow-comment', [CommentController::class, 'allow_comment'])->middleware('auth');
+
 });
 
 Route::get('/', [IndexController::class, 'index']);
@@ -89,3 +91,9 @@ Route::get('/google-callback', [CustomerController::class, 'callback_google']);
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
+
+//comment
+Route::post('/load-comment', [CommentController::class, 'load_comment']);
+
+Route::post('/send-comment', [CommentController::class, 'send_comment']);
+

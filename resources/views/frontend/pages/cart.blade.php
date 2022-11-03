@@ -1,8 +1,8 @@
 @extends('layout.user')
 
 @section('index')
+    @include('frontend.includes.alert')
     @php
-
         $customer_id = Session::get('id');
         $customer_name = Session::get('name');
         $customer_email = Session::get('email');

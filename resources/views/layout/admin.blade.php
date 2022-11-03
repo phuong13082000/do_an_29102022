@@ -148,12 +148,12 @@
 
 <script src="{{asset('admin/js/main.js')}}"></script>
 
-<script>
+<script type="text/javascript">
     CKEDITOR.replace('thongtin_chung'); //create_product
 </script>
 
 <!-- Update Brand Status -->
-<script>
+<script type="text/javascript">
     $('.brand-status').change(function () {
         var id = $(this).attr('id');
         var status = $(this).find(':selected').val();
@@ -171,7 +171,7 @@
 </script>
 
 <!-- Update Order Status -->
-<script>
+<script type="text/javascript">
     $('.order_details').change(function () {
         var id = $('input[name="id_order"]').val();
         var status = $(this).find(':selected').val();
@@ -183,6 +183,26 @@
             success: function (data) {
                 alert(data.message);
                 window.location.href = "{{url('admin/order')}}";
+            }
+        });
+    });
+</script>
+
+<!--comment-->
+<script type="text/javascript">
+    $('.comment_duyet_btn').click(function () {
+        var comment_status = $(this).data('comment_status');
+        var comment_id = $(this).data('comment_id');
+        var comment_product_id = $(this).attr('id');
+        $.ajax({
+            url: "{{url('admin/allow-comment')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {comment_status: comment_status, comment_id: comment_id, comment_product_id: comment_product_id},
+            success: function (data) {
+                location.reload();
             }
         });
     });

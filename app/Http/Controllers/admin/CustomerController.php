@@ -32,7 +32,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::where('email', $request->email_login)->first();
 
-        $check_password = Hash::check($request->password_login, $customer->password);
+        $check_password = Hash::check($request->password_login, $customer->password ?? '');
 
         if ($customer && $check_password) {
             Session::put('id', $customer->id);
@@ -41,9 +41,9 @@ class CustomerController extends Controller
             Session::put('address', $customer->address);
             Session::put('phone', $customer->phone);
 
-            return redirect('/show-cart');
+            return redirect('/show-cart')->with('success', 'Đăng nhập thành công');
         } else {
-            return redirect('/');
+            return redirect('/dang-nhap')->with('error', 'Đăng nhập không thành công');
         }
     }
 
@@ -65,7 +65,7 @@ class CustomerController extends Controller
         Session::put('email', $user->email);
         Session::put('phone', $user->phone);
 
-        return redirect()->back();
+        return redirect('/')->with('success', 'Đăng kí thành công');
     }
 
     public function logout()

@@ -16,6 +16,7 @@ class Comment extends Model
         'status',
         'customer_id',
         'product_id',
+        'admin_id',
         'feedback_parent_id',
     ];
 
@@ -27,5 +28,10 @@ class Comment extends Model
     public function reCustomer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function reAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 }

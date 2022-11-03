@@ -1,6 +1,7 @@
 @extends('layout.user')
 
 @section('index')
+    @include('frontend.includes.alert')
     <div class="row mt-3">
         @php
             $gia = number_format($product->price, 0, '', ',');
@@ -20,19 +21,19 @@
             <!-- Tab thong tin san van va danh gia san pham -->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                            type="button" role="tab" aria-controls="home" aria-selected="true">Mô Tả
+                    <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="false">Mô Tả
                     </button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                            type="button" role="tab" aria-controls="profile" aria-selected="false">Bình Luận
+                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="true">Bình Luận
                     </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="container">
                         <div class="mt-3">
                             <h4>Thông tin sản phẩm {{$product->title}}</h4>
@@ -41,10 +42,65 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="container">
                         <div class="mt-3">
                             <h4>Bình luận về sản phẩm {{$product->title}}</h4>
+                            <form>
+                                @csrf
+                                <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$product->id}}">
+                                <div id="comment_show"></div>
+                                {{--<div class="mt-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" style="color: green">@NGUOI</h5>
+                                                    <p class="card-text">Some quick example text to build on the card
+                                                        title
+                                                        and make up the bulk of the card's content.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ms-5 mt-2">
+                                    <div class="row">
+                                        <div class="col-md-12 ">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" style="color: green">@NGUOI</h5>
+                                                    <p class="card-text">Some quick example text to build on the card
+                                                        title
+                                                        and make up the bulk of the card's content.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                --}}
+                            </form>
+
+                            @if(Session::get('name'))
+                                <div class="mt-3">
+                                    <p><b>Viết bình luận của bạn</b></p>
+                                </div>
+                                <div id="thongbao-comment"></div>
+                                <form action="#">
+                                    @csrf
+                                    <input type="hidden" name="comment_customer_id" class="comment_customer_id" value="{{Session::get('id')}}">
+                                    <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$product->id}}">
+
+                                    <div class="mt-3">
+                                        <textarea name="title" class="form-control title" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-3">
+                                        <button type="button" class="btn btn-outline-secondary" id="send-comment">Submit</button>
+                                    </div>
+                                </form>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -69,7 +125,8 @@
             {{--soluong--}}
             <span>
                 <label for="qty">Số lượng
-                    <input name="qty" type="number" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1">
+                    <input name="qty" type="number" min="1" max="{{$product->number}}"
+                           class="cart_product_qty_{{$product->id}}" value="1">
                 </label>
                 {!! Form::hidden('productid_hidden', $product->id) !!}
             </span>
