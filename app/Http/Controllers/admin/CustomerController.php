@@ -12,6 +12,14 @@ use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
+    public function show_customer()
+    {
+        $title = 'Customer';
+        $list_Customer = Customer::all();
+
+        return view('admin.pages.customer.index')->with(compact('title', 'list_Customer'));
+    }
+
     public function dangnhap()
     {
         $title = 'Login';

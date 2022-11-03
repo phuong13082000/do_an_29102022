@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller

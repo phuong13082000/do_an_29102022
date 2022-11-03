@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\SliderController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\CheckoutController;
 use App\Http\Controllers\frontend\DetailController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("admin")->group(function () {
+
     Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
 
     Route::post('/postLogin', [LoginController::class, 'postLogin']);
@@ -40,6 +42,11 @@ Route::prefix("admin")->group(function () {
     Route::get('/print-order/{id}', [OrderController::class, 'print_order'])->middleware('auth');
 
     Route::get('/order-detail/{id}', [OrderController::class, 'view_order_detail'])->middleware('auth');
+
+    Route::get('/customer', [CustomerController::class, 'show_customer'])->middleware('auth');
+
+    Route::get('/comment', [CommentController::class, 'show_comment'])->middleware('auth');
+
 });
 
 Route::get('/', [IndexController::class, 'index']);

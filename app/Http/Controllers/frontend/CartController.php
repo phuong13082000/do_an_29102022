@@ -4,12 +4,9 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {

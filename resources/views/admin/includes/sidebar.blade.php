@@ -65,6 +65,20 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{url('/admin/customer')}}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>Customer</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{url('/admin/comment')}}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>Comment</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
