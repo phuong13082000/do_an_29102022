@@ -12,12 +12,11 @@ class Comment extends Model
     public $timestamps = true;
     protected $fillable = [
         'title',
-        'answer',
         'status',
         'customer_id',
         'product_id',
         'admin_id',
-        'feedback_parent_id',
+        'comment_parent_id',
     ];
 
     public function reProduct()

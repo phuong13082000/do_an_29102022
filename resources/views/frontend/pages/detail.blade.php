@@ -50,36 +50,7 @@
                                 @csrf
                                 <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$product->id}}">
                                 <div id="comment_show"></div>
-                                {{--<div class="mt-3">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="color: green">@NGUOI</h5>
-                                                    <p class="card-text">Some quick example text to build on the card
-                                                        title
-                                                        and make up the bulk of the card's content.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="ms-5 mt-2">
-                                    <div class="row">
-                                        <div class="col-md-12 ">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="color: green">@NGUOI</h5>
-                                                    <p class="card-text">Some quick example text to build on the card
-                                                        title
-                                                        and make up the bulk of the card's content.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                --}}
                             </form>
 
                             @if(Session::get('name'))

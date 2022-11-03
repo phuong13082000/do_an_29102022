@@ -206,6 +206,27 @@
             }
         });
     });
+
+    $('.btn-reply-comment').click(function () {
+        var comment_id = $(this).data('comment_id');
+        var comment = $('.reply_comment_' + comment_id).val();
+        var comment_product_id = $(this).data('product_id');
+        console.log(comment_id)
+        console.log(comment)
+        console.log(comment_product_id)
+        $.ajax({
+            url: "{{url('admin/reply-comment')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {comment: comment, comment_id: comment_id, comment_product_id: comment_product_id},
+            success: function (data) {
+                location.reload();
+            }
+        });
+    });
+
 </script>
 
 </body>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 03, 2022 at 02:12 PM
+-- Generation Time: Nov 03, 2022 at 06:47 PM
 -- Server version: 8.0.27
 -- PHP Version: 8.0.13
 
@@ -103,20 +103,29 @@ DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `answer` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int NOT NULL,
   `customer_id` int DEFAULT NULL,
   `product_id` int NOT NULL,
   `admin_id` int DEFAULT NULL,
-  `feedback_parent_id` int DEFAULT NULL,
+  `comment_parent_id` int DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `feedback_parent_id` (`feedback_parent_id`),
   KEY `product_id` (`product_id`),
   KEY `customer_id` (`customer_id`),
-  KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `admin_id` (`admin_id`),
+  KEY `comment_parent_id` (`comment_parent_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `title`, `status`, `customer_id`, `product_id`, `admin_id`, `comment_parent_id`, `created_at`, `updated_at`) VALUES
+(1, 'Điện thoại đẹp quá', 0, 1, 22, NULL, NULL, '2022-11-03 08:46:27', '2022-11-03 10:11:21'),
+(2, 'hihi', 0, 1, 22, NULL, NULL, '2022-11-03 08:47:24', '2022-11-03 11:00:49'),
+(3, 'cam on ban nha', 0, NULL, 22, 1, 1, '2022-11-03 10:53:03', '2022-11-03 10:53:03'),
+(4, '=))', 0, NULL, 22, 1, 2, '2022-11-03 11:14:50', '2022-11-03 11:14:50');
 
 -- --------------------------------------------------------
 
@@ -270,8 +279,8 @@ INSERT INTO `sliders` (`id`, `title`, `image`, `url`, `status`) VALUES
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`feedback_parent_id`) REFERENCES `comments` (`id`),
-  ADD CONSTRAINT `comments_ibfk_4` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+  ADD CONSTRAINT `comments_ibfk_4` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `comments_ibfk_5` FOREIGN KEY (`comment_parent_id`) REFERENCES `comments` (`id`);
 
 --
 -- Constraints for table `orders`

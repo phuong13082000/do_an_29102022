@@ -49,6 +49,8 @@ Route::prefix("admin")->group(function () {
 
     Route::post('/allow-comment', [CommentController::class, 'allow_comment'])->middleware('auth');
 
+    Route::post('/reply-comment', [CommentController::class, 'reply_comment'])->middleware('auth');
+
 });
 
 Route::get('/', [IndexController::class, 'index']);
