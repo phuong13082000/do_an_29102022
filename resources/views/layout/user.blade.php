@@ -104,73 +104,198 @@
 <!--script-diachi-->
 <script type="text/javascript">
     const token = "{{env('TOKEN_GHN')}}";
+    const ID_GHN = 3404895;
 
-    $.ajax({
-        url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province',
-        method: 'GET',
-        headers: {'token': token},
-        success: function (province) {
-            for (let i = 0; i <= province.data.length; i++) {
-                let id_province = province.data[i]['ProvinceID'];
-                let name_province = province.data[i]['ProvinceName'];
-                $('#province').append('<option id="id_province" name="id_province" value=' + id_province + '>' + name_province + '</option>' +
-                    '<input type="hidden" id="name_province" value="' + name_province + '">');
+    load_province();
+    load_district();
+    load_ward();
+
+    function load_province() {
+        $.ajax({
+            url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province',
+            method: 'GET',
+            headers: {'token': token},
+            success: function (province) {
+                var length_province = province.data.length;
+                var data_province = province.data;
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{url('/data-province')}}",
+                    method: "POST",
+                    data: {
+                        data_province: data_province,
+                        length_province: length_province,
+                        province: province,
+                        _token: _token
+                    },
+                    success: function (data) {
+                        $('#province').html(data);
+                    }
+                });
             }
-        }
+        });
+    }
+
+    function load_district() {
+        $(document).ready(function () {
+            $('#province').on('change', function () {
+                var id_province = $(this).val();
+                $.ajax({
+                    url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district',
+                    method: 'GET',
+                    headers: {'token': token},
+                    data: {province_id: id_province},
+                    success: function (district) {
+                        var length_district = district.data.length;
+                        var data_district = district.data;
+                        var _token = $('input[name="_token"]').val();
+                        $.ajax({
+                            url: "{{url('/data-district')}}",
+                            method: "POST",
+                            data: {
+                                data_district: data_district,
+                                length_district: length_district,
+                                district: district,
+                                _token: _token
+                            },
+                            success: function (data) {
+                                $('#district').html(data);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    function load_ward() {
+        $(document).ready(function () {
+            $('#district').on('change', function () {
+                var id_district = $(this).val();
+                $.ajax({
+                    url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward',
+                    method: 'GET',
+                    headers: {'token': token},
+                    data: {district_id: id_district},
+                    success: function (ward) {
+                        var length_ward = ward.data.length;
+                        var data_ward = ward.data;
+                        var _token = $('input[name="_token"]').val();
+                        $.ajax({
+                            url: "{{url('/data-ward')}}",
+                            method: "POST",
+                            data: {length_ward: length_ward, data_ward: data_ward, _token: _token},
+                            success: function (data) {
+                                $('#ward').html(data);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    $('#district').on('change', function () {
+        var form_district = 1450; //q8-tphcm
+        var to_district = $('#district').val();
+
+        var settings = {
+            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" +
+                ID_GHN + "&from_district=" +
+                form_district + "&to_district=" +
+                to_district + "",
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "token": token
+            },
+        };
+        $.ajax(settings).done(function (response) {
+            var service_id = response['data'][0]['service_id'];
+            $('#fee_ship').append('<input type="hidden" id="fee_service" value="' + service_id + '">');
+        });
     });
+
+    //canc fee
+    $('#ward').on('change', function () {
+        var to_ward_code = $(this).val();
+        var to_district_id = $('#id_district').val();
+        var price_product = $('#product_price').val();
+        var service_id = $('#fee_service').val();
+        var from_district_id = 1450; //q8-tphcm
+        var height = 15; //cm
+        var length = 15; //cm
+        var weight = 3000; //g
+        var width = 15; //cm
+
+        var settings = {
+            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" +
+                service_id + "&insurance_value=" +
+                price_product + "&coupon=&from_district_id=" +
+                from_district_id + "&to_district_id=" +
+                to_district_id + "&to_ward_code=" +
+                to_ward_code + "&height=" +
+                height + "&length=" +
+                length + "&weight=" +
+                weight + "&width=" +
+                width + "",
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "token": token,
+                "shop_id": ID_GHN
+            },
+        };
+        $.ajax(settings).done(function (response) {
+            var price = response['data']['total'];
+            $('#fee_ship').append('<span id="fee">' + price + '</span>');
+        });
+
+        $.ajax(settings).fail(function (response) {
+            $('#fee_ship').append('<span id="fee"> Free ship</span>');
+        });
+    });
+
     $(document).ready(function () {
         $('#province').on('change', function () {
-            var id_province = $(this).val();
-            $.ajax({
-                url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district',
-                method: 'GET',
-                headers: {'token': token},
-                data: {province_id: id_province},
-                success: function (district) {
-                    $('#district').append('<option selected>Quận Huyện</option>');
-                    for (let i_district = 0; i_district <= district.data.length; i_district++) {
-                        let id_district = district.data[i_district]['DistrictID'];
-                        let name_district = district.data[i_district]['DistrictName'];
-                        $('#district').append('<option id="id_district" name="id_district" value=' + id_district + '>' + name_district + '</option>' +
-                            '<input type="hidden" id="name_district" value="' + name_district + '">');
+            $('#fee').remove();
+        });
+    });
 
-                    }
+    $(document).ready(function () {
+        $('.btn-submit').on('click', function () {
+            var _token = $('input[name="_token"]').val();
+            var price_ship = $('#fee').text();
+            var name_province = $('#id_province').val();
+            var name_district = $('#id_district').val();
+            var name_ward = $('#id_ward').val();
+
+            var name_nguoinhan = $('#name_nguoinhan').val();
+            var phone_nguoinhan = $('#phone_nguoinhan').val();
+            var payment_method = $('#payment_method').val();
+            var note = $('#note').val();
+
+            $.ajax({
+                url: "{{url('/confirm-order')}}",
+                method: "POST",
+                data: {
+                    name_nguoinhan:name_nguoinhan,
+                    phone_nguoinhan:phone_nguoinhan,
+                    payment_method:payment_method,
+                    note:note,
+                    name_province:name_province,
+                    name_district:name_district,
+                    name_ward:name_ward,
+                    price_ship:price_ship,
+                    _token: _token
+                },
+                success: function (data) {
+                    window.location.href = "{{url('/')}}";
                 }
             });
         });
     });
-    $(document).ready(function () {
-        $('#district').on('change', function () {
-            var id_district = $(this).val();
-            $.ajax({
-                url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward',
-                method: 'GET',
-                headers: {'token': token},
-                data: {district_id: id_district},
-                success: function (ward) {
-                    $('#ward').append('<option selected>Phưòng Xã</option>');
-                    for (let i_ward = 0; i_ward <= ward.data.length; i_ward++) {
-                        let id_ward = ward.data[i_ward]['WardCode'];
-                        let name_ward = ward.data[i_ward]['WardName'];
-                        $('#ward').append('<option id="id_ward" name="id_ward" value=' + id_ward + '>' + name_ward + '</option>' +
-                            '<input type="hidden" id="name_ward" value="' + name_ward + '">');
-                    }
-                }
-            });
-        });
-    });
-    $(document).ready(function () {
-        $('#province').on('change', function () {
-            $('#district').empty();
-            $('#ward').empty();
 
-            //$('#district').append('<option selected>Quận Huyện</option>');
-            $('#ward').append('<option selected>Phưòng Xã</option>');
-        });
-        $('#district').on('change', function () {
-            $('#ward').empty();
-        });
-    });
 </script>
 
 </body>

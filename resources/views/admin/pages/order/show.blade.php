@@ -42,6 +42,7 @@
                         <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
                         <th>Ghi chú</th>
+                        <th>Phí ship</th>
                         <th>Hình thức thanh toán</th>
                         <th style="width:30px;"></th>
                     </tr>
@@ -52,6 +53,7 @@
                         <td>{{$order->address_nguoinhan}}</td>
                         <td>{{$order->phone_nguoinhan}}</td>
                         <td>{{$order->note}}</td>
+                        <td>{{$order->price_ship}}</td>
                         <td>{{$order->payment_method}}</td>
                     </tr>
                     </tbody>
@@ -98,7 +100,7 @@
                             <td>{{$details->reProduct->number}}</td>
                             <td>{{$details->num}}</td>
                             <td>{{number_format($details->price ,0,',','.')}}đ</td>
-                            <td>{{number_format($subtotal ,0,',','.')}}đ</td>
+                            <td>{{number_format($subtotal+$order->price_ship ,0,',','.')}}đ</td>
                         </tr>
                     @endforeach
                     <tr>

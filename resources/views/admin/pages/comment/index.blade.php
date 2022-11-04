@@ -40,7 +40,7 @@
                                                 @endforeach
                                             </ul>
 
-                                            @if ($comment->status==0)
+                                            @if ($comment->status==0 && $comment->admin_id == NULL)
                                                 <br><textarea class="form-control reply_comment_{{$comment->id}}" rows="3"></textarea>
                                                 <br>
                                                 <button class="btn btn-default btn-reply-comment" data-product_id="{{$comment->product_id}}" data-comment_id="{{$comment->id}}">Trả lời

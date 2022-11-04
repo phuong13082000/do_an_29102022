@@ -211,9 +211,6 @@
         var comment_id = $(this).data('comment_id');
         var comment = $('.reply_comment_' + comment_id).val();
         var comment_product_id = $(this).data('product_id');
-        console.log(comment_id)
-        console.log(comment)
-        console.log(comment_product_id)
         $.ajax({
             url: "{{url('admin/reply-comment')}}",
             method: "POST",

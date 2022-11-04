@@ -53,9 +53,9 @@ class CommentController extends Controller
             ->where('customer_id',NULL)
             ->where('product_id', $product_id)->get();
 
-        $output1 = '';
+        $output = '';
         foreach ($comment as $comm) {
-            $output1 .= '
+            $output .= '
             <div class="mt-3">
                 <div class="row">
                     <div class="col-md-12">
@@ -71,7 +71,7 @@ class CommentController extends Controller
 
             foreach ($comment_reply as $comm_rep){
                 if ($comm_rep->comment_parent_id == $comm->id){
-                    $output1 .= '
+                    $output .= '
                     <div class="ms-5 mt-2">
                         <div class="row">
                             <div class="col-md-12 ">
@@ -87,7 +87,7 @@ class CommentController extends Controller
                 }
             }
         }
-        echo $output1;
+        echo $output;
     }
 
     public function send_comment(Request $request)

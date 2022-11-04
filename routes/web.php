@@ -87,12 +87,16 @@ Route::get('/fb-callback', [CustomerController::class, 'callback_facebook']);
 //google
 Route::get('/login-google', [CustomerController::class, 'login_google']);
 
-Route::get('/google-callback', [CustomerController::class, 'callback_google']);
+Route::post('/google-callback', [CustomerController::class, 'callback_google']);
 
 //Checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
+
+Route::post('/data-province', [CheckoutController::class, 'data_province']);
+Route::post('/data-district', [CheckoutController::class, 'data_district']);
+Route::post('/data-ward', [CheckoutController::class, 'data_ward']);
 
 //comment
 Route::post('/load-comment', [CommentController::class, 'load_comment']);
