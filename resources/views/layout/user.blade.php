@@ -111,28 +111,23 @@
     load_ward();
 
     function load_province() {
-        $.ajax({
-            url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province',
-            method: 'GET',
-            headers: {'token': token},
-            success: function (province) {
-                var length_province = province.data.length;
-                var data_province = province.data;
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url: "{{url('/data-province')}}",
-                    method: "POST",
-                    data: {
-                        data_province: data_province,
-                        length_province: length_province,
-                        province: province,
-                        _token: _token
-                    },
-                    success: function (data) {
-                        $('#province').html(data);
-                    }
-                });
-            }
+        var provinces = {
+            "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+            "method": "GET",
+            "timeout": 0,
+            "headers": {"token": token},
+        };
+        $.ajax(provinces).done(function (response) {
+            var data_province = response.data;
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('/data-province')}}",
+                method: "POST",
+                data: {data_province: data_province, _token: _token},
+                success: function (data) {
+                    $('#province').html(data);
+                }
+            });
         });
     }
 
@@ -140,29 +135,29 @@
         $(document).ready(function () {
             $('#province').on('change', function () {
                 var id_province = $(this).val();
-                $.ajax({
-                    url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district',
-                    method: 'GET',
-                    headers: {'token': token},
-                    data: {province_id: id_province},
-                    success: function (district) {
-                        var length_district = district.data.length;
-                        var data_district = district.data;
-                        var _token = $('input[name="_token"]').val();
-                        $.ajax({
-                            url: "{{url('/data-district')}}",
-                            method: "POST",
-                            data: {
-                                data_district: data_district,
-                                length_district: length_district,
-                                district: district,
-                                _token: _token
-                            },
-                            success: function (data) {
-                                $('#district').html(data);
-                            }
-                        });
+                var districts = {
+                    "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + id_province + "",
+                    "method": "GET",
+                    "timeout": 0,
+                    "headers": {"token": token},
+                };
+                $.ajax(districts).done(function (response) {
+                    let length_district;
+                    if (response.data.length) {
+                        length_district = response.data.length;
+                    } else {
+                        length_district = 0;
                     }
+                    var data_district = response.data;
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{url('/data-district')}}",
+                        method: "POST",
+                        data: {data_district: data_district, length_district: length_district, _token: _token},
+                        success: function (data) {
+                            $('#district').html(data);
+                        }
+                    });
                 });
             });
         });
@@ -172,43 +167,39 @@
         $(document).ready(function () {
             $('#district').on('change', function () {
                 var id_district = $(this).val();
-                $.ajax({
-                    url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward',
-                    method: 'GET',
-                    headers: {'token': token},
-                    data: {district_id: id_district},
-                    success: function (ward) {
-                        var length_ward = ward.data.length;
-                        var data_ward = ward.data;
-                        var _token = $('input[name="_token"]').val();
-                        $.ajax({
-                            url: "{{url('/data-ward')}}",
-                            method: "POST",
-                            data: {length_ward: length_ward, data_ward: data_ward, _token: _token},
-                            success: function (data) {
-                                $('#ward').html(data);
-                            }
-                        });
-                    }
+                var districts = {
+                    "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + id_district + "",
+                    "method": "GET",
+                    "timeout": 0,
+                    "headers": {"token": token},
+                };
+                $.ajax(districts).done(function (response) {
+                    var length_ward = response.data.length;
+                    var data_ward = response.data;
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{url('/data-ward')}}",
+                        method: "POST",
+                        data: {length_ward: length_ward, data_ward: data_ward, _token: _token},
+                        success: function (data) {
+                            $('#ward').html(data);
+                        }
+                    });
                 });
             });
         });
     }
 
+    //service-fee
     $('#district').on('change', function () {
         var form_district = 1450; //q8-tphcm
         var to_district = $('#district').val();
 
         var settings = {
-            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" +
-                ID_GHN + "&from_district=" +
-                form_district + "&to_district=" +
-                to_district + "",
+            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" + ID_GHN + "&from_district=" + form_district + "&to_district=" + to_district + "",
             "method": "GET",
             "timeout": 0,
-            "headers": {
-                "token": token
-            },
+            "headers": {"token": token},
         };
         $.ajax(settings).done(function (response) {
             var service_id = response['data'][0]['service_id'];
@@ -219,7 +210,7 @@
     //canc fee
     $('#ward').on('change', function () {
         var to_ward_code = $(this).val();
-        var to_district_id = $('#id_district').val();
+        var to_district_id = $('#district').val();
         var price_product = $('#product_price').val();
         var service_id = $('#fee_service').val();
         var from_district_id = 1450; //q8-tphcm
@@ -228,47 +219,46 @@
         var weight = 3000; //g
         var width = 15; //cm
 
-        var settings = {
-            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" +
-                service_id + "&insurance_value=" +
-                price_product + "&coupon=&from_district_id=" +
-                from_district_id + "&to_district_id=" +
-                to_district_id + "&to_ward_code=" +
-                to_ward_code + "&height=" +
-                height + "&length=" +
-                length + "&weight=" +
-                weight + "&width=" +
-                width + "",
+        var calculatorFee = {
+            "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" + service_id + "&insurance_value=" +
+                price_product + "&coupon=&from_district_id=" + from_district_id + "&to_district_id=" + to_district_id + "&to_ward_code=" +
+                to_ward_code + "&height=" + height + "&length=" + length + "&weight=" + weight + "&width=" + width + "",
             "method": "GET",
             "timeout": 0,
-            "headers": {
-                "token": token,
-                "shop_id": ID_GHN
-            },
+            "headers": {"token": token, "shop_id": ID_GHN},
         };
-        $.ajax(settings).done(function (response) {
+        $.ajax(calculatorFee).done(function (response) {
             var price = response['data']['total'];
             $('#fee_ship').append('<span id="fee">' + price + '</span>');
         });
-
-        $.ajax(settings).fail(function (response) {
-            $('#fee_ship').append('<span id="fee"> Free ship</span>');
+        $.ajax(calculatorFee).fail(function (response) {
+            $('#fee_ship').append('<span id="fee">Free ship</span>');
         });
     });
 
+    //reset -- luu name_address
     $(document).ready(function () {
-        $('#province').on('change', function () {
+        $('#ward').on('change', function () {
             $('#fee').remove();
+            $('#name_address').remove();
+
+            var id_province = $('#province').val();
+            var id_district = $('#district').val();
+            var id_ward = $('#ward').val();
+            var name_province = $('#id_province_'+id_province).text();
+            var name_district = $('#id_district_'+id_district).text();
+            var name_ward = $('#id_ward_'+id_ward).text();
+            $('#address').append('<input type="hidden" id="name_address" value="'+name_ward+'-'+name_district+'-'+name_province+'">');
+
         });
     });
 
+    //checkout
     $(document).ready(function () {
         $('.btn-submit').on('click', function () {
             var _token = $('input[name="_token"]').val();
             var price_ship = $('#fee').text();
-            var name_province = $('#id_province').val();
-            var name_district = $('#id_district').val();
-            var name_ward = $('#id_ward').val();
+            var name_address = $('#name_address').val();
 
             var name_nguoinhan = $('#name_nguoinhan').val();
             var phone_nguoinhan = $('#phone_nguoinhan').val();
@@ -279,14 +269,12 @@
                 url: "{{url('/confirm-order')}}",
                 method: "POST",
                 data: {
-                    name_nguoinhan:name_nguoinhan,
-                    phone_nguoinhan:phone_nguoinhan,
-                    payment_method:payment_method,
-                    note:note,
-                    name_province:name_province,
-                    name_district:name_district,
-                    name_ward:name_ward,
-                    price_ship:price_ship,
+                    name_nguoinhan: name_nguoinhan,
+                    phone_nguoinhan: phone_nguoinhan,
+                    payment_method: payment_method,
+                    note: note,
+                    name_address: name_address,
+                    price_ship: price_ship,
                     _token: _token
                 },
                 success: function (data) {

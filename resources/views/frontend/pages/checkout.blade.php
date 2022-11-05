@@ -44,6 +44,7 @@
                                 <option selected>Phường Xã</option>
                             </select>
                         </div>
+                        <span id="address"></span>
                     </div>
 
                 </div>
@@ -89,45 +90,36 @@
                                     <tbody>
                                     @foreach(Cart::content() as $content)
                                         <tr>
-                                            <td class="cart_product">
-                                                <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
-                                            </td>
-
-                                            <td class="cart_description">
-                                                <h4>{{$content->name}}</a></h4>
-                                            </td>
-
-                                            <td class="cart_price">
+                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
+                                            <td><h4>{{$content->name}}</a></h4></td>
+                                            <td>
                                                 <p>{{number_format($content->price).' '.'vnđ'}}</p>
                                                 <input type="hidden" id="product_price" value="{{$content->price}}">
                                             </td>
-
-                                            <td class="cart_quantity">{{$content->qty}}</td>
-
-                                            <td class="cart_total">
-                                                <p class="cart_total_price">
+                                            <td>{{$content->qty}}</td>
+                                            <td>
+                                                <p>
                                                     @php
                                                         $subtotal = $content->price * $content->qty;
                                                         echo number_format($subtotal).' '.'vnđ';
                                                     @endphp
                                                 </p>
                                             </td>
-
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
                         <h4 id="fee_ship">Tiền ship:</h4>
-                        <h3>Thành tiền: <span>{{Cart::total().' '.'vnđ'}}</span></h3>
+                        <h3>Thành tiền: <span>{{Cart::total().' '.'VND'}}</span></h3>
 
                     </div>
                 @else
                     <div class="container">
                         <div class="mt-3">
-                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để
-                                mua</a>
+                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để mua</a>
                         </div>
                     </div>
                 @endif

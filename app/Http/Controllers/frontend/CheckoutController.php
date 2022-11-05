@@ -23,51 +23,43 @@ class CheckoutController extends Controller
 
     public function data_province(Request $request)
     {
-        $data = $request->all();
-        $output = '<option selected >Thành Phố</option>';
-        for ($i = 0; $i < $data['length_province']; $i++) {
-            $output .= '
-            <option id="id_province" value="' . $data['data_province'][$i]['ProvinceID'] . '">
-            ' . $data['data_province'][$i]['ProvinceName'] . '
-            </option>
-            ';
+        $province = '<option selected >Thành Phố</option>';
+        // 64 tinh thanh
+        for ($i = 0; $i < 63; $i++) {
+            $province .= '<option id="id_province_' . $request['data_province'][$i]['ProvinceID'] . '" value="' . $request['data_province'][$i]['ProvinceID'] . '">
+            ' . $request['data_province'][$i]['ProvinceName'] . '</option>';
         }
-        echo $output;
+        echo $province;
     }
 
     public function data_district(Request $request)
     {
-        $data = $request->all();
-        $output = '<option selected >Quận Huyện</option>';
-        for ($i = 0; $i < $data['length_district']; $i++) {
-            $output .= '
-            <option id="id_district" value="' . $data['data_district'][$i]['DistrictID'] . '">
-            ' . $data['data_district'][$i]['DistrictName'] . '
-            </option>
-            ';
+        $length = $request['length_district'];
+
+        $district = '<option selected >Quận Huyện</option>';
+        for ($i = 0; $i < $length; $i++) {
+            $district .= '<option id="id_district_' . $request['data_district'][$i]['DistrictID'] . '" value="' . $request['data_district'][$i]['DistrictID'] . '">
+            ' . $request['data_district'][$i]['DistrictName'] . '</option>';
         }
-        echo $output;
+        echo $district;
     }
 
     public function data_ward(Request $request)
     {
-        $data = $request->all();
-        $output = '<option selected >Phường Xã</option>';
-        for ($i = 0; $i < $data['length_ward']; $i++) {
-            $output .= '
-            <option id="id_ward" value="' . $data['data_ward'][$i]['WardCode'] . '">
-            ' . $data['data_ward'][$i]['WardName'] . '
-            </option>
-            ';
+        $length = $request['length_ward'];
+
+        $ward = '<option selected >Phường Xã</option>';
+        for ($i = 0; $i < $length; $i++) {
+            $ward .= '<option id="id_ward_' . $request['data_ward'][$i]['WardCode'] . '" value="' . $request['data_ward'][$i]['WardCode'] . '">
+            ' . $request['data_ward'][$i]['WardName'] . '</option>';
         }
-        echo $output;
+        echo $ward;
     }
 
     public function confirm_order(Request $request)
     {
         $data = $request->all();
         $order_id = substr(md5(microtime()), rand(0, 26), 5);
-        $address = $data['name_province'].'-'.$data['name_district'].'-'.$data['name_ward'];
 
         //order
         $order = new Order();
@@ -80,7 +72,7 @@ class CheckoutController extends Controller
 
         $order->name_nguoinhan = $data['name_nguoinhan'] ?? Session::get('phone');
         $order->phone_nguoinhan = $data['phone_nguoinhan'] ?? Session::get('name');
-        $order->address_nguoinhan = $address ?? Session::get('address');
+        $order->address_nguoinhan = $data['name_address'] ?? Session::get('address') ?? '';
 
         $order->save();
 
@@ -96,6 +88,7 @@ class CheckoutController extends Controller
             $order_details->product_id = $cart->id;
             $order_details->save();
 
+            //tru san pham
             $product = Product::find($cart->id);
             $product->number = $product->number-$cart->qty;
             $product->save();

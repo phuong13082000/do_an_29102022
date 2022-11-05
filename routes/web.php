@@ -15,11 +15,11 @@ use App\Http\Controllers\frontend\DetailController;
 use App\Http\Controllers\frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix("admin")->group(function () {
+    Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
 
-    Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
+    Route::post('admin/postLogin', [LoginController::class, 'postLogin']);
 
-    Route::post('/postLogin', [LoginController::class, 'postLogin']);
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
     Route::get('/logout', [LoginController::class, 'getLogout'])->middleware('auth');
 
