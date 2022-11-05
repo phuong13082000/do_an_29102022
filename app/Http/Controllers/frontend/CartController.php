@@ -35,8 +35,7 @@ class CartController extends Controller
         $data['options']['image'] = $chitiet_sanpham->image;
 
         Cart::add($data);
-
-        return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
+        return redirect()->back();
     }
 
     public function delete_to_cart($rowId)

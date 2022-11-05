@@ -4,8 +4,7 @@
     @include('frontend.includes.slider')
     @include('frontend.includes.alert')
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1"
-                aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
             <span>Lọc</span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent1">
@@ -13,16 +12,14 @@
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="loaisanpham"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="loaisanpham" data-bs-toggle="dropdown" aria-expanded="false">
                             Loại sản phẩm
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="loaisanpham">
                             @foreach($list_category as $category)
                                 <li>
-                                    <a class="dropdown-item"
-                                       href="{{route('category', $category->id)}}">{{$category->title}}</a>
+                                    <a class="dropdown-item" href="{{route('category', $category->id)}}">{{$category->title}}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -31,86 +28,79 @@
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="giasanpham"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="giasanpham" data-bs-toggle="dropdown" aria-expanded="false">
                             Giá
                         </a>
-
                         <ul class="dropdown-menu" aria-labelledby="giasanpham">
-                            <li><a class="dropdown-item" href="#">Dưới 2 triệu</a></li>
-                            <li><a class="dropdown-item" href="#">Từ 2 đến 4 triệu</a></li>
-                            <li><a class="dropdown-item" href="#">Từ 4 đến 7 triệu</a></li>
-                            <li><a class="dropdown-item" href="#">Từ 7 đến 13 triệu</a></li>
-                            <li><a class="dropdown-item" href="#">Từ 13 đến 20 triệu</a></li>
-                            <li><a class="dropdown-item" href="#">Trên 20 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'duoi-2-trieu')}}">Dưới 2 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'tu-2-den-4-trieu')}}">Từ 2 đến 4 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'tu-4-den-7-trieu' )}}">Từ 4 đến 7 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'tu-7-den-13-trieu')}}">Từ 7 đến 13 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'tu-13-den-20-trieu')}}">Từ 13 đến 20 triệu</a></li>
+                            <li><a class="dropdown-item" href="{{route('price', 'tren-20-trieu')}}">Trên 20 triệu</a></li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="ram"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="ram" data-bs-toggle="dropdown" aria-expanded="false">
                             Ram
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="ram">
-                            <li><a class="dropdown-item" href="#">2 GB</a></li>
-                            <li><a class="dropdown-item" href="#">3 GB</a></li>
-                            <li><a class="dropdown-item" href="#">4 GB</a></li>
-                            <li><a class="dropdown-item" href="#">6 GB</a></li>
-                            <li><a class="dropdown-item" href="#">8 GB</a></li>
-                            <li><a class="dropdown-item" href="#">12 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '2-gb')}}">2 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '3-gb')}}">3 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '4-gb')}}">4 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '6-gb')}}">6 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '8-gb')}}">8 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('ram', '12-gb')}}">12 GB</a></li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dungluong"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dungluong" data-bs-toggle="dropdown" aria-expanded="false">
                             Dung Lượng Lưu Trữ
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dungluong">
-                            <li><a class="dropdown-item" href="#">32 GB</a></li>
-                            <li><a class="dropdown-item" href="#">64 GB</a></li>
-                            <li><a class="dropdown-item" href="#">128 GB</a></li>
-                            <li><a class="dropdown-item" href="#">256 GB</a></li>
-                            <li><a class="dropdown-item" href="#">512 GB</a></li>
-                            <li><a class="dropdown-item" href="#">1 TB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '32-gb')}}">32 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '64-gb')}}">64 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '128-gb')}}">128 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '256-gb')}}">256 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '512-gb')}}">512 GB</a></li>
+                            <li><a class="dropdown-item" href="{{route('dung-luong', '1-tb')}}">1 TB</a></li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="pinsac"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="pinsac" data-bs-toggle="dropdown" aria-expanded="false">
                             Pin & Sạc
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="pinsac">
-                            <li><a class="dropdown-item" href="#">Pin khủng trên 5000mAh</a></li>
-                            <li><a class="dropdown-item" href="#">Sạc nhanh trên 18w</a></li>
-                            <li><a class="dropdown-item" href="#">Sạc siêu nhanh trên 33w</a></li>
-                            <li><a class="dropdown-item" href="#">Sạc không dây</a></li>
+                            <li><a class="dropdown-item" href="{{route('pin-sac', 'pin-khung-tren-5000-mah')}}">Pin khủng trên 5000mAh</a></li>
+                            <li><a class="dropdown-item" href="{{route('pin-sac', 'sac-nhanh-tren-20w')}}">Sạc nhanh trên 20w</a></li>
+                            <li><a class="dropdown-item" href="{{route('pin-sac', 'sac-khong-day')}}">Sạc không dây</a></li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item pe-3">
                     <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="tinhnang"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="tinhnang" data-bs-toggle="dropdown" aria-expanded="false">
                             Tính Năng Đặc Biệt
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="tinhnang">
-                            <li><a class="dropdown-item" href="#">Kháng nước, bụi</a></li>
-                            <li><a class="dropdown-item" href="#">Hỗ trợ 5G</a></li>
-                            <li><a class="dropdown-item" href="#">Bảo mật khuôn mặt 3D</a></li>
-                            <li><a class="dropdown-item" href="#">Chống rung quang học</a></li>
+                            <li><a class="dropdown-item" href="{{route('tinh-nang', 'khang-nuoc-bui')}}">Kháng nước, bụi</a></li>
+                            <li><a class="dropdown-item" href="{{route('tinh-nang', 'ho-tro-5g')}}">Hỗ trợ 5G</a></li>
+                            <li><a class="dropdown-item" href="{{route('tinh-nang', 'bao-mat-khuon-mat-3d')}}">Bảo mật khuôn mặt 3D</a></li>
+                            <li><a class="dropdown-item" href="{{route('tinh-nang', 'chong-rung-quang-hoc')}}">Chống rung quang học</a></li>
                         </ul>
                     </div>
                 </li>
@@ -121,11 +111,10 @@
 
     <div class="mt-3 btn-group">
         <label>Chọn điện thoại theo nhu cầu: <br>
-            <button type="button" class="btn btn-default border-dark">Chơi game Cấu hình cao</button>
-            <button type="button" class="btn btn-default border-dark">Chụp ảnh Quay phim</button>
-            <button type="button" class="btn btn-default border-dark">Mỏng nhẹ</button>
-            <button type="button" class="btn btn-default border-dark">Nhỏ gọn dễ cầm</button>
-        </label>
+            @foreach($list_category as $category)
+                <a type="button" href="{{route('category', $category->id)}}" class="btn btn-default border-dark">{{$category->title}}</a>
+            @endforeach
+         </label>
     </div>
 
     <div class="mt-3">

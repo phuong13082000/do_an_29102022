@@ -5,7 +5,7 @@
     <div class="mt-3">
         <div class="new-item">
             <div class="row">
-                <h2 class="text-center mb-3">Brand</h2>
+                <h2 class="text-center mb-3">{{$title}}</h2>
                 @foreach($list_product as $product)
                     @php
                         $gia = number_format($product->price, 0, '', ',');
@@ -32,7 +32,13 @@
                                 <p class="card-text">
 
                                 </p>
-                                <a href="{{route('detail',$product->id)}}" class="btn btn-default border-dark">Detail</a>
+                                {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
+                                {{--soluong--}}
+                                <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
+                                {!! Form::hidden('productid_hidden', $product->id) !!}
+                                <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Detail</a>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>

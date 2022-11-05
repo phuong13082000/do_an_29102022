@@ -1,9 +1,7 @@
 @extends('layout.admin')
 
 @section('content')
-    <div class="mt-3">
-        Thông tin đăng nhập
-    </div>
+    <div class="mt-3">Thông tin đăng nhập</div>
 
     <div class="table-responsive">
         <table class="table table-striped b-t b-light">
@@ -30,9 +28,7 @@
     <br>
     <div class="table-agile-info">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Thông tin vận chuyển hàng
-            </div>
+            <div class="panel-heading">Thông tin vận chuyển hàng</div>
 
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
@@ -53,23 +49,19 @@
                         <td>{{$order->address_nguoinhan}}</td>
                         <td>{{$order->phone_nguoinhan}}</td>
                         <td>{{$order->note}}</td>
-                        <td>{{$order->price_ship}}</td>
+                        <td>{{number_format($order->price_ship ,0,',','.')}}đ</td>
                         <td>{{$order->payment_method}}</td>
                     </tr>
                     </tbody>
                 </table>
-
             </div>
-
         </div>
     </div>
     <br><br>
 
     <div class="table-agile-info">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Liệt kê chi tiết đơn hàng
-            </div>
+            <div class="panel-heading">Liệt kê chi tiết đơn hàng</div>
 
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
@@ -80,7 +72,6 @@
                         <th>Số lượng</th>
                         <th>Giá sản phẩm</th>
                         <th>Tổng tiền</th>
-
                         <th style="width:30px;"></th>
                     </tr>
                     </thead>
@@ -107,10 +98,10 @@
                         <td colspan="2">
                             @php
                                 $total_coupon = 0;
-                                $total_coupon = $total + 50000 ;
+                                $total_coupon = $total + $order->price_ship ;
                             @endphp
                             Tổng : {{number_format($total,0,',','.')}}đ <br>
-                            Phí ship : 50.000đ <br>
+                            Phí ship : {{number_format($order->price_ship,0,',','.')}}đ <br>
                             Thanh toán: {{number_format($total_coupon,0,',','.')}}đ
                         </td>
                     </tr>
@@ -157,14 +148,10 @@
                     </tr>
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#don-hang"> Xem trước bản
-                    in
-                </button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#don-hang"> Xem trước bản in</button>
             </div>
-
         </div>
     </div>
-
 
     <div class="modal fade bd-example-modal-lg" id="don-hang" tabindex="-1" aria-labelledby="modallable"
          aria-hidden="true">

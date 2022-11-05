@@ -61,6 +61,20 @@ Route::get('/brand/{id}', [IndexController::class, 'brand'])->name('brand');
 
 Route::get('/category/{id}', [IndexController::class, 'category'])->name('category');
 
+Route::get('/price/{value}', [IndexController::class, 'price'])->name('price');
+
+Route::get('/ram/{value}', [IndexController::class, 'ram'])->name('ram');
+
+Route::get('/dung-luong/{value}', [IndexController::class, 'dung_luong'])->name('dung-luong');
+
+Route::get('/pin-sac/{value}', [IndexController::class, 'pin_sac'])->name('pin-sac');
+
+Route::get('/tinh-nang/{value}', [IndexController::class, 'tinh_nang'])->name('tinh-nang');
+
+Route::post('/search', [IndexController::class, 'search'])->name('search');
+
+Route::post('/search-ajax', [IndexController::class, 'search_ajax']);
+
 //Cart
 Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
 
@@ -95,7 +109,9 @@ Route::get('/checkout', [CheckoutController::class, 'checkout']);
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
 
 Route::post('/data-province', [CheckoutController::class, 'data_province']);
+
 Route::post('/data-district', [CheckoutController::class, 'data_district']);
+
 Route::post('/data-ward', [CheckoutController::class, 'data_ward']);
 
 //comment
