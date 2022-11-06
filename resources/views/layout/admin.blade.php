@@ -174,12 +174,13 @@
 <script type="text/javascript">
     $('.order_details').change(function () {
         var id = $('input[name="id_order"]').val();
+        var id_product = $('input[name="id_product"]').val();
         var status = $(this).find(':selected').val();
         var _token = $('input[name="_token"]').val();
         $.ajax({
             url: "{{url('admin/update-status-order')}}",
             method: "POST",
-            data: {id: id, status: status, _token: _token},
+            data: {id: id, id_product:id_product, status: status, _token: _token},
             success: function (data) {
                 alert(data.message);
                 window.location.href = "{{url('admin/order')}}";

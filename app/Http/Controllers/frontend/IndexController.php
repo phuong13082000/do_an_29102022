@@ -14,14 +14,14 @@ class IndexController extends Controller
     public function index()
     {
         $title = 'HomePage';
-        $list_brand = Brand::take(5)->get();
-        $list_category = Category::all();
-        $list_product_new = Product::orderBy('created_at', 'DESC')->take(4)->get();
-        $list_product_sale = Product::where('price_sale', '!=', '0')->orderBy('price_sale', 'ASC')->take(4)->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_category = Category::where('status', 0)->get();
+        $list_product_new = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
+        $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
         $list_recommend = Product::orderBy('updated_at', 'DESC')->take(10)->get();
 
-        $first_slider = Slider::orderBy('id', 'ASC')->first();
-        $list_slider = Slider::where('id', '>', $first_slider->id)->take(2)->get();
+        $first_slider = Slider::where('status', 0)->orderBy('id', 'ASC')->first();
+        $list_slider = Slider::where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
 
         return view('frontend.pages.index')
             ->with(compact('title', 'list_brand', 'list_product_new', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));

@@ -28,6 +28,14 @@ class CustomerController extends Controller
         return view('frontend.pages.login')->with(compact('title', 'list_brand'));
     }
 
+    public function dangki()
+    {
+        $title = 'Register';
+        $list_brand = Brand::take(5)->get();
+
+        return view('frontend.pages.register')->with(compact('title', 'list_brand'));
+    }
+
     public function login_customer(Request $request)
     {
         $customer = Customer::where('email', $request->email_login)->first();
@@ -105,10 +113,10 @@ class CustomerController extends Controller
             $this->createUserFacebook($provider);
         }
 
-        $account_name = Customer::where('id', $account->id)->first();
+        $account_name = Customer::where('facebook_id', $account->id)->first();
 
         Session::put('id', $account_name->id);
-        Session::put('name', $account_name->name);
+        Session::put('name', $account_name->fullname);
         return redirect('/')->with('message', 'Đăng nhập thành công');
     }
 
@@ -139,10 +147,10 @@ class CustomerController extends Controller
         if (!$account) {
             $this->createUserGoogle($provider);
         }
-        $account_name = Customer::where('id', $account->id)->first();
+        $account_name = Customer::where('google_id', $account->id)->first();
 
         Session::put('id', $account_name->id);
-        Session::put('name', $account_name->name);
+        Session::put('name', $account_name->fullname);
         return redirect('/')->with('message', 'Đăng nhập thành công');
     }
 

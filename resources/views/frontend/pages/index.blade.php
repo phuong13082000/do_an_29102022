@@ -120,7 +120,7 @@
     <div class="mt-3">
         <div class="new-item">
             <div class="row">
-                <h2 class="text-center mb-3">New Items</h2>
+                <h2 class="text-center mb-3">New Product</h2>
                 @foreach($list_product_new as $product_new)
                     @php
                         $gia = number_format($product_new->price, 0, '', ',');
@@ -165,7 +165,7 @@
 
         <div class="sell-item">
             <div class="row">
-                <h2 class="text-center mb-3">Top Sell Items</h2>
+                <h2 class="text-center mb-3">Top Sell Product</h2>
                 @foreach($list_product_sale as $product_sale)
                     @php
                         $gia = number_format($product_sale->price, 0, '', ',');

@@ -22,7 +22,10 @@
             @endphp
             @if (!$id)
                 <div class="nav-item justify-content-end">
-                    <a class="nav-link" href="{{ url('dang-nhap') }}">Login</a>
+                    <a class="nav-link text-white" href="{{ url('dang-nhap') }}">Login</a>
+                </div>
+                <div class="nav-item justify-content-end">
+                    <a class="nav-link text-white" href="{{ url('dang-ki') }}">Register</a>
                 </div>
             @else
                 <div class="nav-item dropdown justify-content-end">

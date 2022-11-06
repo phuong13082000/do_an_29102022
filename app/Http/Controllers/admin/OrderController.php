@@ -39,8 +39,9 @@ class OrderController extends Controller
         $data = $request->all();
         $id = $data['id'];
         $status = $data['status'];
-
+        //$id_product = $data['id_product'];
         $order = Order::find($id);
+
         if ($status > $order->status) {
             $order->status = $status;
             $order->save();

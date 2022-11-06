@@ -11,6 +11,8 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                         <h6 class="text-uppercase mb-4 font-weight-bold">Thông tin về chúng tôi</h6>
                         <p>Chuyên kinh doanh điện thoại di động.</p>
+                        <p>Địa chỉ: Quận 8 - Thành phố Hồ Chí Minh</p>
+                        <input type="hidden" id="footer_id_address" value=1450>
                     </div>
                     <!-- Grid column -->
 

@@ -91,6 +91,8 @@ Route::post('/add-customer', [CustomerController::class, 'add_customer']);
 
 Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 
+Route::get('/dang-ki', [CustomerController::class, 'dangki']);
+
 Route::post('/dang-xuat', [CustomerController::class, 'logout']);
 
 //facebook
@@ -107,12 +109,6 @@ Route::post('/google-callback', [CustomerController::class, 'callback_google']);
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
-
-Route::post('/data-province', [CheckoutController::class, 'data_province']);
-
-Route::post('/data-district', [CheckoutController::class, 'data_district']);
-
-Route::post('/data-ward', [CheckoutController::class, 'data_ward']);
 
 //comment
 Route::post('/load-comment', [CommentController::class, 'load_comment']);

@@ -35,13 +35,11 @@
 
                         <div class="col-sm-4">
                             <select id='district' class="form-control">
-                                <option selected>Quận Huyện</option>
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='ward' class="form-control">
-                                <option selected>Phường Xã</option>
                             </select>
                         </div>
                         <span id="address"></span>
@@ -112,8 +110,8 @@
                             </div>
                         </div>
 
-                        <h4 id="fee_ship">Tiền ship:</h4>
-                        <h3>Thành tiền: <span>{{Cart::total().' '.'VND'}}</span></h3>
+                        <div id="fee_ship_hidden"></div>
+                        <h3>Thành tiền :<span>{{Cart::total().' '.'VND'}}</span></h3> + <h3 id="fee_ship">Tiền ship :</h3>
 
                     </div>
                 @else

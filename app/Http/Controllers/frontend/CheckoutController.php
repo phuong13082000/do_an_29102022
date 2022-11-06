@@ -21,41 +21,6 @@ class CheckoutController extends Controller
         return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
     }
 
-    public function data_province(Request $request)
-    {
-        $province = '<option selected >Thành Phố</option>';
-        // 64 tinh thanh
-        for ($i = 0; $i < 63; $i++) {
-            $province .= '<option id="id_province_' . $request['data_province'][$i]['ProvinceID'] . '" value="' . $request['data_province'][$i]['ProvinceID'] . '">
-            ' . $request['data_province'][$i]['ProvinceName'] . '</option>';
-        }
-        echo $province;
-    }
-
-    public function data_district(Request $request)
-    {
-        $length = $request['length_district'];
-
-        $district = '<option selected >Quận Huyện</option>';
-        for ($i = 0; $i < $length; $i++) {
-            $district .= '<option id="id_district_' . $request['data_district'][$i]['DistrictID'] . '" value="' . $request['data_district'][$i]['DistrictID'] . '">
-            ' . $request['data_district'][$i]['DistrictName'] . '</option>';
-        }
-        echo $district;
-    }
-
-    public function data_ward(Request $request)
-    {
-        $length = $request['length_ward'];
-
-        $ward = '<option selected >Phường Xã</option>';
-        for ($i = 0; $i < $length; $i++) {
-            $ward .= '<option id="id_ward_' . $request['data_ward'][$i]['WardCode'] . '" value="' . $request['data_ward'][$i]['WardCode'] . '">
-            ' . $request['data_ward'][$i]['WardName'] . '</option>';
-        }
-        echo $ward;
-    }
-
     public function confirm_order(Request $request)
     {
         $data = $request->all();
