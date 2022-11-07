@@ -57,9 +57,6 @@ $('.owl-carousel').owlCarousel({
 
 <!--script-diachi-->
 function load_province() {
-    $('#district').html('<option selected>Quận Huyện</option>');
-    $('#ward').html('<option selected>Phường Xã</option>');
-
     var provinces = {
         "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
         "method": "GET",
@@ -78,7 +75,7 @@ function load_province() {
 //load-district
 $(document).ready(function () {
     $('#province').on('change', function () {
-        var id_province = $(this).val();
+        var id_province = $(this).find(":selected").val();
         var districts = {
             "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + id_province + "",
             "method": "GET",
@@ -98,7 +95,7 @@ $(document).ready(function () {
 //load-ward
 $(document).ready(function () {
     $('#district').on('change', function () {
-        var id_district = $(this).val();
+        var id_district = $(this).find(":selected").val();
         var wards = {
             "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + id_district + "",
             "method": "GET",
@@ -150,14 +147,20 @@ $('#ward').on('change', function () {
         var fee = response['data']['total'];
         $('#fee_ship').append('<span id="fees">' + fee + ' VND</span>');
         $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
+
+        var total = $('#total_hidden').val();
+        var can_total = Number(total) + Number(fee);
+        $('#total').append('<span id="total_span">' + can_total + ' VND</span>');
+
     });
     $.ajax(calculatorFee).fail(function (response) {
-        $('#fee_ship').append('<span id="fees">0</span>');
+        $('#fee_ship').append('<span id="fees">0 VND</span>');
         $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value=0>');
     });
 
 //reset -- luu name_address
     $('#fees').remove();
+    $('#total_span').remove();
     $('#name_address').remove();
 
     var id_province = $('#province').val();
@@ -300,7 +303,38 @@ $(function () {
         },
         messages: {
             email: {
-                email: "<div style='color: red;'>Wrong format email",
+                email: "<div style='color: red;'>Wrong format email</div>",
+            },
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            error.insertAfter(element);
+        },
+        highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
+    });
+});
+
+<!--validate-checkout-->
+$(function () {
+    $("#form_checkout").validate({
+        rules: {
+            phone_nguoinhan: {
+                number: true,
+                minlength: 10,
+                maxlength: 10
+            },
+        },
+        messages: {
+            phone_nguoinhan: {
+                number: "<div style='color: red;'>Please enter some number</div>",
+                minlength: "<div style='color: red;'>Wrong fotmat</div>",
+                maxlength: "<div style='color: red;'>Wrong fotmat</div>",
             },
         },
         errorElement: "div",
@@ -318,3 +352,40 @@ $(function () {
 });
 
 
+//update-profile
+$(document).ready(function () {
+    $("#profile_setup_frm").submit(function (e) {
+        e.preventDefault();
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var address = $('#address').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#btn").attr("disabled", true);
+        $("#btn").html("Updating...");
+        $.ajax({
+            url: "/update-profile",
+            method: "POST",
+            data: {name:name, email:email, phone:phone, address:address},
+            success: function (response) {
+                if (response.code == 400) {
+                    let error = '<span class="alert alert-danger">' + response.msg + '</span>';
+                    $("#res").html(error);
+                    $("#btn").attr("disabled", false);
+                    $("#btn").html("Save Profile");
+                } else if (response.code == 200) {
+                    let success = '<span class="alert alert-success">' + response.msg + '</span>';
+                    $("#res").html(success);
+                    $("#btn").attr("disabled", false);
+                    $("#btn").html("Save Profile");
+
+                }
+            }
+        });
+    });
+});

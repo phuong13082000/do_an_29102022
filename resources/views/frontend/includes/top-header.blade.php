@@ -32,7 +32,7 @@
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Session::get('name') }}</a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#" >Profile</a>
+                        <a class="dropdown-item" href="{{url('profile')}}" >Profile</a>
                         <a class="dropdown-item" href="{{ url('dang-xuat') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ url('dang-xuat') }}" method="POST" class="d-none">
                             @csrf

@@ -5,22 +5,18 @@
     <div class="mt-3">
         <div class="row">
             <div class="col-sm-6">
-                {!! Form::open(['url'=>'#']) !!}
+                {!! Form::open(['url'=>'#', 'id'=>'form_checkout']) !!}
 
                 <h3>Thông tin nhận hàng</h3>
                 <hr>
-                <div class="mb-3">
-                    <div class="form-group">
-                        {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
-                        {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan']) !!}
-                    </div>
+                <div class="form-floating mb-4">
+                    {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
+                    {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
                 </div>
 
-                <div class="mb-3">
-                    <div class="form-group">
-                        {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
-                        {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan']) !!}
-                    </div>
+                <div class="form-floating mb-4">
+                    {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan', 'placeholder'=>'Số điện thoại nhận hàng']) !!}
+                    {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
                 </div>
 
                 <div class="mb-3">
@@ -35,11 +31,13 @@
 
                         <div class="col-sm-4">
                             <select id='district' class="form-control">
+                                <option selected>Quận Huyện</option>
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='ward' class="form-control">
+                                <option selected>Phường Xã</option>
                             </select>
                         </div>
                         <span id="address"></span>
@@ -109,10 +107,10 @@
                                 </table>
                             </div>
                         </div>
-
+                        <h4 id="fee_ship">Tiền ship :</h4>
                         <div id="fee_ship_hidden"></div>
-                        <h3>Thành tiền :<span>{{Cart::total().' '.'VND'}}</span></h3> + <h3 id="fee_ship">Tiền ship :</h3>
-
+                        <h4 id="total">Thành tiền :</h4>{{--<span>{{Cart::total().' '.'VND'}}</span>--}}
+                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}">
                     </div>
                 @else
                     <div class="container">

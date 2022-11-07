@@ -8,10 +8,12 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
+    //admin
     public function show_customer()
     {
         $title = 'Customer';
@@ -20,6 +22,7 @@ class CustomerController extends Controller
         return view('admin.pages.customer.index')->with(compact('title', 'list_Customer'));
     }
 
+    //user
     public function dangnhap()
     {
         $title = 'Login';
@@ -34,6 +37,45 @@ class CustomerController extends Controller
         $list_brand = Brand::take(5)->get();
 
         return view('frontend.pages.register')->with(compact('title', 'list_brand'));
+    }
+
+    public function profile()
+    {
+        $title = 'Profile';
+        $list_brand = Brand::take(5)->get();
+
+        $customer = Customer::find(Session::get('id'));
+
+        return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer'));
+    }
+
+    public function update_profile(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'name' => ['max:255'],
+            'phone' => ['max:11'],
+            'address' => ['string', 'max:255'],
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['code' => 400, 'msg' => $validated->errors()->first()]);
+        }
+
+        $customer = Customer::find(Session::get('id'));
+        $customer->fullname = $request['name'];
+        $customer->phone = $request['phone'];
+        $customer->email = $request['email'];
+        $customer->address = $request['address'];
+        $customer->save();
+
+        $user = Customer::where('email', $request['email'])->first();
+
+        Session::put('id', $user->id);
+        Session::put('name', $user->fullname);
+        Session::put('email', $user->email);
+        Session::put('phone', $user->phone);
+        Session::put('address', $user->address);
+        return response()->json(['code' => 200, 'msg' => 'Profile updated successfully.']);
     }
 
     public function login_customer(Request $request)
@@ -69,7 +111,7 @@ class CustomerController extends Controller
         $user = Customer::where('email', $data['email'])->first();
 
         Session::put('id', $user->id);
-        Session::put('name', $user->name);
+        Session::put('name', $user->fullname);
         Session::put('email', $user->email);
         Session::put('phone', $user->phone);
 
@@ -113,7 +155,7 @@ class CustomerController extends Controller
             $this->createUserFacebook($provider);
         }
 
-        $account_name = Customer::where('facebook_id', $account->id)->first();
+        $account_name = Customer::where('facebook_id', $account->facebook_id)->first();
 
         Session::put('id', $account_name->id);
         Session::put('name', $account_name->fullname);
@@ -142,7 +184,7 @@ class CustomerController extends Controller
     public function callback_google()
     {
         $provider = Socialite::driver('google')->stateless()->user();
-        $account = Customer::where('provider', 'google')->where('facebook_id', $provider->getId())->first();
+        $account = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
 
         if (!$account) {
             $this->createUserGoogle($provider);

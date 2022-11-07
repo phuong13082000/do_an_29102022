@@ -68,6 +68,7 @@ Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
 
 Route::get('/brand/{id}', [IndexController::class, 'brand'])->name('brand');
 
+//search
 Route::get('/category/{id}', [IndexController::class, 'category'])->name('category');
 
 Route::get('/price/{value}', [IndexController::class, 'price'])->name('price');
@@ -103,6 +104,10 @@ Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 Route::get('/dang-ki', [CustomerController::class, 'dangki']);
 
 Route::post('/dang-xuat', [CustomerController::class, 'logout']);
+
+Route::get('/profile', [CustomerController::class, 'profile']);
+
+Route::post('/update-profile', [CustomerController::class, 'update_profile']);
 
 //facebook
 Route::get('/login-facebook', [CustomerController::class, 'login_facebook']);
