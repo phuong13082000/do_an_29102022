@@ -55,7 +55,6 @@ $('.owl-carousel').owlCarousel({
     }
 });
 
-
 <!--script-diachi-->
 function load_province() {
     $('#district').html('<option selected>Quận Huyện</option>');
@@ -317,3 +316,5 @@ $(function () {
         }
     });
 });
+
+

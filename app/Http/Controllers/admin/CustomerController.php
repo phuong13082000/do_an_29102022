@@ -49,7 +49,7 @@ class CustomerController extends Controller
             Session::put('address', $customer->address);
             Session::put('phone', $customer->phone);
 
-            return redirect('/show-cart')->with('success', 'Đăng nhập thành công');
+            return redirect('/')->with('success', 'Đăng nhập thành công');
         } else {
             return redirect('/dang-nhap')->with('error', 'Đăng nhập không thành công');
         }

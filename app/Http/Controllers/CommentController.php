@@ -61,7 +61,7 @@ class CommentController extends Controller
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '</h5>
+                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '<span style="float:right; font-size: 13px">'.$comm->created_at.'</span></h5>
                                 <p class="card-text">' . $comm->title . '</p>
                             </div>
                         </div>
@@ -77,7 +77,7 @@ class CommentController extends Controller
                             <div class="col-md-12 ">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: green">@Admin</h5>
+                                        <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">'.$comm->created_at.'</span></h5>
                                         <p class="card-text">' . $comm_rep->title . '</p >
                                     </div >
                                 </div>

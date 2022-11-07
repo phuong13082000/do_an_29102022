@@ -11,12 +11,16 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $title = 'HomePage';
+        $meta_desc = "Chuyên bán điện thoại di động";
+        $meta_keywords = "dien thoai di dong, điện thoại di động giá rẻ, điện thoại mới";
+        $title = "Điện thoại di động";
+        $url_canonical = $request->url();
+
         $list_brand = Brand::where('status', 0)->take(5)->get();
         $list_category = Category::where('status', 0)->get();
-        $list_product_new = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
+        $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
         $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
         $list_recommend = Product::orderBy('updated_at', 'DESC')->take(10)->get();
 
@@ -24,7 +28,7 @@ class IndexController extends Controller
         $list_slider = Slider::where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
 
         return view('frontend.pages.index')
-            ->with(compact('title', 'list_brand', 'list_product_new', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
+            ->with(compact('title', 'meta_keywords', 'meta_desc', 'url_canonical', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
     }
 
     public function brand($id)
@@ -55,32 +59,22 @@ class IndexController extends Controller
 
         if ($value == 'duoi-2-trieu') {
             $title = 'Điện thoại dưới 2 triệu';
-            $price_s = 2000000;
-            $list_product = Product::where('price', '<', $price_s)->get();
+            $list_product = Product::where('price', '<', 2000000)->get();
         } elseif ($value == 'tu-2-den-4-trieu') {
             $title = 'Điện thoại từ 2 đến 4 triệu';
-            $price_s = 2000000;
-            $price_e = 4000000;
-            $list_product = Product::where('price', '>=', $price_s)->where('price', '<=', $price_e)->get();
+            $list_product = Product::where('price', '>=', 2000000)->where('price', '<=', 4000000)->get();
         } elseif ($value == 'tu-4-den-7-trieu') {
             $title = 'Điện thoại từ 4 đến 7 triệu';
-            $price_s = 4000000;
-            $price_e = 7000000;
-            $list_product = Product::where('price', '>=', $price_s)->where('price', '<=', $price_e)->get();
+            $list_product = Product::where('price', '>=', 4000000)->where('price', '<=', 7000000)->get();
         } elseif ($value == 'tu-7-den-13-trieu') {
             $title = 'Điện thoại từ 7 đến 13 triệu';
-            $price_s = 7000000;
-            $price_e = 13000000;
-            $list_product = Product::where('price', '>=', $price_s)->where('price', '<=', $price_e)->get();
+            $list_product = Product::where('price', '>=', 7000000)->where('price', '<=', 13000000)->get();
         } elseif ($value == 'tu-13-den-20-trieu') {
             $title = 'Điện thoại từ 13 đến 20 triệu';
-            $price_s = 13000000;
-            $price_e = 20000000;
-            $list_product = Product::where('price', '>=', $price_s)->where('price', '<=', $price_e)->get();
+            $list_product = Product::where('price', '>=', 13000000)->where('price', '<=', 20000000)->get();
         } else {
             $title = 'Điện thoại trên 20 triệu';
-            $price_s = 20000000;
-            $list_product = Product::where('price', '>', $price_s)->get();
+            $list_product = Product::where('price', '>', 20000000)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));

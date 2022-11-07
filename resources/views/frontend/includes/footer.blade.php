@@ -69,18 +69,6 @@
                     </div>
                     <!-- Grid column -->
 
-                    <!-- Grid column -->
-                    <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                        <!-- Facebook -->
-                        <a class="btn btn-outline-light btn-floating m-1 text-white" role="button"><i class="fa fa-facebook-f"></i></a>
-                        <!-- Twitter -->
-                        <a class="btn btn-outline-light btn-floating m-1 text-white" role="button"><i class="fa fa-twitter"></i></a>
-                        <!-- Google -->
-                        <a class="btn btn-outline-light btn-floating m-1 text-white" role="button"><i class="fa fa-google"></i></a>
-                        <!-- Instagram -->
-                        <a class="btn btn-outline-light btn-floating m-1 text-white" role="button"><i class="fa fa-instagram"></i></a>
-                    </div>
-                    <!-- Grid column -->
                 </div>
             </section>
             <!-- Section: Copyright -->

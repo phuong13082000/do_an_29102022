@@ -19,10 +19,13 @@
     <div class="login-logo">
         <a href="#"><b>Admin</b>Login</a>
     </div>
+
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <form action="{{ url('admin/postLogin') }}" method="POST">
+            <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+
+            <form action="{{url('admin/recover-password')}}" method="post">
                 @csrf
                 @if (session('error'))
                     <div class="alert alert-danger" role="alert">
@@ -30,35 +33,24 @@
                     </div>
                 @endif
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
                 </div>
-
-                <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="mb-1">
-                    <a href="{{url('admin/quen-mat-khau')}}">I forgot my password</a>
-                </p>
-
                 <div class="row">
-                    <!-- /.col -->
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block">Request new password</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
+
+            <p class="mt-3 mb-1">
+                <a href="{{url('admin/login')}}">Login</a>
+            </p>
 
         </div>
         <!-- /.login-card-body -->

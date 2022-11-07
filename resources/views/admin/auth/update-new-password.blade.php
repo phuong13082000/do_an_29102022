@@ -19,47 +19,53 @@
     <div class="login-logo">
         <a href="#"><b>Admin</b>Login</a>
     </div>
+
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <form action="{{ url('admin/postLogin') }}" method="POST">
+            <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
+
+            <form action="{{url('admin/reset-new-password')}}" method="post">
                 @csrf
                 @if (session('error'))
                     <div class="alert alert-danger" role="alert">
                         {{ session('error') }}
                     </div>
                 @endif
-                <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
+                @php
+                    $token = $_GET['token'];
+                    $email = $_GET['email'];
+                @endphp
+                <input type="hidden" name="email" value="{{$email}}">
+                <input type="hidden" name="token" value="{{$token}}">
 
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
                 </div>
-
-                <p class="mb-1">
-                    <a href="{{url('admin/quen-mat-khau')}}">I forgot my password</a>
-                </p>
-
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Confirm Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
-                    <!-- /.col -->
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block">Change password</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
+            <p class="mt-3 mb-1">
+                <a href="{{url('admin/login')}}">Login</a>
+            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

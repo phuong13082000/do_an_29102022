@@ -13,11 +13,20 @@ use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\CheckoutController;
 use App\Http\Controllers\frontend\DetailController;
 use App\Http\Controllers\frontend\IndexController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
-    Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
+Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
 
-    Route::post('admin/postLogin', [LoginController::class, 'postLogin']);
+Route::post('admin/postLogin', [LoginController::class, 'postLogin']);
+
+Route::get('admin/quen-mat-khau', [MailController::class, 'admin_forget_password']);
+
+Route::post('admin/recover-password', [MailController::class, 'admin_recover_password']);
+
+Route::get('admin/update-new-password', [MailController::class, 'admin_update_new_password']);
+
+Route::post('admin/reset-new-password', [MailController::class, 'admin_reset_new_password']);
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
