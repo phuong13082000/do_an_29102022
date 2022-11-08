@@ -192,7 +192,7 @@
         $.ajax({
             url: "{{url('admin/update-status-order')}}",
             method: "POST",
-            data: {id: id, id_product:id_product, status: status, _token: _token},
+            data: {id: id, id_product: id_product, status: status, _token: _token},
             success: function (data) {
                 alert(data.message);
                 window.location.href = "{{url('admin/order')}}";
@@ -237,6 +237,108 @@
         });
     });
 
+</script>
+
+<!--gallery-->
+<script type="text/javascript">
+    load_gallery();
+
+    function load_gallery() {
+        var pro_id = $('#id_product').val();
+        $.ajax({
+            url: "{{url('admin/select-gallery')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {pro_id: pro_id},
+            success: function (data) {
+                $('#gallery_load').html(data);
+            }
+        });
+    }
+
+    $('#file').change(function () {
+        var error = '';
+        var files = $('#file')[0].files;
+        if (files.length > 5) {
+            error += '<p>Max 5 Image</p>';
+        } else if (files.length == '') {
+            error += '<p>No Image</p>';
+        } else if (files.size > 2000000) {
+            error += '<p>Max 2 MB</p>';
+        }
+        if (error == '') {
+
+        } else {
+            $('#file').val('');
+            $('#error_gallery').html('<span class="text-danger">' + error + '</span>');
+            return false;
+        }
+    });
+
+    $(document).on('blur', '.edit_gall_name', function () {
+        var gall_id = $(this).data('gall_id');
+        var gall_text = $(this).text()
+        $.ajax({
+            url: "{{url('admin/update-gallery-name')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {gall_id: gall_id, gall_text: gall_text},
+            success: function (data) {
+                $('#gallery_load').html(data);
+                load_gallery();
+                $('#error_gallery').html('<span class="text-danger">Cập nhật tên hình ảnh thành công</span>');
+            }
+        });
+    });
+
+    $(document).on('click', '.delete_gall', function () {
+        var gall_id = $(this).data('gall_id');
+        if (confirm('Bạn muốn xóa hình ảnh này không?')) {
+            $.ajax({
+                url: "{{url('admin/delete-gallery')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {gall_id: gall_id},
+                success: function (data) {
+                    $('#gallery_load').html(data);
+                    load_gallery();
+                    $('#error_gallery').html('<span class="text-danger">Xóa hình ảnh thành công</span>');
+                }
+            });
+        }
+    });
+
+    $(document).on('change', '.file_image', function () {
+        var gall_id = $(this).data('gall_id');
+        var image = document.getElementById('file-'+gall_id).files[0];
+
+        var form_data = new FormData();
+        form_data.append("file", image);
+        form_data.append("gall_id", gall_id);
+
+        $.ajax({
+            url: "{{url('admin/update-gallery')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            contentType:false,
+            cache:false,
+            processData:false,
+            success: function (data) {
+                $('#gallery_load').html(data);
+                load_gallery();
+                $('#error_gallery').html('<span class="text-danger">Cập nhật hình ảnh thành công</span>');
+            }
+        });
+    });
 </script>
 
 </body>

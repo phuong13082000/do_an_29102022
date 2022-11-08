@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -15,14 +16,18 @@ class OrderController extends Controller
     {
         $title = 'Order';
         $orders = Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.order.index')->with(compact('title', 'orders'));
+        return view('admin.pages.order.index')->with(compact('title', 'orders', 'count_message', 'messages'));
     }
 
     public function view_order_detail($id)
     {
         $title = 'Order Detail';
         $order_details = OrderDetail::with('reProduct')->where('order_id', $id)->get();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         $order = Order::where('id', $id)->first();
 
@@ -31,7 +36,7 @@ class OrderController extends Controller
 
         $customer = Customer::where('id', $customer_id)->first();
 
-        return view('admin.pages.order.show')->with(compact('order_details', 'customer', 'order_details', 'order_status', 'order', 'title'));
+        return view('admin.pages.order.show')->with(compact('order_details', 'customer', 'order_details', 'order_status', 'order', 'title', 'count_message', 'messages'));
     }
 
     public function update_status_order(Request $request)

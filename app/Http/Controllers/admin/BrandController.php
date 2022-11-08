@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,10 @@ class BrandController extends Controller
     {
         $title = 'Brand';
         $list_Brand = Brand::all();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.brand.index')->with(compact('title', 'list_Brand'));
+        return view('admin.pages.brand.index')->with(compact('title', 'list_Brand', 'count_message', 'messages'));
     }
 
     public function create()
@@ -38,8 +41,10 @@ class BrandController extends Controller
     {
         $title = 'Edit Brand';
         $brand = Brand::find($id);
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.brand.form')->with(compact('title', 'brand'));
+        return view('admin.pages.brand.form')->with(compact('title', 'brand', 'count_message', 'messages'));
     }
 
     public function update(Request $request, $id)

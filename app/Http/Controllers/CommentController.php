@@ -12,11 +12,11 @@ class CommentController extends Controller
     public function show_comment()
     {
         $title = 'Comment';
-        $list_Comment = Comment::with('reProduct', 'reCustomer')
-            ->orderBy('status', 'DESC')
-            ->get();
+        $list_Comment = Comment::with('reProduct', 'reCustomer')->orderBy('status', 'DESC')->get();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.comment.index')->with(compact('title', 'list_Comment'));
+        return view('admin.pages.comment.index')->with(compact('title', 'list_Comment', 'count_message', 'messages'));
     }
 
     public function allow_comment(Request $request)
@@ -45,12 +45,12 @@ class CommentController extends Controller
         $product_id = $request->product_id;
         $comment = Comment::with('reCustomer')
             ->where('status', 0)
-            ->where('admin_id',NULL)
+            ->where('admin_id', NULL)
             ->where('product_id', $product_id)->get();
 
         $comment_reply = Comment::with('reAdmin')
             ->where('status', 0)
-            ->where('customer_id',NULL)
+            ->where('customer_id', NULL)
             ->where('product_id', $product_id)->get();
 
         $output = '';
@@ -61,7 +61,7 @@ class CommentController extends Controller
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '<span style="float:right; font-size: 13px">'.$comm->created_at.'</span></h5>
+                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
                                 <p class="card-text">' . $comm->title . '</p>
                             </div>
                         </div>
@@ -69,15 +69,15 @@ class CommentController extends Controller
                 </div>
             </div> ';
 
-            foreach ($comment_reply as $comm_rep){
-                if ($comm_rep->comment_parent_id == $comm->id){
+            foreach ($comment_reply as $comm_rep) {
+                if ($comm_rep->comment_parent_id == $comm->id) {
                     $output .= '
                     <div class="ms-5 mt-2">
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">'.$comm->created_at.'</span></h5>
+                                        <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
                                         <p class="card-text">' . $comm_rep->title . '</p >
                                     </div >
                                 </div>

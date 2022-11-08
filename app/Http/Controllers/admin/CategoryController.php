@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,10 @@ class CategoryController extends Controller
     {
         $title = 'Category';
         $list_Category = Category::all();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.category.index')->with(compact('title', 'list_Category'));
+        return view('admin.pages.category.index')->with(compact('title', 'list_Category', 'count_message', 'messages'));
     }
 
     public function create()
@@ -38,8 +41,10 @@ class CategoryController extends Controller
     {
         $title = 'Edit Category';
         $category = Category::find($id);
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.category.form')->with(compact('title', 'category'));
+        return view('admin.pages.category.form')->with(compact('title', 'category', 'count_message', 'messages'));
     }
 
     public function update(Request $request, $id)

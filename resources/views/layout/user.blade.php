@@ -22,6 +22,10 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/lightslider.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/prettify.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.19/css/lightgallery.min.css" />
+
 </head>
 <body>
 <div class="container-fluid bg-black">
@@ -50,6 +54,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
         integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{{asset('frontend/js/lightslider.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.19/js/lightgallery-all.min.js"></script>
+<script src="{{asset('frontend/js/prettify.js')}}"></script>
+<script src="{{asset('frontend/js/jquery.sharrre.min.js')}}"></script>
 
 <!-- jquery-validation -->
 <script src="{{asset('admin/plugins/jquery-validation/jquery.validate.min.js')}}"></script>

@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/order-detail/{id}', [OrderController::class, 'view_order_detail']);
     Route::get('/customer', [CustomerController::class, 'show_customer']);
     Route::get('/comment', [CommentController::class, 'show_comment']);
+    Route::get('/profile-admin', [AdminController::class, 'profile_admin']);
+    Route::get('/add-gallery/{id}', [ProductController::class, 'gallery_index']);
 
     Route::resource('/brand', BrandController::class);
     Route::resource('/category', CategoryController::class);
@@ -44,6 +46,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/reply-comment', [CommentController::class, 'reply_comment']);
     Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
     Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
+
+    //gallery
+    Route::post('/select-gallery', [ProductController::class, 'select_gallery']);
+    Route::post('/insert-gallery/{id}', [ProductController::class, 'insert_gallery']);
+    Route::post('/update-gallery-name', [ProductController::class, 'update_gallery_name']);
+    Route::post('/delete-gallery', [ProductController::class, 'delete_gallery']);
+    Route::post('/update-gallery', [ProductController::class, 'update_gallery']);
 
 });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -15,15 +16,19 @@ class SliderController extends Controller
     {
         $title = 'Slider';
         $list_Slider = Slider::all();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.slider.index')->with(compact('title', 'list_Slider'));
+        return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_message', 'messages'));
     }
 
     public function create()
     {
         $title = 'Create Slider';
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.slider.form')->with(compact('title'));
+        return view('admin.pages.slider.form')->with(compact('title', 'count_message', 'messages'));
     }
 
     public function store(Request $request)
@@ -40,7 +45,7 @@ class SliderController extends Controller
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('uploads/slider/', $new_image);
+            $get_image->move('public/uploads/slider/', $new_image);
             $slider->image = $new_image;
         }
 
@@ -58,8 +63,10 @@ class SliderController extends Controller
     {
         $title = 'Edit Slider';
         $slider = Slider::find($id);
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.slider.form')->with(compact('title', 'slider'));
+        return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages'));
     }
 
     public function update(Request $request, $id)
@@ -73,8 +80,8 @@ class SliderController extends Controller
 
         $get_image = $request->file('image');
         if ($get_image) {
-            if (file_exists('uploads/slider/' . $slider->image)) {
-                unlink('uploads/slider/' . $slider->image);
+            if (file_exists('public/uploads/slider/' . $slider->image)) {
+                unlink('public/uploads/slider/' . $slider->image);
             } else {
                 $get_name_image = $get_image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));

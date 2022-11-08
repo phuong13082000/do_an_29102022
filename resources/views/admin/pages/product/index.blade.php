@@ -21,6 +21,7 @@
                                         <th>Number</th>
                                         <th>Price</th>
                                         <th>Price Sale</th>
+                                        <th>Gallery</th>
                                         <th>Brand</th>
                                         <th>Category</th>
                                         <th>Status</th>
@@ -37,6 +38,7 @@
                                             <td>{{$product->number}}</td>
                                             <td>{{$product->price}}</td>
                                             <td>{{$product->price_sale}}</td>
+                                            <td><a href="{{url('admin/add-gallery/'.$product->id)}}">Add Gallery</a></td>
                                             <td>{{$product->reBrand->title}}</td>
                                             <td>{{$product->reCategory->title}}</td>
                                             <td>
@@ -98,6 +100,7 @@
                                         <th>Number</th>
                                         <th>Price</th>
                                         <th>Price Sale</th>
+                                        <th>Gallery</th>
                                         <th>Brand</th>
                                         <th>Category</th>
                                         <th>Status</th>

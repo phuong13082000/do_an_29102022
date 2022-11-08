@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Comment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +19,10 @@ class CustomerController extends Controller
     {
         $title = 'Customer';
         $list_Customer = Customer::all();
+        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
+        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.customer.index')->with(compact('title', 'list_Customer'));
+        return view('admin.pages.customer.index')->with(compact('title', 'list_Customer', 'count_message', 'messages'));
     }
 
     //user
