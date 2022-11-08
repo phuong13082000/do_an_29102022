@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="labels">ID Google</label>
-                                        <input type="text" id="google_id" name="google_id" disabled class="form-control" value="{{ $customer->google_id }}" placeholder="facebook_id">
+                                        <input type="text" id="google_id" name="google_id" disabled class="form-control" value="{{ $customer->google_id }}" placeholder="google_id">
                                     </div>
                                 </div>
                             @endif

@@ -34,13 +34,13 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_APP_ID'),
         'client_secret' => env('FACEBOOK_APP_SECRET'),
-        'redirect' => 'https://localhost/fb-callback',
+        'redirect' => 'https://localhost/BanHang/public/fb-callback',
     ],
 
     'google' => [
         'client_id' => env('GOOGLE_ID'),
         'client_secret' => env('GOOGLE_SECRET'),
-        'redirect' => 'https://localhost/google-callback',
+        'redirect' => 'https://localhost/BanHang/public/google-callback',
     ],
 
 ];
