@@ -67,4 +67,14 @@ class CategoryController extends Controller
             return redirect()->route('category.index')->with('success', 'Xóa category thành công');
         }
     }
+
+    public function update_Status_Category(Request $request)
+    {
+        $data = $request->all();
+
+        $category = Category::find($data['id']);
+        $category->status = $data['status'];
+
+        $category->save();
+    }
 }

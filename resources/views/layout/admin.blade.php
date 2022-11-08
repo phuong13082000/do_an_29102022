@@ -100,8 +100,6 @@
 
 <!-- JQVMap -->
 <script src="{{asset('admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-
-<!-- JQVMap -->
 <script src="{{asset('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
 
 <!-- jQuery Knob Chart -->
@@ -148,10 +146,6 @@
 
 <script src="{{asset('admin/js/main.js')}}"></script>
 
-<script type="text/javascript">
-    CKEDITOR.replace('thongtin_chung'); //create_product
-</script>
-
 <!-- Update Brand Status -->
 <script type="text/javascript">
     $('.brand-status').change(function () {
@@ -165,6 +159,24 @@
             success: function () {
                 alert('Change status success!');
                 window.location.href = "{{route('brand.index')}}";
+            }
+        });
+    });
+</script>
+
+<!-- Update Category Status -->
+<script type="text/javascript">
+    $('.category-status').change(function () {
+        var id = $(this).attr('id');
+        var status = $(this).find(':selected').val();
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: "{{url('admin/update-status-category')}}",
+            method: 'POST',
+            data: {id: id, status: status, _token: _token},
+            success: function () {
+                alert('Change status success!');
+                window.location.href = "{{route('category.index')}}";
             }
         });
     });
@@ -203,7 +215,7 @@
             },
             data: {comment_status: comment_status, comment_id: comment_id, comment_product_id: comment_product_id},
             success: function (data) {
-                location.reload();
+                window.location.reload();
             }
         });
     });
@@ -220,7 +232,7 @@
             },
             data: {comment: comment, comment_id: comment_id, comment_product_id: comment_product_id},
             success: function (data) {
-                location.reload();
+                window.location.reload();
             }
         });
     });

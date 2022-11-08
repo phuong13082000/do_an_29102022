@@ -153,7 +153,7 @@
                                         {{--soluong--}}
                                         <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
                                         {!! Form::hidden('productid_hidden', $product->id) !!}
-                                        <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Detail</a>
+                                        <a href="{{route('detail', $product->id)}}" class="btn btn-sm btn-outline-secondary">Detail</a>
                                         <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                                         {!! Form::close() !!}
                                     </div>

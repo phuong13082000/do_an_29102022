@@ -55,8 +55,34 @@
 <script src="{{asset('admin/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('admin/plugins/jquery-validation/additional-methods.min.js')}}"></script>
 
+@yield('scripts')
+
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
+<!--search-->
+<script type="text/javascript">
+    $('#keywords').keyup(function () {
+        var keywords = $(this).val();
+        if (keywords !== '') {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('/search-ajax')}}",
+                method: "POST",
+                data: {keywords: keywords, _token: _token},
+                success: function (data) {
+                    $('#search_ajax').fadeIn();
+                    $('#search_ajax').html(data);
+                }
+            });
+        } else {
+            $('#search_ajax').fadeOut();
+        }
+    });
+    $(document).on('click', '.li_search_ajax', function () {
+        $('#keywords').val($(this).text());
+        $('#search_ajax').fadeOut();
+    });
+</script>
 </body>
 </html>
 

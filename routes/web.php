@@ -17,107 +17,75 @@ use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
-
-Route::post('admin/postLogin', [LoginController::class, 'postLogin']);
-
 Route::get('admin/quen-mat-khau', [MailController::class, 'admin_forget_password']);
-
-Route::post('admin/recover-password', [MailController::class, 'admin_recover_password']);
-
 Route::get('admin/update-new-password', [MailController::class, 'admin_update_new_password']);
 
+Route::post('admin/postLogin', [LoginController::class, 'postLogin']);
+Route::post('admin/recover-password', [MailController::class, 'admin_recover_password']);
 Route::post('admin/reset-new-password', [MailController::class, 'admin_reset_new_password']);
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
-    Route::get('/logout', [LoginController::class, 'getLogout'])->middleware('auth');
+    Route::get('/logout', [LoginController::class, 'getLogout']);
+    Route::get('/home', [AdminController::class, 'getHome']);
+    Route::get('/order', [OrderController::class, 'view_order']);
+    Route::get('/print-order/{id}', [OrderController::class, 'print_order']);
+    Route::get('/order-detail/{id}', [OrderController::class, 'view_order_detail']);
+    Route::get('/customer', [CustomerController::class, 'show_customer']);
+    Route::get('/comment', [CommentController::class, 'show_comment']);
 
-    Route::get('/home', [AdminController::class, 'getHome'])->middleware('auth');
+    Route::resource('/brand', BrandController::class);
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/product', ProductController::class);
+    Route::resource('/slider', SliderController::class);
 
-    Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand'])->middleware('auth');
-
-    Route::resource('/brand', BrandController::class)->middleware('auth');
-
-    Route::resource('/category', CategoryController::class)->middleware('auth');
-
-    Route::resource('/product', ProductController::class)->middleware('auth');
-
-    Route::resource('/slider', SliderController::class)->middleware('auth');
-
-    Route::get('/order', [OrderController::class, 'view_order'])->middleware('auth');
-
-    Route::post('/update-status-order', [OrderController::class, 'update_status_order'])->middleware('auth');
-
-    Route::get('/print-order/{id}', [OrderController::class, 'print_order'])->middleware('auth');
-
-    Route::get('/order-detail/{id}', [OrderController::class, 'view_order_detail'])->middleware('auth');
-
-    Route::get('/customer', [CustomerController::class, 'show_customer'])->middleware('auth');
-
-    Route::get('/comment', [CommentController::class, 'show_comment'])->middleware('auth');
-
-    Route::post('/allow-comment', [CommentController::class, 'allow_comment'])->middleware('auth');
-
-    Route::post('/reply-comment', [CommentController::class, 'reply_comment'])->middleware('auth');
+    Route::post('/update-status-order', [OrderController::class, 'update_status_order']);
+    Route::post('/allow-comment', [CommentController::class, 'allow_comment']);
+    Route::post('/reply-comment', [CommentController::class, 'reply_comment']);
+    Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
+    Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
 
 });
 
 Route::get('/', [IndexController::class, 'index']);
-
 Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
-
 Route::get('/brand/{id}', [IndexController::class, 'brand'])->name('brand');
 
 //search
 Route::get('/category/{id}', [IndexController::class, 'category'])->name('category');
-
 Route::get('/price/{value}', [IndexController::class, 'price'])->name('price');
-
 Route::get('/ram/{value}', [IndexController::class, 'ram'])->name('ram');
-
 Route::get('/dung-luong/{value}', [IndexController::class, 'dung_luong'])->name('dung-luong');
-
 Route::get('/pin-sac/{value}', [IndexController::class, 'pin_sac'])->name('pin-sac');
-
 Route::get('/tinh-nang/{value}', [IndexController::class, 'tinh_nang'])->name('tinh-nang');
 
 Route::post('/search', [IndexController::class, 'search'])->name('search');
-
 Route::post('/search-ajax', [IndexController::class, 'search_ajax']);
 
 //Cart
-Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
-
-Route::post('/save-cart', [CartController::class, 'save_cart']);
-
 Route::get('/show-cart', [CartController::class, 'show_cart']);
-
 Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
 
+Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
+Route::post('/save-cart', [CartController::class, 'save_cart']);
+
 //Profile
-Route::post('/login-customer', [CustomerController::class, 'login_customer']);
-
-Route::post('/add-customer', [CustomerController::class, 'add_customer']);
-
 Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
-
 Route::get('/dang-ki', [CustomerController::class, 'dangki']);
-
-Route::post('/dang-xuat', [CustomerController::class, 'logout']);
-
 Route::get('/profile', [CustomerController::class, 'profile']);
 
+Route::post('/login-customer', [CustomerController::class, 'login_customer']);
+Route::post('/add-customer', [CustomerController::class, 'add_customer']);
+Route::post('/dang-xuat', [CustomerController::class, 'logout']);
 Route::post('/update-profile', [CustomerController::class, 'update_profile']);
 
 //facebook
 Route::get('/login-facebook', [CustomerController::class, 'login_facebook']);
-
 Route::get('/fb-callback', [CustomerController::class, 'callback_facebook']);
 
 //google
 Route::get('/login-google', [CustomerController::class, 'login_google']);
-
-Route::post('/google-callback', [CustomerController::class, 'callback_google']);
+Route::get('/google-callback', [CustomerController::class, 'callback_google']);
 
 //Checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
@@ -126,6 +94,5 @@ Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
 
 //comment
 Route::post('/load-comment', [CommentController::class, 'load_comment']);
-
 Route::post('/send-comment', [CommentController::class, 'send_comment']);
 

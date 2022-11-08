@@ -196,7 +196,7 @@ class IndexController extends Controller
             foreach ($product as $prod) {
                 $output .= '<li>
                                 <a class="dropdown-item" href="#">
-                                    <img width="90" src="../uploads/product/' . $prod->image . '" alt="' . $prod->title . '">
+                                    <img width="90" src="../public/uploads/product/' . $prod->image . '" alt="' . $prod->title . '">
                                     <b class="li_search_ajax">' . $prod->title . '</b>
                                 </a>
                             </li><hr>';

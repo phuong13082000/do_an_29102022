@@ -30,9 +30,9 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrap();
 
-        if (env('APP_ENV') === 'production') {
-            $this->app['request']->server->set('HTTPS','on'); // this line
+        //if (env('APP_ENV') === 'production') {
+            //$this->app['request']->server->set('HTTPS','on'); // this line
             URL::forceScheme('https');
-        }
+        //}
     }
 }

@@ -29,11 +29,10 @@
                                         <td>{{$key}}</td>
                                         <td>{{$category->title}}</td>
                                         <td>
-                                            @if ($category->status==0)
-                                                <span class="text text-success"><i class="fa fa-thumbs-up"></i></span>
-                                            @else
-                                                <span class="text text-danger"><i class="fa fa-thumbs-down"></i></span>
-                                            @endif
+                                            <form method="POST">
+                                                @csrf
+                                                {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $category->status ?? '', ['class'=>'form-select category-status', 'id'=>$category->id]) !!}
+                                            </form>
                                         </td>
                                         <td>
                                             <div class="row">

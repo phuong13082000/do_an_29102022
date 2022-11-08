@@ -73,3 +73,50 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script type="text/javascript">
+        //update-profile
+        $(document).ready(function () {
+            $("#profile_setup_frm").submit(function (e) {
+                e.preventDefault();
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var phone = $('#phone').val();
+                var address = $('#address').val();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $("#btn").attr("disabled", true);
+                $("#btn").html("Updating...");
+                $.ajax({
+                    url: "{{url('/update-profile')}}",
+                    method: "POST",
+                    data: {
+                        name:name,
+                        email:email,
+                        phone:phone,
+                        address:address
+                    },
+                    success: function (response) {
+                        if (response.code == 400) {
+                            let error = '<span class="alert alert-danger">' + response.msg + '</span>';
+                            $("#res").html(error);
+                            $("#btn").attr("disabled", false);
+                            $("#btn").html("Save Profile");
+                        } else if (response.code == 200) {
+                            let success = '<span class="alert alert-success">' + response.msg + '</span>';
+                            $("#res").html(success);
+                            $("#btn").attr("disabled", false);
+                            $("#btn").html("Save Profile");
+
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+@endsection
