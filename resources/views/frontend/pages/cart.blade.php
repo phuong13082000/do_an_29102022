@@ -2,6 +2,7 @@
 
 @section('index')
     @include('frontend.includes.alert')
+    @include('frontend.includes.breadcrumb')
     @php
         $customer_id = Session::get('id');
         $customer_name = Session::get('name');
@@ -28,18 +29,10 @@
                         <tbody>
                         @foreach(Cart::content() as $content)
                             <tr>
-                                <td class="cart_product">
-                                    <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
-                                </td>
-
-                                <td class="cart_description">
-                                    <h4>{{$content->name}}</a></h4>
-                                </td>
-
-                                <td class="cart_price">
-                                    <p>{{number_format($content->price).' '.'vnđ'}}</p>
-                                </td>
-
+                                <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
+                                <td><h4>{{$content->name}}</a></h4></td>
+                                <td><p>{{number_format($content->price).' '.'vnđ'}}</p></td>
+                                
                                 <td class="cart_quantity">
                                     <div class="cart_quantity_button">
                                         {!! Form::open(['url'=>'/update-cart-quantity', 'method'=>'POST']) !!}

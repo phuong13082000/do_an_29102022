@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Comment;
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -48,8 +49,9 @@ class CustomerController extends Controller
         $list_brand = Brand::take(5)->get();
 
         $customer = Customer::find(Session::get('id'));
+        $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
 
-        return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer'));
+        return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
     }
 
     public function change_password_user(Request $request)

@@ -2,6 +2,7 @@
 
 @section('index')
     @include('frontend.includes.alert')
+    @include('frontend.includes.breadcrumb')
     <div class="mt-3">
         <div class="container">
             <h2 class="text-center mb-4">Profile</h2>
@@ -62,7 +63,7 @@
                             @if($customer->provider !== 'google' && $customer->provider !== 'facebook')
                                 <div class="mt-5 text-center">
                                     <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</button>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
                                 </div>
                             @else
                                 <div class="mt-5 text-center">
@@ -75,15 +76,57 @@
 
                 </div>
             </form>
+            <hr>
+            <h2 class="text-center mb-4">Order History</h2>
+
+            <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Người nhận</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        {{--<th></th>--}}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($history_orders as $order)
+                        <tr>
+                            <td>{{$order->name_nguoinhan}}</td>
+                            <td>{{$order->payment_method}}</td>
+                            <td>
+                                @if($order->status==1)
+                                    Chưa xử lý
+                                @elseif($order->status==2)
+                                    Đã xử lý-Đã giao hàng
+                                @else
+                                    Hủy đơn hàng-tạm giữ
+                                @endif
+                            </td>
+                            <td>{{$order->created_at}}</td>
+                        {{--<td>
+                                <div class="row">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detail">Detail</button>
+
+                                </div>
+                            </td>--}}
+                        </tr>
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Modal Change Password-->
+    <div class="modal fade" id="changePassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+                    <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -115,6 +158,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Detail Order
+    <div class="modal fade" id="detail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordLabel">Order Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>-->
 @endsection
 
 @section('scripts')

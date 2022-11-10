@@ -2,6 +2,7 @@
 
 @section('index')
     @include('frontend.includes.alert')
+    @include('frontend.includes.breadcrumb')
     <div class="mt-3">
         <div class="row">
             <div class="col-sm-6">

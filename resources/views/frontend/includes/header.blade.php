@@ -59,8 +59,8 @@
                         </ul>
                     </div>
                     <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">
-                        {{Cart::count()}} <i class="fa fa-shopping-cart"></i>
-                    </a>
+                            {{ count(Cart::content()) }}
+                        <i class="fa fa-shopping-cart"></i></a>
                 </div>
 
             </div>

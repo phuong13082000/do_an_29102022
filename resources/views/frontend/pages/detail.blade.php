@@ -2,9 +2,7 @@
 
 @section('index')
     @include('frontend.includes.alert')
-    <style>
-
-    </style>
+    @include('frontend.includes.breadcrumb')
     <div class="row mt-3">
         @php
             $gia = number_format($product->price, 0, '', ',');
