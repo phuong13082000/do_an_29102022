@@ -26,18 +26,21 @@
                         <div class="col-sm-4">
                             <select id='province' class="form-control">
                                 <option selected>Thành Phố</option>
+
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='district' class="form-control">
                                 <option selected>Quận Huyện</option>
+
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='ward' class="form-control">
                                 <option selected>Phường Xã</option>
+
                             </select>
                         </div>
                         <span id="address"></span>
@@ -112,12 +115,12 @@
                         <div id="fee_ship_hidden"></div>
                         <h4 id="total">Thành tiền :</h4>
                         <input type="hidden" id="total_hidden" value="{{Cart::total()}}">
+                        <div id="thanhtoan_hidden"></div>
                     </div>
                 @else
                     <div class="container">
                         <div class="mt-3">
-                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để
-                                mua</a>
+                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để mua</a>
                         </div>
                     </div>
                 @endif
@@ -144,8 +147,16 @@
                 "headers": {"token": TOKEN_GHN},
             };
             $.ajax(provinces).done(function (province) {
-                let length_province = province.data.length;
                 let data_province = province.data;
+                let length_province;
+
+                if(province.data.length == null)
+                {
+                    length_province = 63;
+                }else {
+                    length_province = province.data.length;
+                }
+
                 for (let i = 0; i < length_province; i++) {
                     $('#province').append('<option id="id_province_' + data_province[i]['ProvinceID'] + '" value="' + data_province[i]['ProvinceID'] + '">' + data_province[i]['ProvinceName'] + '</option>');
                 }
@@ -155,6 +166,9 @@
         //load-district
         $(document).ready(function () {
             $('#province').on('change', function () {
+                $('option[name="district-name"]').remove();
+                $('option[name="ward-name"]').remove();
+
                 var id_province = $(this).find(":selected").val();
                 var districts = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + id_province + "",
@@ -164,9 +178,17 @@
                 };
                 $.ajax(districts).done(function (district) {
                     let data_district = district.data;
-                    let length_district = district.data.length;
+                    let length_district;
+
+                    if(district.data.length == null)
+                    {
+                        length_district = 0;
+                    }else {
+                        length_district = district.data.length;
+                    }
+
                     for (let i = 0; i < length_district; i++) {
-                        $('#district').append('<option id="id_district_' + data_district[i]['DistrictID'] + '" value="' + data_district[i]['DistrictID'] + '">' + data_district[i]['DistrictName'] + '</option>');
+                        $('#district').append('<option id="id_district_' + data_district[i]['DistrictID'] + '" name="district-name" value="' + data_district[i]['DistrictID'] + '">' + data_district[i]['DistrictName'] + '</option>');
                     }
                 });
             });
@@ -175,6 +197,8 @@
         //load-ward
         $(document).ready(function () {
             $('#district').on('change', function () {
+                $('option[name="ward-name"]').remove();
+
                 var id_district = $(this).find(":selected").val();
                 var wards = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + id_district + "",
@@ -186,7 +210,7 @@
                     let data_ward = ward.data;
                     let length_ward = ward.data.length;
                     for (let i = 0; i < length_ward; i++) {
-                        $('#ward').append('<option id="id_ward_' + data_ward[i]['WardCode'] + '" value="' + data_ward[i]['WardCode'] + '">' + data_ward[i]['WardName'] + '</option>');
+                        $('#ward').append('<option id="id_ward_' + data_ward[i]['WardCode'] + '" name="ward-name" value="' + data_ward[i]['WardCode'] + '">' + data_ward[i]['WardName'] + '</option>');
                     }
                 });
 
@@ -206,51 +230,62 @@
         });
 
         //canc fee
-        $('#ward').on('change', function () {
-            var ward_code = $(this).val();
-            var district_id = $('#district').val();
-            var price_product = $('#product_price').val();
-            var service_id = $('#fee_service').val();
-            var from_district_id = $('#footer_id_address').val(); // 1450 q8-tphcm
-            var height = 15; //cm
-            var length = 15; //cm
-            var weight = 400; //g
-            var width = 8; //cm
+        $(document).ready(function () {
+            $('#ward').on('change', function () {
+                var ward_code = $(this).val();
+                var district_id = $('#district').val();
+                var price_product = $('#product_price').val();
+                var service_id = $('#fee_service').val();
+                var from_district_id = $('#footer_id_address').val(); // 1450 q8-tphcm
+                var height = 15; //cm
+                var length = 15; //cm
+                var weight = 400; //g
+                var width = 8; //cm
 
-            var calculatorFee = {
-                "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" + service_id + "&insurance_value=" + price_product + "&coupon=&from_district_id=" + from_district_id + "&to_district_id=" + district_id + "&to_ward_code=" + ward_code + "&height=" + height + "&length=" + length + "&weight=" + weight + "&width=" + width + "",
-                "method": "GET",
-                "timeout": 0,
-                "headers": {"token": TOKEN_GHN, "shop_id": ID_GHN},
-            };
-            $.ajax(calculatorFee).done(function (response) {
-                var fee = response['data']['total'];
-                $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
-                $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
+                var calculatorFee = {
+                    "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" + service_id + "&insurance_value=" + price_product + "&coupon=&from_district_id=" + from_district_id + "&to_district_id=" + district_id + "&to_ward_code=" + ward_code + "&height=" + height + "&length=" + length + "&weight=" + weight + "&width=" + width + "",
+                    "method": "GET",
+                    "timeout": 0,
+                    "headers": {"token": TOKEN_GHN, "shop_id": ID_GHN},
+                };
+                $.ajax(calculatorFee).done(function (response) {
+                    var fee = response['data']['total'];
+                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
+                    $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
 
-                var total = $('#total_hidden').val();
-                var can_total = Number(total) + Number(fee);
-                $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
+                    var total = $('#total_hidden').val();
+                    let can_total;
+
+                    if(fee){
+                        can_total = Number(total) + Number(fee);
+                    }else{
+                        can_total = Number(total);
+                    }
+
+                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
+                    //$('#thanhtoan_hidden').append('<span id="paypal">' + can_total + '</span>');
+
+                });
+                $.ajax(calculatorFee).fail(function (response) {
+                    $('#fee_ship').append('<span id="fees">0 VND</span>');
+                    $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value=0>');
+                });
+
+                //reset -- luu name_address
+                $('#fees').remove();
+                $('#total_span').remove();
+                $('#name_address').remove();
+                //$('#paypal').remove();
+
+                var id_province = $('#province').val();
+
+                var name_province = $('#id_province_' + id_province).text();
+                var name_district = $('#id_district_' + district_id).text();
+                var name_ward = $('#id_ward_' + ward_code).text();
+
+                $('#address').append('<input type="hidden" id="name_address" value="' + name_ward + '-' + name_district + '-' + name_province + '">');
 
             });
-            $.ajax(calculatorFee).fail(function (response) {
-                $('#fee_ship').append('<span id="fees">0 VND</span>');
-                $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value=0>');
-            });
-
-            //reset -- luu name_address
-            $('#fees').remove();
-            $('#total_span').remove();
-            $('#name_address').remove();
-
-            var id_province = $('#province').val();
-
-            var name_province = $('#id_province_' + id_province).text();
-            var name_district = $('#id_district_' + district_id).text();
-            var name_ward = $('#id_ward_' + ward_code).text();
-
-            $('#address').append('<input type="hidden" id="name_address" value="' + name_ward + '-' + name_district + '-' + name_province + '">');
-
         });
 
         //checkout

@@ -200,6 +200,8 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+
     ],
 
     /*
@@ -220,6 +222,7 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Flasher' => Flasher\Laravel\Facade\Flasher::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
     ])->toArray(),
 
 ];

@@ -14,6 +14,7 @@ use App\Http\Controllers\frontend\CheckoutController;
 use App\Http\Controllers\frontend\DetailController;
 use App\Http\Controllers\frontend\IndexController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PayPalPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
@@ -97,6 +98,12 @@ Route::get('/fb-callback', [CustomerController::class, 'callback_facebook']);
 //google
 Route::get('/login-google', [CustomerController::class, 'login_google']);
 Route::get('/google-callback', [CustomerController::class, 'callback_google']);
+
+//paypal
+Route::get('create-transaction', [PayPalPaymentController::class, 'createTransaction'])->name('createTransaction');
+Route::get('process-transaction', [PayPalPaymentController::class, 'processTransaction'])->name('processTransaction');
+Route::get('success-transaction', [PayPalPaymentController::class, 'successTransaction'])->name('successTransaction');
+Route::get('cancel-transaction', [PayPalPaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 //Checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
