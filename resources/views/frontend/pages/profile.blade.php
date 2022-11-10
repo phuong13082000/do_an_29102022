@@ -59,11 +59,16 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="mt-5 text-center">
-                                <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                                <a href="#" type="button" class="btn btn-success">Change Password</a>
-
-                            </div>
+                            @if($customer->provider !== 'google' && $customer->provider !== 'facebook')
+                                <div class="mt-5 text-center">
+                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</button>
+                                </div>
+                            @else
+                                <div class="mt-5 text-center">
+                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-2"></div>
@@ -72,7 +77,46 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url'=>'change-password-user', 'method'=>'POST', 'id'=>'form_change-password', 'role'=>'form']) !!}
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('password', ['class'=>'form-control']) !!}
+                        {!! Form::label('password', 'Password old', []) !!}
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('password_new', ['class'=>'form-control']) !!}
+                        {!! Form::label('password_new', 'Password new', []) !!}
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
+                        {!! Form::label('re_password_new', 'Re-Password new', []) !!}
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        {!! Form::submit('Add', ['class'=>'btn btn-success btn-change-password']) !!}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
 @section('scripts')
     <script type="text/javascript">
         //update-profile

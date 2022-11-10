@@ -42,7 +42,8 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <a type="button" class="btn btn-primary" href="#">Đổi mật khẩu</a>
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-profile">Change password</button>
+
                                     </div>
                                 </div>
 
@@ -51,5 +52,45 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+
+    <div class="modal fade" id="modal-profile" tabindex="-1" aria-labelledby="modallable" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modallable">Add Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url'=>'admin/change-password-admin/'.$admin_detail->admin_id, 'method'=>'POST', 'role'=>'form']) !!}
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('password', ['class'=>'form-control']) !!}
+                        {!! Form::label('password', 'Password old', []) !!}
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('password_new', ['class'=>'form-control']) !!}
+                        {!! Form::label('password_new', 'Password new', []) !!}
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
+                        {!! Form::label('re_password_new', 'Re-Password new', []) !!}
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

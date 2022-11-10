@@ -64,18 +64,28 @@
                         <div class="card-header">
                             <b style="font-size: 18px"> Cấu hình {{$product->title}}: </b>
                         </div>
+                        <style>
+                            #cauhinh_l{
+                                font-weight: bold;
+                            }
+                            #cauhinh_r{
+                                padding-left: 5px;
+                            }
+                        </style>
                         <div class="card-body">
                             <div class="mt-3">
-                                <p>Màn hình: {{$product->manhinh}}</p>
-                                <p>Màu sắc: {{$product->mausac}}</p>
-                                <p>Camera sau: {{$product->camera_sau}}</p>
-                                <p>Camera trước: {{$product->camera_truoc}}</p>
-                                <p>CPU: {{$product->cpu}}</p>
-                                <p>Bộ nhớ: {{$product->bonho}}</p>
-                                <p>Ram: {{$product->ram}}</p>
-                                <p>Kết nối: {{$product->ketnoi}}</p>
-                                <p>Pin sạc: {{$product->pin_sac}}</p>
-                                <p>Tiện ích: {{$product->tienich}}</p>
+                                <ul style="list-style-type: none">
+                                    <li><span id="cauhinh_l">Màn hình:</span><span id="cauhinh_r">{{$product->manhinh}}</span></li>
+                                    <li><span id="cauhinh_l">Màu sắc:</span><span id="cauhinh_r">{{$product->mausac}}</span></li>
+                                    <li><span id="cauhinh_l">Camera sau:</span><span id="cauhinh_r">{{$product->camera_sau}}</span></li>
+                                    <li><span id="cauhinh_l">Camera trước:</span><span id="cauhinh_r">{{$product->camera_truoc}}</span></li>
+                                    <li><span id="cauhinh_l">CPU:</span><span id="cauhinh_r">{{$product->cpu}}</span></li>
+                                    <li><span id="cauhinh_l">Bộ nhớ:</span><span id="cauhinh_r">{{$product->bonho}}</span></li>
+                                    <li><span id="cauhinh_l">Ram:</span><span id="cauhinh_r">{{$product->ram}}</span></li>
+                                    <li><span id="cauhinh_l">Kết nối:</span><span id="cauhinh_r">{{$product->ketnoi}}</span></li>
+                                    <li><span id="cauhinh_l">Pin sạc:</span><span id="cauhinh_r">{{$product->pin_sac}}</span></li>
+                                    <li><span id="cauhinh_l">Tiện ích:</span><span id="cauhinh_r">{{$product->tienich}}</span></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -190,6 +200,7 @@
                 }
             });
         });
+
         $(document).ready(function() {
             $('#imageGallery').lightSlider({
                 gallery:true,

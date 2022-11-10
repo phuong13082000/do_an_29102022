@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 07, 2022 at 03:31 PM
--- Server version: 5.7.36
--- PHP Version: 8.1.0
+-- Host: 127.0.0.1
+-- Generation Time: Nov 08, 2022 at 07:15 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `admin_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admin` (
+  `admin_id` int(11) NOT NULL,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `token` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admin`
@@ -51,13 +49,11 @@ INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `token`) 
 -- Table structure for table `brands`
 --
 
-DROP TABLE IF EXISTS `brands`;
-CREATE TABLE IF NOT EXISTS `brands` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `brands` (
+  `id` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `brands`
@@ -76,13 +72,11 @@ INSERT INTO `brands` (`id`, `title`, `status`) VALUES
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categories`
@@ -103,23 +97,17 @@ INSERT INTO `categories` (`id`, `title`, `status`) VALUES
 -- Table structure for table `comments`
 --
 
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE IF NOT EXISTS `comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `comment_parent_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  KEY `customer_id` (`customer_id`),
-  KEY `admin_id` (`admin_id`),
-  KEY `comment_parent_id` (`comment_parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `comments`
@@ -132,7 +120,8 @@ INSERT INTO `comments` (`id`, `title`, `status`, `customer_id`, `product_id`, `a
 (4, '=))', 0, NULL, 22, 1, 2, '2022-11-03 11:14:50', '2022-11-03 11:14:50'),
 (6, 'ban nho mua nha', 0, NULL, 22, 1, 1, '2022-11-04 00:21:23', '2022-11-04 00:21:23'),
 (7, 'ád', 0, 1, 22, NULL, NULL, '2022-11-05 19:50:14', '2022-11-05 19:50:52'),
-(8, 'da', 0, NULL, 22, 1, 7, '2022-11-05 19:50:59', '2022-11-05 19:50:59');
+(8, 'da', 0, NULL, 22, 1, 7, '2022-11-05 19:50:59', '2022-11-05 19:50:59'),
+(9, 'Điện thoại đẹp quá', 0, 1, 23, NULL, NULL, '2022-11-08 13:06:39', '2022-11-08 13:06:39');
 
 -- --------------------------------------------------------
 
@@ -140,30 +129,50 @@ INSERT INTO `comments` (`id`, `title`, `status`, `customer_id`, `product_id`, `a
 -- Table structure for table `customers`
 --
 
-DROP TABLE IF EXISTS `customers`;
-CREATE TABLE IF NOT EXISTS `customers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
   `fullname` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `customer_token` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `google_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `provider` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`id`, `fullname`, `email`, `password`, `gender`, `birthday`, `phone`, `address`, `status`, `customer_token`, `google_id`, `facebook_id`, `provider`) VALUES
-(1, 'Phuong', 'hoangphuong0813@gmail.com', '$2y$10$PaLqY1iSU8psCcazbPMeeecdOLwTTsTjzZe6V7fxyAy31vETn72ku', NULL, NULL, '0356929673', NULL, 0, NULL, NULL, NULL, NULL);
+(1, 'Phuong', 'hoangphuong0813@gmail.com', '$2y$10$PaLqY1iSU8psCcazbPMeeecdOLwTTsTjzZe6V7fxyAy31vETn72ku', NULL, NULL, '0356929673', NULL, 0, NULL, NULL, NULL, NULL),
+(2, 'Phương', 'hoangphuong0813@gmail.com', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '3330089617264301', 'facebook');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `galleries`
+--
+
+CREATE TABLE `galleries` (
+  `id` int(11) NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `galleries`
+--
+
+INSERT INTO `galleries` (`id`, `title`, `image`, `product_id`) VALUES
+(5, 'iphone-11-trang.jpg', 'iphone-11-trang-1-2-org5364.jpg', 22),
+(6, 'vi-vn-iphone-11-tinhnang2475.jpg', 'vi-vn-iphone-11-tinhnang2475.jpg', 22);
 
 -- --------------------------------------------------------
 
@@ -171,21 +180,18 @@ INSERT INTO `customers` (`id`, `fullname`, `email`, `password`, `gender`, `birth
 -- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
+CREATE TABLE `orders` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price_ship` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` int(11) DEFAULT 1,
   `payment_method` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name_nguoinhan` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_nguoinhan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address_nguoinhan` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `customer_id` (`customer_id`)
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -193,9 +199,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`id`, `price_ship`, `note`, `status`, `payment_method`, `name_nguoinhan`, `phone_nguoinhan`, `address_nguoinhan`, `customer_id`, `created_at`, `updated_at`) VALUES
-('52b17', '170500', '751', 1, 'Tiền mặt', 'Phuong', '01656929673', 'Xã Phong Phú-Huyện Bình Chánh-\n            Hồ Chí Minh', 1, '2022-11-06 05:51:42', '2022-11-06 05:51:42'),
+('52b17', '170500', '751', 1, 'Tiền mặt', 'Phuong', '01656929673', 'Xã Phong Phú-Huyện Bình Chánh-Hồ Chí Minh', 1, '2022-11-08 12:47:58', '2022-11-06 05:51:42'),
 ('999de', '97951', 'adsad', 1, 'Tiền mặt', 'asda', '1231231', 'Xã Nghĩa Lộ--', 1, '2022-11-06 07:00:55', '2022-11-06 07:00:55'),
-('d1239', '205498', 'sdadas', 1, 'Tiền mặt', 'Phuong', '0356929673', 'Xã Tú Nang-\n            Huyện Yên Châu-\n            Sơn La', 1, '2022-11-05 02:51:18', '2022-11-05 02:51:18');
+('d1239', '205498', 'sdadas', 1, 'Tiền mặt', 'Phuong', '0356929673', 'Xã Tú Nang-Huyện Yên Châu-Sơn La', 1, '2022-11-08 12:48:08', '2022-11-05 02:51:18');
 
 -- --------------------------------------------------------
 
@@ -203,20 +209,16 @@ INSERT INTO `orders` (`id`, `price_ship`, `note`, `status`, `payment_method`, `n
 -- Table structure for table `order_details`
 --
 
-DROP TABLE IF EXISTS `order_details`;
-CREATE TABLE IF NOT EXISTS `order_details` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL,
   `num` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `order_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `order_details`
@@ -234,9 +236,8 @@ INSERT INTO `order_details` (`id`, `num`, `price`, `status`, `order_id`, `produc
 -- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number` int(11) NOT NULL,
@@ -256,12 +257,9 @@ CREATE TABLE IF NOT EXISTS `products` (
   `status` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category_id` (`category_id`),
-  KEY `brands_id` (`brand_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
@@ -277,15 +275,13 @@ INSERT INTO `products` (`id`, `title`, `image`, `number`, `price`, `price_sale`,
 -- Table structure for table `sliders`
 --
 
-DROP TABLE IF EXISTS `sliders`;
-CREATE TABLE IF NOT EXISTS `sliders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sliders` (
+  `id` int(11) NOT NULL,
   `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sliders`
@@ -294,6 +290,138 @@ CREATE TABLE IF NOT EXISTS `sliders` (
 INSERT INTO `sliders` (`id`, `title`, `image`, `url`, `status`) VALUES
 (1, 'dt', '800-200-800x200-958058.png', 'dt', 0),
 (2, 'dt1', '800-200-800x200-137806.png', 'dt1', 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Indexes for table `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `admin_id` (`admin_id`),
+  ADD KEY `comment_parent_id` (`comment_parent_id`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `galleries`
+--
+ALTER TABLE `galleries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `brands_id` (`brand_id`);
+
+--
+-- Indexes for table `sliders`
+--
+ALTER TABLE `sliders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `galleries`
+--
+ALTER TABLE `galleries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -307,6 +435,12 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   ADD CONSTRAINT `comments_ibfk_4` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
   ADD CONSTRAINT `comments_ibfk_5` FOREIGN KEY (`comment_parent_id`) REFERENCES `comments` (`id`);
+
+--
+-- Constraints for table `galleries`
+--
+ALTER TABLE `galleries`
+  ADD CONSTRAINT `galleries_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `orders`

@@ -83,7 +83,6 @@ $(function () {
     });
 });
 
-
 <!--validate-register-->
 $(function () {
     $("#login_form").validate({

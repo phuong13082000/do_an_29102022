@@ -52,6 +52,22 @@ class CustomerController extends Controller
         return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer'));
     }
 
+    public function change_password_user(Request $request)
+    {
+        $password_new_1 = $request['password_new'];
+        $password_new_2 = $request['re_password_new'];
+
+        $customer = Customer::find(Session::get('id'));
+        $check_password = Hash::check($request['password'], $customer->password ?? '');
+
+        if($check_password && $password_new_1 == $password_new_2){
+            $customer->password = Hash::make($password_new_1);
+            $customer->save();
+            return redirect()->back()->with('success','Change password success');
+        }
+        return redirect()->back()->with('error','Change password error');
+    }
+
     public function update_profile(Request $request)
     {
         $validated = Validator::make($request->all(), [

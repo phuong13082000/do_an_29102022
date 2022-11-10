@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/reply-comment', [CommentController::class, 'reply_comment']);
     Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
     Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
+    Route::post('/change-password-admin/{id}', [AdminController::class, 'change_password_admin']);
 
     //gallery
     Route::post('/select-gallery', [ProductController::class, 'select_gallery']);
@@ -82,6 +83,7 @@ Route::post('/save-cart', [CartController::class, 'save_cart']);
 Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 Route::get('/dang-ki', [CustomerController::class, 'dangki']);
 Route::get('/profile', [CustomerController::class, 'profile']);
+Route::post('/change-password-user', [CustomerController::class, 'change_password_user']);
 
 Route::post('/login-customer', [CustomerController::class, 'login_customer']);
 Route::post('/add-customer', [CustomerController::class, 'add_customer']);
