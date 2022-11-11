@@ -96,7 +96,7 @@ class CustomerController extends Controller
         Session::put('email', $user->email);
         Session::put('phone', $user->phone);
         Session::put('address', $user->address);
-        return response()->json(['code' => 200, 'msg' => 'Profile updated successfully.']);
+        return response()->json(['code' => 200, 'msg' => 'Cập nhật thông tin cá nhân thành công']);
     }
 
     public function login_customer(Request $request)

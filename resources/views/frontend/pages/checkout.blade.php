@@ -44,7 +44,7 @@
 
                             </select>
                         </div>
-                        <span id="address"></span>
+                        <span id="address"></span> {{-- Gui dia chi de checkout --}}
                     </div>
 
                 </div>
@@ -78,21 +78,20 @@
                             <div class="table-responsive cart_info">
                                 <table class="table table-condensed">
                                     <thead>
-                                    <tr class="cart_menu">
-                                        <td class="image">Hình ảnh</td>
-                                        <td class="description">Tên sản phẩm</td>
-                                        <td class="price">Giá</td>
-                                        <td class="quantity">Số lượng</td>
-                                        <td class="total">Tổng</td>
+                                    <tr>
+                                        <td>Hình ảnh</td>
+                                        <td>Tên sản phẩm</td>
+                                        <td>Giá</td>
+                                        <td>Số lượng</td>
+                                        <td>Tổng</td>
                                         <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach(Cart::content() as $content)
                                         <tr>
-                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}"
-                                                     width="90" alt="{{$content->name}}"/></td>
-                                            <td><h4>{{$content->name}}</a></h4></td>
+                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
+                                            <td><h4>{{$content->name}}</h4></td>
                                             <td>
                                                 <p>{{number_format($content->price).' '.'vnđ'}}</p>
                                                 <input type="hidden" id="product_price" value="{{$content->price}}">
@@ -112,11 +111,11 @@
                                 </table>
                             </div>
                         </div>
-                        <h4 id="fee_ship">Tiền ship :</h4>
-                        <div id="fee_ship_hidden"></div>
-                        <h4 id="total">Thành tiền :</h4>
-                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}">
-                        <div id="thanhtoan_hidden"></div>
+                        <h4 id="fee_ship">Tiền ship :</h4> {{-- fee --}}
+                        <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
+                        <h4 id="total">Thành tiền :</h4> {{-- fee_hidden + total_hidden --}}
+                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
+                        <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                     </div>
                 @else
                     <div class="container">
@@ -209,7 +208,15 @@
                 };
                 $.ajax(wards).done(function (ward) {
                     let data_ward = ward.data;
-                    let length_ward = ward.data.length;
+                    let length_ward ;
+
+                    if(ward.data.length == null)
+                    {
+                        length_ward = 0;
+                    }else {
+                        length_ward = ward.data.length;
+                    }
+
                     for (let i = 0; i < length_ward; i++) {
                         $('#ward').append('<option id="id_ward_' + data_ward[i]['WardCode'] + '" name="ward-name" value="' + data_ward[i]['WardCode'] + '">' + data_ward[i]['WardName'] + '</option>');
                     }

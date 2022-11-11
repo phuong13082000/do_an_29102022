@@ -22,7 +22,8 @@ class AdminController extends Controller
         $count_message = Comment::where('status', 1)->where('admin_id', NULL)->count();
         $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.home')->with(compact('title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
+        return view('admin.pages.home')
+            ->with(compact('title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
     }
 
     public function profile_admin()
@@ -46,9 +47,9 @@ class AdminController extends Controller
         if($check_password && $password_new_1 == $password_new_2){
             $admin->password = $password_new_1;
             $admin->save();
-            return redirect()->back()->with('success','Change password success');
+            return redirect()->back()->with('success','Đổi mật khẩu thành công');
         }
-        return redirect()->back()->with('error','Change password error');
+        return redirect()->back()->with('error','Đổi mật khẩu không thành công');
     }
 
 }
