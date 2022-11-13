@@ -44,7 +44,7 @@
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                         <h6 class="text-uppercase mb-4 font-weight-bold">Liên hệ</h6>
-                        <p><i class="fa fa-home mr-3"></i>&nbsp;quận 8 - Thành phố Hồ Chí Minh</p><input type="hidden" id="footer_id_address" value=1450>
+                        <p><i class="fa fa-home mr-3"></i>&nbsp;Quận 8 - Thành phố Hồ Chí Minh</p><input type="hidden" id="footer_id_address" value=1450>
                         <p><i class="fa fa-envelope mr-3"></i>&nbsp;hoangphuong0813@gmail.com</p>
                         <p><i class="fa fa-phone mr-3"></i></p>
                         <p><i class="fa fa-print mr-3"></i></p>

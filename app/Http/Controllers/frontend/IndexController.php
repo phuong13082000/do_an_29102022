@@ -11,12 +11,9 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $meta_desc = "Chuyên bán điện thoại di động";
-        $meta_keywords = "dien thoai di dong, điện thoại di động giá rẻ, điện thoại mới";
         $title = "Điện thoại di động";
-        $url_canonical = $request->url();
 
         $list_brand = Brand::where('status', 0)->take(5)->get();
         $list_category = Category::where('status', 0)->get();
@@ -28,7 +25,7 @@ class IndexController extends Controller
         $list_slider = Slider::where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
 
         return view('frontend.pages.index')
-            ->with(compact('title', 'meta_keywords', 'meta_desc', 'url_canonical', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
+            ->with(compact('title', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
     }
 
     public function brand($id)

@@ -6,12 +6,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
     <!---------Seo--------->
-    <meta name="description" content="{{$meta_desc ?? ''}}">
-    <meta name="keywords" content="{{$meta_keywords ?? ''}}"/>
-    <meta name="robots" content="INDEX,FOLLOW"/>
-    <link rel="canonical" href="{{$url_canonical ?? ''}}"/>
-    <meta name="author" content="">
-    <link rel="icon" type="image/x-icon" href=""/>
+{{--    <meta name="description" content="{{$meta_desc ?? ''}}">--}}
+{{--    <meta name="keywords" content="{{$meta_keywords ?? ''}}"/>--}}
+{{--    <meta name="robots" content="INDEX,FOLLOW"/>--}}
+{{--    <link rel="canonical" href="{{$url_canonical ?? ''}}"/>--}}
+{{--    <meta name="author" content="">--}}
+{{--    <link rel="icon" type="image/x-icon" href=""/>--}}
     <title>{{$title ?? ''}}</title>
     <!--//-------Seo--------->
 

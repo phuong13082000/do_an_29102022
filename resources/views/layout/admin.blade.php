@@ -144,6 +144,8 @@
 
 <script src="{{asset('admin/js/main.js')}}"></script>
 
+@yield('script_admin')
+
 <!-- Update Brand Status -->
 <script type="text/javascript">
     $('.brand-status').change(function () {
@@ -373,6 +375,7 @@
             }
         });
     });
+
 </script>
 
 </body>

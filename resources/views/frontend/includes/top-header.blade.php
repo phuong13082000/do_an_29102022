@@ -1,9 +1,9 @@
 <nav class="bg-light border-bottom">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2"><i class="fa fa-phone mr-3"></i>&nbsp;0123456789</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2"><i class="fa fa-envelope mr-3"></i>&nbsp;hoangphuong0813@gmail.com</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2"><i class="fa fa-home mr-3"></i>&nbsp;Quận 8 - Thành phố Hồ Chí Minh</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="font-size: 14px"><i class="fa fa-phone mr-3"></i>&nbsp;0123456789</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="font-size: 14px"><i class="fa fa-envelope mr-3"></i>&nbsp;hoangphuong0813@gmail.com</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="font-size: 14px"><i class="fa fa-home mr-3"></i>&nbsp;Quận 8 - Thành phố Hồ Chí Minh</a></li>
         </ul>
 
         @if (!Session::get('id'))

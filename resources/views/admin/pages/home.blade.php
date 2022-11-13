@@ -97,10 +97,49 @@
                                 </div>
                             </section>
 
+                            <canvas id="myChart" height="100px"></canvas>
+                            <div class="text-center">Chart Order</div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+@section('script_admin')
+    <!-- ChartJs -->
+    <script src="{{asset('admin/plugins/chart.js/Chart.js')}}"></script>
+
+    <script type="text/javascript">
+        //char js
+        var labels =  {{ Js::from($labels) }};
+        var users =  {{ Js::from($data) }};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Số người đăng kí',
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1,
+                data: users,
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'), config
+        );
+    </script>
 @endsection

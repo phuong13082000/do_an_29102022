@@ -106,7 +106,6 @@
     </div>
 
     <h3 class="text-center mb-3 mt-3">Sảm phẩm</h3>
-
     <div class="mt-3">
         <div class="new-item">
             <div class="row">
@@ -153,7 +152,6 @@
         </div>
 
     <h3 class="text-center mb-3 mt-3">Sảm phẩm bán chạy</h3>
-
     <div class="sell-item">
         <div class="row">
             @foreach($list_product_sale as $product_sale)

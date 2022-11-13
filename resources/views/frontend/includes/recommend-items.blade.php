@@ -13,7 +13,7 @@
                         <img src="{{asset('uploads/product/'.$recommend->image)}}" alt="{{$recommend->title}}"/>
                         @if($recommend->number)
                             @if($recommend->price_sale)
-                                <b style="color: red">{{ $giaKhuyenMai }} VND</b>
+                                <b style="color: red">{{ $giaKhuyenMai }} VND</b><br>
                                 <del>&nbsp;{{ $gia }} VND</del><b style="color: red"> -{{ $phanTramGiam }}%</b><br>
                             @else
                                 <b>{{ $gia }} VND</b><br>
