@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/update-status-order', [OrderController::class, 'update_status_order']);
     Route::post('/allow-comment', [CommentController::class, 'allow_comment']);
     Route::post('/reply-comment', [CommentController::class, 'reply_comment']);
+    Route::post('/delete-comment', [CommentController::class, 'delete_comment']);
+    Route::post('/delete-reply-comment', [CommentController::class, 'delete_reply_comment']);
     Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
     Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
     Route::post('/change-password-admin/{id}', [AdminController::class, 'change_password_admin']);
@@ -84,7 +86,10 @@ Route::post('/save-cart', [CartController::class, 'save_cart']);
 Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 Route::get('/dang-ki', [CustomerController::class, 'dangki']);
 Route::get('/profile', [CustomerController::class, 'profile']);
+
 Route::post('/change-password-user', [CustomerController::class, 'change_password_user']);
+Route::post('/chi-tiet-don-hang', [CustomerController::class, 'profile_order_detail']);
+Route::post('/huy-don-hang', [CustomerController::class, 'cancel_order']);
 
 Route::post('/login-customer', [CustomerController::class, 'login_customer']);
 Route::post('/add-customer', [CustomerController::class, 'add_customer']);

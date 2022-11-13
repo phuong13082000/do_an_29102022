@@ -39,6 +39,27 @@ class CommentController extends Controller
         $comment->save();
     }
 
+    public function delete_comment(Request $request)
+    {
+        $comment_id = $request['comment_id'];
+
+        $comment_parent = Comment::where('comment_parent_id', $comment_id)->get();
+        foreach ($comment_parent as $parrent){
+            $parrent->delete();
+        }
+
+        $comments = Comment::find($comment_id);
+        $comments->delete();
+    }
+
+    public function delete_reply_comment(Request $request)
+    {
+        $comment_parent_id = $request['comment_parent_id'];
+
+        $comments = Comment::find($comment_parent_id);
+        $comments->delete();
+    }
+
     //user
     public function load_comment(Request $request)
     {

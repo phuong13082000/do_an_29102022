@@ -1,5 +1,5 @@
 <div class="mt-3">
-    <h2 class="text-center mb-3">Recommended Product</h2>
+    <h2 class="text-center mb-3">Sản phẩm gợi ý</h2>
     <div class="owl-carousel owl-theme">
         @foreach($list_recommend as $recommend)
             @php

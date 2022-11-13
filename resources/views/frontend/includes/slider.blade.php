@@ -1,5 +1,5 @@
 @if($first_slider && $list_slider)
-<div class="mt-3">
+<div class="mt-2">
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -54,6 +55,116 @@ class CustomerController extends Controller
         return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
     }
 
+    public function profile_order_detail(Request $request)
+    {
+        $order = Order::where('id', $request['order_id'])->first();
+        $order_detail = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->first();
+
+        $output = '
+    <div class="table-agile-info">
+        <div class="panel panel-default">
+            <div class="panel-heading">Thông tin vận chuyển hàng</div>
+
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                    <tr>
+                        <th>Tên người nhận</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Ghi chú</th>
+                        <th>Phí ship</th>
+                        <th>Hình thức thanh toán</th>
+                        <th style="width:30px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>' . $order->name_nguoinhan . '</td>
+                        <td>' . $order->address_nguoinhan . '</td>
+                        <td>' . $order->phone_nguoinhan . '</td>
+                        <td>' . $order->note . '</td>
+                        <td>' . number_format($order->price_ship, 0, ',', ' . ') . 'đ</td>
+                        <td>' . $order->payment_method . '</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="table-agile-info">
+        <div class="panel panel-default">
+            <div class="panel-heading">Liệt kê chi tiết đơn hàng</div>
+
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-light">
+                    <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng kho còn</th>
+                        <th>Số lượng</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th style="width:30px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>';
+
+        $subtotal = $order_detail->price * $order_detail->num;
+
+        $output .= '
+                    <tr class="color_qty_{{$details->product_id}}">
+                        <td>' . $order_detail->reProduct->title . '</td>
+                        <td>' . $order_detail->reProduct->number . '</td>
+                        <td>' . $order_detail->num . '</td>
+                        <td>' . number_format($order_detail->price, 0, ',', ' . ') . 'đ</td>
+                        <td>' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ</td>
+                    </tr>';
+
+        $output .= '
+                    <tr>
+                        <td colspan="2">';
+
+        $output .= '
+                            Tổng : ' . number_format($subtotal, 0, ',', ' . ') . 'đ <br>
+                            Phí ship : ' . number_format($order->price_ship, 0, ',', ' . ') . 'đ <br>
+                            Thanh toán: ' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+        ';
+        echo $output;
+    }
+
+    public function cancel_order(Request $request)
+    {
+        $order = Order::where('id', $request['order_id'])->first();
+
+        $status = $order->status;
+
+        switch ($status) {
+            case 1:
+                $order->status = 3;
+                $order->save();
+                echo 'Đơn hàng đã hủy';
+                break;
+            case 2:
+                echo 'Đơn hàng đang được giao, liên hệ với quản trị viên để hủy';
+                break;
+
+            default:
+                echo 'Đơn hàng đã hủy';
+                break;
+
+        }
+    }
+
     public function change_password_user(Request $request)
     {
         $password_new_1 = $request['password_new'];
@@ -62,12 +173,12 @@ class CustomerController extends Controller
         $customer = Customer::find(Session::get('id'));
         $check_password = Hash::check($request['password'], $customer->password ?? '');
 
-        if($check_password && $password_new_1 == $password_new_2){
+        if ($check_password && $password_new_1 == $password_new_2) {
             $customer->password = Hash::make($password_new_1);
             $customer->save();
-            return redirect()->back()->with('success','Change password success');
+            return redirect()->back()->with('success', 'Change password success');
         }
-        return redirect()->back()->with('error','Change password error');
+        return redirect()->back()->with('error', 'Change password error');
     }
 
     public function update_profile(Request $request)

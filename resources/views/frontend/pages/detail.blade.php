@@ -62,29 +62,21 @@
                         <div class="card-header">
                             <b style="font-size: 18px"> Cấu hình {{$product->title}}: </b>
                         </div>
-                        <style>
-                            #cauhinh_l{
-                                font-weight: bold;
-                            }
-                            #cauhinh_r{
-                                padding-left: 5px;
-                            }
-                        </style>
+
                         <div class="card-body">
-                            <div class="mt-3">
-                                <ul style="list-style-type: none">
-                                    <li><span id="cauhinh_l">Màn hình:</span><span id="cauhinh_r">{{$product->manhinh}}</span></li>
-                                    <li><span id="cauhinh_l">Màu sắc:</span><span id="cauhinh_r">{{$product->mausac}}</span></li>
-                                    <li><span id="cauhinh_l">Camera sau:</span><span id="cauhinh_r">{{$product->camera_sau}}</span></li>
-                                    <li><span id="cauhinh_l">Camera trước:</span><span id="cauhinh_r">{{$product->camera_truoc}}</span></li>
-                                    <li><span id="cauhinh_l">CPU:</span><span id="cauhinh_r">{{$product->cpu}}</span></li>
-                                    <li><span id="cauhinh_l">Bộ nhớ:</span><span id="cauhinh_r">{{$product->bonho}}</span></li>
-                                    <li><span id="cauhinh_l">Ram:</span><span id="cauhinh_r">{{$product->ram}}</span></li>
-                                    <li><span id="cauhinh_l">Kết nối:</span><span id="cauhinh_r">{{$product->ketnoi}}</span></li>
-                                    <li><span id="cauhinh_l">Pin sạc:</span><span id="cauhinh_r">{{$product->pin_sac}}</span></li>
-                                    <li><span id="cauhinh_l">Tiện ích:</span><span id="cauhinh_r">{{$product->tienich}}</span></li>
-                                </ul>
-                            </div>
+                            <table class="table table-striped">
+                                <tr><td style="width: 150px; font-weight: bold">Màn hình</td><td>{{$product->manhinh}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Màu sắc</td><td>{{$product->mausac}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Camera sau</td><td>{{$product->camera_sau}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Camera trước</td><td>{{$product->camera_truoc}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">CPU</td><td>{{$product->cpu}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Bộ nhớ</td><td>{{$product->bonho}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Ram</td><td>{{$product->ram}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Kết nối</td><td>{{$product->ketnoi}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Pin sạc</td><td>{{$product->pin_sac}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Tiện ích</td><td>{{$product->tienich}}</td></tr>
+                            </table>
+
                         </div>
                     </div>
                 </div>
@@ -96,15 +88,11 @@
         <!-- Tab thong tin san van va danh gia san pham -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                        role="tab" aria-controls="home" aria-selected="false">Mô Tả
-                </button>
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">Mô Tả</button>
             </li>
 
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                        role="tab" aria-controls="profile" aria-selected="true">Bình Luận
-                </button>
+                <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Bình Luận</button>
             </li>
         </ul>
 

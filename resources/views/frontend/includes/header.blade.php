@@ -1,69 +1,71 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <h4><a href="{{url('/')}}" style="text-decoration: none">PhoneShop</a></h4>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
-                &nbsp;
-                @foreach($list_brand as $brand)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('brand',$brand->id)}}">{{$brand->title}}</a>
-                    </li>
-                @endforeach
-            </ul>
+<header class="py-3 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <a href="{{url('/')}}" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"/>
+            </svg>
+            <span class="fs-4">PhoneShop</span>
+        </a>
 
-            <div class="nav-item justify-content-end">
-                {{--<a class="nav-link" href="{{url('show-cart')}}">{{Cart::count()}} Cart</a>--}}
+        <div class="nav-item">
+            <button class="btn btn-default position-relative text-decoration-none me-5" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-shopping-cart me-2"></i>
+                Giỏ Hàng
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ count(Cart::content()) }}
+                    <span class="visually-hidden">New cart</span>
+                </span>
+            </button>
 
-                <!-- Split dropstart button -->
-                <div class="btn-group">
-                    <div class="btn-group dropstart" role="group">
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropstart</span>
-                        </button>
-                        <ul class="dropdown-menu" style="width: 500px">
-                            <li class="dropdown-item" href="#">
-                                @if(Cart::count() != 0)
-                                    <div class="container">
-                                        <div class="mt-3">
-                                            @foreach(Cart::content() as $content)
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <b>{{$content->name}}</b>
-                                                        <p>Price: {{number_format($content->price).' '.'vnđ'}}</p>
-                                                        <p>Number: {{$content->qty}}</p>
-                                                        <hr>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                            <p>Subtotal: {{Cart::total().' '.'vnđ'}}</p>
+            <ul class="dropdown-menu" style="width: 500px">
+                <li class="dropdown-item" href="#">
+                    @if(Cart::count() != 0)
+                        <div class="container">
+                            <div class="mt-3">
+                                @foreach(Cart::content() as $content)
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
                                         </div>
-                                    </div>
-                                @else
-                                    <div class="container">
-                                        <div class="mt-3">
-                                            <a href="{{url('/')}}" style="text-decoration: none"> Cart empty</a>
+                                        <div class="col-sm-8">
+                                            <p><b>{{$content->name}}</b></p>
+                                            <p>Đơn giá: {{number_format($content->price).' '.'vnđ'}}</p>
+                                            <p>Số lượng: {{$content->qty}}</p>
                                         </div>
+                                        <hr>
                                     </div>
-                                @endif
-                            </li>
-                            <div class="d-grid gap-2 col-6 mx-auto">
-                                <a type="button" class="btn btn-outline-info" href="{{url('show-cart')}}">Cart</a>
+                                @endforeach
+                                <p>Tổng tiền tạm tính: {{number_format(Cart::total()).' '.'vnđ'}}</p>
                             </div>
-                        </ul>
-                    </div>
-                    <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">
-                            {{ count(Cart::content()) }}
-                        <i class="fa fa-shopping-cart"></i></a>
+                        </div>
+                    @else
+                        <div class="container">
+                            <div class="mt-3">
+                                <a class="text-decoration-none" href="{{url('/')}}"> Không có sản phẩm</a>
+                            </div>
+                        </div>
+                    @endif
+                </li>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">Giỏ hàng</a>
                 </div>
-
-            </div>
+            </ul>
         </div>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0" action="{{ route('search') }}" method="POST" autocomplete="off">
+            @csrf
+            <input class="form-control" type="search" id="keywords" name="tukhoa" aria-label="Search" placeholder="Tìm kiếm">
+            <div id="search_ajax"></div>
+        </form>
     </div>
-</nav>
+</header>
+
+<div class="nav-scroller sm-body shadow-sm">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <nav class="nav nav-underline align-items-center" aria-label="Secondary navigation">
+            <a class="nav-link active" aria-current="page" href="{{url('/')}}">Home</a>
+            @foreach($list_brand as $brand)
+                <a class="nav-link" href="{{route('brand',$brand->id)}}">{{$brand->title}}</a>
+            @endforeach
+        </nav>
+    </div>
+</div>

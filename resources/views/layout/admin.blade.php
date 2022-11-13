@@ -337,6 +337,42 @@
             }
         });
     });
+
+    //xoa cmt binh luan
+    $(document).on('click', '.btn_delete_bl', function () {
+        var comment_id = $(this).data('comment_id');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{url('admin/delete-comment')}}",
+            method: "POST",
+            data: {comment_id: comment_id},
+            success: function (data) {
+                window.location.reload();
+            }
+        });
+    });
+
+    //xoa cmt tra loi
+    $(document).on('click', '.btn_delete_tl', function () {
+        var comment_parent_id = $(this).data('comment_parent_id');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{url('admin/delete-reply-comment')}}",
+            method: "POST",
+            data: {comment_parent_id: comment_parent_id},
+            success: function (data) {
+                window.location.reload();
+            }
+        });
+    });
 </script>
 
 </body>

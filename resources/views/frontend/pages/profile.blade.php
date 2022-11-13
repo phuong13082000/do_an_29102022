@@ -5,7 +5,7 @@
     @include('frontend.includes.breadcrumb')
     <div class="mt-3">
         <div class="container">
-            <h2 class="text-center mb-4">Profile</h2>
+            <h2 class="text-center mb-4">Thông tin tài khoản</h2>
             <form method="POST" id="profile_setup_frm" action="#" >
                 @csrf
                 <div class="row">
@@ -77,7 +77,7 @@
                 </div>
             </form>
             <hr>
-            <h2 class="text-center mb-4">Order History</h2>
+            <h2 class="text-center mb-4">Lịch sử đơn hàng</h2>
 
             <div class="table-responsive">
                 <table id="example1" class="table table-bordered table-striped">
@@ -87,7 +87,7 @@
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
                         <th>Ngày tạo</th>
-                        {{--<th></th>--}}
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -105,12 +105,13 @@
                                 @endif
                             </td>
                             <td>{{$order->created_at}}</td>
-                        {{--<td>
-                                <div class="row">
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detail">Detail</button>
+                            <td>
+                                <button type="button" class="btn btn-success btn_detail" data-bs-toggle="modal" data-bs-target="#detail" data-order_code="{{$order->id}}">Chi tiết</button>
 
-                                </div>
-                            </td>--}}
+                                @if($order->status==1)
+                                    <a href="#" type="button" class="btn btn-danger btn_cancel" data-order_id="{{$order->id}}">Hủy đơn hàng</a>
+                                @endif
+                            </td>
                         </tr>
 
                     @endforeach
@@ -159,16 +160,17 @@
         </div>
     </div>
 
-    <!-- Modal Detail Order
+    <!-- Modal Detail Order -->
     <div class="modal fade" id="detail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="changePasswordLabel">Order Detail</h5>
+                    <h5 class="modal-title" id="changePasswordLabel">Chi tiết đơn hàng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
+                <div id="detail_order"></div>
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -177,7 +179,8 @@
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -190,7 +193,6 @@
                 var email = $('#email').val();
                 var phone = $('#phone').val();
                 var address = $('#address').val();
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -218,10 +220,50 @@
                             $("#res").html(success);
                             $("#btn").attr("disabled", false);
                             $("#btn").html("Save Profile");
-
                         }
                     }
                 });
+            });
+        });
+
+        //chi tiet don hang
+        $(document).on('click', '.btn_detail', function () {
+            var order_id = $(this).data('order_code');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{url('/chi-tiet-don-hang')}}",
+                method: "POST",
+                data: {order_id: order_id},
+                success: function (data) {
+                    $('#detail_order').html(data);
+                }
+            });
+        });
+
+        //huy don hang
+        $(document).on('click', '.btn_cancel', function () {
+            var order_id = $(this).data('order_id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{url('/huy-don-hang')}}",
+                method: "POST",
+                data: {order_id: order_id},
+                success: function (data) {
+                    alert(data);
+                    window.location.reload();
+                },
+                fail: function (data) {
+                    alert(data);
+                    window.location.reload();
+                }
             });
         });
 

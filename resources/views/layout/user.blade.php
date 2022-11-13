@@ -24,21 +24,16 @@
 
 </head>
 <body>
-<div class="container-fluid bg-black">
 
     @include('frontend.includes.top-header')
 
-</div>
-
-<div class="container">
-
     @include('frontend.includes.header')
 
+<div class="container">
     @yield('index')
+</div>
 
     @include('frontend.includes.footer')
-
-</div>
 
 <script src="{{asset('frontend/js/jquery.js')}}"></script>
 <script src="{{asset('frontend/js/jquery-ui.js')}}"></script>
@@ -81,6 +76,7 @@
         $('#search_ajax').fadeOut();
     });
 </script>
+
 </body>
 </html>
 
