@@ -27,26 +27,32 @@
                         <div class="col-sm-4">
                             <select id='province' class="form-control">
                                 <option selected>Thành Phố</option>
-
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='district' class="form-control">
                                 <option selected>Quận Huyện</option>
-
                             </select>
                         </div>
 
                         <div class="col-sm-4">
                             <select id='ward' class="form-control">
                                 <option selected>Phường Xã</option>
-
                             </select>
                         </div>
-                        <span id="address"></span> {{-- Gui dia chi de checkout --}}
-                    </div>
 
+                        <span id="address"></span> {{-- Gui dia chi de checkout --}}
+
+                    </div>
+                </div>
+
+                {{-- Service --}}
+                <div class="mb-3">
+                    <label for='service'>Dịch vụ bên giao hàng</label>
+                    <select id='service' class="form-control">
+                        <option selected>Dịch vụ</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -111,6 +117,7 @@
                                 </table>
                             </div>
                         </div>
+                        <h4>Tạm tính :{{number_format(Cart::total()).' '.'vnđ'}}</h4>
                         <h4 id="fee_ship">Tiền ship :</h4> {{-- fee --}}
                         <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
                         <h4 id="total">Thành tiền :</h4> {{-- fee_hidden + total_hidden --}}
@@ -168,6 +175,7 @@
             $('#province').on('change', function () {
                 $('option[name="district-name"]').remove();
                 $('option[name="ward-name"]').remove();
+                $('option[name="name-service"]').remove();
 
                 var id_province = $(this).find(":selected").val();
                 var districts = {
@@ -198,8 +206,9 @@
         $(document).ready(function () {
             $('#district').on('change', function () {
                 $('option[name="ward-name"]').remove();
-
+                $('option[name="name-service"]').remove();
                 var id_district = $(this).find(":selected").val();
+
                 var wards = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + id_district + "",
                     "method": "GET",
@@ -220,30 +229,46 @@
                     for (let i = 0; i < length_ward; i++) {
                         $('#ward').append('<option id="id_ward_' + data_ward[i]['WardCode'] + '" name="ward-name" value="' + data_ward[i]['WardCode'] + '">' + data_ward[i]['WardName'] + '</option>');
                     }
-                });
-
-                //service-fee
-                var form_district = 1450; //q8-tphcm
-                var service_fee = {
-                    "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" + ID_GHN + "&from_district=" + form_district + "&to_district=" + id_district + "",
-                    "method": "GET",
-                    "timeout": 0,
-                    "headers": {"token": TOKEN_GHN},
-                };
-                $.ajax(service_fee).done(function (response) {
-                    var service_id = response['data'][0]['service_id'];
-                    $('#fee_ship').append('<input type="hidden" id="fee_service" value="' + service_id + '">');
+                    service_fee();
                 });
             });
         });
 
-        //canc fee
         $(document).ready(function () {
             $('#ward').on('change', function () {
-                var ward_code = $(this).val();
+                $('option[name="name-service"]').remove();
+                service_fee();
+            });
+        });
+
+        function service_fee() {
+            var id_district = $('#district').find(":selected").val();
+            //service-fee
+            var form_district = 1450; //q8-tphcm
+            var service_fee = {
+                "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" + ID_GHN + "&from_district=" + form_district + "&to_district=" + id_district + "",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {"token": TOKEN_GHN},
+            };
+            $.ajax(service_fee).done(function (response) {
+
+                for (let w = 0; w < response['data']['length']; w++) {
+                    $('#service').append('<option id="service_' + response['data'][w]['service_id'] + '" name="name-service" value="' + response['data'][w]['service_id'] + '">' + response['data'][w]['short_name'] + '</option>');
+                }
+
+                var service_id = response['data'][0]['service_id'];
+                $('#fee_ship').append('<input type="hidden" id="fee_service" value="' + service_id + '">');
+            });
+        }
+
+        //canc fee
+        $(document).ready(function () {
+            $('#service').on('change', function () {
+                var ward_code = $('#ward').val();
                 var district_id = $('#district').val();
                 var price_product = $('#product_price').val();
-                var service_id = $('#fee_service').val();
+                var service_id = $(this).val();
                 var from_district_id = $('#footer_id_address').val(); // 1450 q8-tphcm
                 var height = 15; //cm
                 var length = 15; //cm

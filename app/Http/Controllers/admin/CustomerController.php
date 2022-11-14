@@ -264,68 +264,53 @@ class CustomerController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
 
-    function createUserFacebook($getInfo)
-    {
-        $user = Customer::where('facebook_id', $getInfo->id)->first();
-        if (!$user) {
-            $user = Customer::create([
-                'fullname' => $getInfo->name,
-                'email' => $getInfo->email,
-                'provider' => 'facebook',
-                'facebook_id' => $getInfo->id
-            ]);
-        }
-        return $user;
-    }
-
-    public function callback_facebook()
-    {
-        $provider = Socialite::driver('facebook')->user();
-        $account = Customer::where('provider', 'facebook')->where('facebook_id', $provider->getId())->first();
-
-        if (!$account) {
-            $this->createUserFacebook($provider);
-        }
-
-        $account_name = Customer::where('facebook_id', $account->facebook_id)->first();
-
-        Session::put('id', $account_name->id);
-        Session::put('name', $account_name->fullname);
-        return redirect('/')->with('message', 'Đăng nhập thành công');
-    }
-
     public function login_google()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    function createUserGoogle($getInfo)
+    public function callback_facebook()
     {
-        $user = Customer::where('google_id', $getInfo->id)->first();
-        if (!$user) {
-            $user = Customer::create([
-                'fullname' => $getInfo->name,
-                'email' => $getInfo->email,
-                'provider' => 'google',
-                'google_id' => $getInfo->id
+        $provider = Socialite::driver('facebook')->user();
+        $account_before = Customer::where('provider', 'facebook')->where('facebook_id', $provider->getId())->first();
+
+        if (!$account_before) {
+            Customer::create([
+                'fullname' => $provider->name,
+                'email' => $provider->email,
+                'provider' => 'facebook',
+                'facebook_id' => $provider->id
             ]);
         }
-        return $user;
+        $account_after = Customer::where('provider', 'facebook')->where('facebook_id', $provider->getId())->first();
+
+        $account_name = Customer::where('facebook_id', $account_after->facebook_id)->first();
+
+        Session::put('id', $account_name->id);
+        Session::put('name', $account_name->fullname);
+        return redirect('/')->with('success', 'Đăng nhập thành công');
     }
 
     public function callback_google()
     {
         $provider = Socialite::driver('google')->stateless()->user();
-        $account = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
+        $account_before = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
 
-        if (!$account) {
-            $this->createUserGoogle($provider);
+        if (!$account_before) {
+            Customer::create([
+                'fullname' => $provider->name,
+                'email' => $provider->email,
+                'provider' => 'google',
+                'google_id' => $provider->id
+            ]);
         }
-        $account_name = Customer::where('google_id', $account->id)->first();
+        $account_after = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
+
+        $account_name = Customer::where('google_id', $account_after->google_id)->first();
 
         Session::put('id', $account_name->id);
         Session::put('name', $account_name->fullname);
-        return redirect('/')->with('message', 'Đăng nhập thành công');
+        return redirect('/')->with('success', 'Đăng nhập thành công');
     }
 
 }

@@ -23,6 +23,7 @@ class AdminController extends Controller
         $count_message = Comment::where('status', 1)->where('admin_id', NULL)->count();
         $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
+        //chart
         $users = Order::select(DB::raw("COUNT(*) as count"))
             ->whereYear('created_at', date('Y'))
             ->groupBy(DB::raw("Month(created_at)"))

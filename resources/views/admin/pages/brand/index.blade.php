@@ -103,3 +103,24 @@
         </div>
     </div>
 @endsection
+
+@section('script_admin')
+    <!-- Update Brand Status -->
+    <script type="text/javascript">
+        $('.brand-status').change(function () {
+            var id = $(this).attr('id');
+            var status = $(this).find(':selected').val();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('admin/update-status-brand')}}",
+                method: 'POST',
+                data: {id: id, status: status, _token: _token},
+                success: function () {
+                    alert('Change status success!');
+                    window.location.href = "{{route('brand.index')}}";
+                }
+            });
+        });
+    </script>
+
+@endsection

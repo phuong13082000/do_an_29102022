@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -45,15 +46,26 @@ class OrderController extends Controller
         $id = $data['id'];
         $status = $data['status'];
         $order = Order::find($id);
-
-        if ($status > $order->status) {
+        $order_details = OrderDetail::with('reProduct')->where('order_id', $id)->get();
+        if ($order->status == 1 && $status == 2) {
             $order->status = $status;
             $order->save();
+
             return response()->json(['message' => 'Cập nhật thành công.']);
-        } elseif ($status < $order->status || $status == '') {
+        } elseif ($order->status == 2 && $status == 3) {
+            $order->status = $status;
+            $order->save();
+
+            foreach ($order_details as $order_detail) {
+                $id_product = $order_detail->product_id;
+                $product = Product::find($id_product);
+                $product->number = $product->number + $order_detail->num;
+                $product->save();
+            }
+            return response()->json(['message' => 'Cập nhật thành công.']);
+        } else {
             return response()->json(['message' => 'Cập nhật thất bại.']);
         }
-        return response()->json(['message' => 'Cập nhật thất bại.']);
     }
 
     public function print_order($id)

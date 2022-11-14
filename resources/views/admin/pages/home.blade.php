@@ -120,7 +120,7 @@
         const data = {
             labels: labels,
             datasets: [{
-                label: 'Số người đăng kí',
+                label: 'Số đơn hàng',
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)'
                 ],

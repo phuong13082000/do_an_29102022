@@ -76,12 +76,11 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>Status</th>
                                     <th>Title</th>
                                     <th>Answer</th>
                                     <th>Product</th>
                                     <th>Customer</th>
-                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </tfoot>

@@ -116,7 +116,6 @@
                                         <option value="2">Đã xử lý-Đã giao hàng</option>
                                         <option value="3">Hủy đơn hàng-tạm giữ</option>
                                         <input type="hidden" name="id_order" value="{{$order->id}}">
-                                        <input type="hidden" name="id_product" value="{{$details->product_id}}">
                                     </select>
                                 </form>
                             @elseif($order->status==2)
@@ -128,7 +127,6 @@
                                         <option selected value="2">Đã xử lý-Đã giao hàng</option>
                                         <option value="3">Hủy đơn hàng-tạm giữ</option>
                                         <input type="hidden" name="id_order" value="{{$order->id}}">
-                                        <input type="hidden" name="id_product" value="{{$details->product_id}}">
                                     </select>
                                 </form>
 
@@ -141,7 +139,6 @@
                                         <option value="2">Đã xử lý-Đã giao hàng</option>
                                         <option selected value="3">Hủy đơn hàng-tạm giữ</option>
                                         <input type="hidden" name="id_order" value="{{$order->id}}">
-                                        <input type="hidden" name="id_product" value="{{$details->product_id}}">
                                     </select>
                                 </form>
 
