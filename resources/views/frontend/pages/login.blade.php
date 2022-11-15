@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="col"></div>
                                 <div class="col">
-                                    <a href="#">Forgot password?</a>
+                                    <a href="{{url('/forgot-password')}}">Forgot password?</a>
                                 </div>
                             </div>
                         </div>

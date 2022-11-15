@@ -87,14 +87,19 @@ Route::get('/dang-nhap', [CustomerController::class, 'dangnhap']);
 Route::get('/dang-ki', [CustomerController::class, 'dangki']);
 Route::get('/profile', [CustomerController::class, 'profile']);
 
+Route::get('/forgot-password', [MailController::class, 'user_forgot_password']);
+Route::get('/update-new-password', [MailController::class, 'user_update_new_password']);
+
 Route::post('/change-password-user', [CustomerController::class, 'change_password_user']);
 Route::post('/chi-tiet-don-hang', [CustomerController::class, 'profile_order_detail']);
 Route::post('/huy-don-hang', [CustomerController::class, 'cancel_order']);
-
 Route::post('/login-customer', [CustomerController::class, 'login_customer']);
 Route::post('/add-customer', [CustomerController::class, 'add_customer']);
 Route::post('/dang-xuat', [CustomerController::class, 'logout']);
 Route::post('/update-profile', [CustomerController::class, 'update_profile']);
+
+Route::post('/recover-password', [MailController::class, 'user_recover_password']);
+Route::post('/reset-new-password', [MailController::class, 'user_reset_new_password']);
 
 //facebook
 Route::get('/login-facebook', [CustomerController::class, 'login_facebook']);
