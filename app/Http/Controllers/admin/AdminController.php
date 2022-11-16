@@ -28,7 +28,6 @@ class AdminController extends Controller
             ->whereYear('created_at', date('Y'))
             ->groupBy(DB::raw("Month(created_at)"))
             ->pluck('count');
-
         $labels = $users->keys();
         $data = $users->values();
 

@@ -117,6 +117,7 @@ Route::get('cancel-transaction', [PayPalPaymentController::class, 'cancelTransac
 
 //Checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
+Route::get('/hand-cash', [CheckoutController::class, 'handcash']);
 
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
 

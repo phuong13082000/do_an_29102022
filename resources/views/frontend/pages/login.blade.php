@@ -9,7 +9,7 @@
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <div class="login-form"><!--login form-->
-                        <h2 class="text-center mb-4">Login Account</h2>
+                        <h2 class="text-center mb-4">Đăng Nhập</h2>
                         {!! Form::open(['url'=>'/login-customer', 'method'=>'POST', 'id'=>'login_form']) !!}
 
                         <div class="form-floating mb-4">
@@ -19,7 +19,7 @@
 
                         <div class="form-floating mb-4">
                             {!! Form::password('password_login', ['class'=>'form-control', 'placeholder'=>'Password']) !!}
-                            {!! Form::label('password_login', 'Password', []) !!}
+                            {!! Form::label('password_login', 'Mật khẩu', []) !!}
                         </div>
 
                         <div class="row mb-4">
@@ -30,21 +30,21 @@
                                 </div>
                                 <div class="col"></div>
                                 <div class="col">
-                                    <a href="{{url('/forgot-password')}}">Forgot password?</a>
+                                    <a class="text-decoration-none" href="{{url('/forgot-password')}}">Quên mật khẩu?</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="d-grid gap-2 mb-3">
-                            {!! Form::submit('Sign in', ['class'=>'btn btn-primary']) !!}
+                            {!! Form::submit('Đăng nhập', ['class'=>'btn btn-primary']) !!}
                         </div>
 
                         {!! Form::close() !!}
 
                         <!-- Register buttons -->
                         <div class="text-center">
-                            <p>Not a member? <a href="{{ url('dang-ki') }}">Register</a></p>
-                            <p>or sign up with:</p>
+                            <p>Bạn không phải thành viên? <a class="text-decoration-none" href="{{ url('dang-ki') }}">Đăng kí</a></p>
+                            <p>hoặc đăng nhập bằng:</p>
                             <a type="button" class="btn btn-link btn-floating mx-1" href="{{ url('/login-facebook') }}">
                                 <i class="fa fa-facebook-f"></i>
                             </a>
@@ -61,3 +61,4 @@
         </div>
     </div>
 @endsection
+

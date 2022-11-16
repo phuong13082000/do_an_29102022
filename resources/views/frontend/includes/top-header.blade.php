@@ -9,7 +9,7 @@
         @if (!Session::get('id'))
         <ul class="nav">
             <li class="nav-item"><a href="{{ url('dang-nhap') }}" class="nav-link link-dark px-2">Đăng nhập</a></li>
-            <li class="nav-item"><a href="{{ url('dang-ki') }}" class="nav-link link-dark px-2">Đăng kí</a></li>
+            {{--<li class="nav-item"><a href="{{ url('dang-ki') }}" class="nav-link link-dark px-2">Đăng kí</a></li>--}}
         </ul>
         @else
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle pt-2" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">

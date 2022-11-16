@@ -55,10 +55,19 @@ class CheckoutController extends Controller
 
             //tru san pham
             $product = Product::find($cart->id);
-            $product->number = $product->number-$cart->qty;
+            $product->number = $product->number - $cart->qty;
             $product->save();
         }
 
         Cart::destroy();
+
+    }
+
+    public function handcash()
+    {
+        $list_brand = Brand::take(5)->get();
+        $title = 'Thanh toán tiền mặt';
+
+        return view('frontend.pages.handcash')->with(compact('title', 'list_brand'));
     }
 }

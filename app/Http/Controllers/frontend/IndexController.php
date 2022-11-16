@@ -188,7 +188,7 @@ class IndexController extends Controller
         if ($data['keywords']) {
             $product = Product::where('status', 0)->where('title', 'LIKE', '%' . $data['keywords'] . '%')->get();
 
-            $output = '<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="display:block;"><h5 style="text-align: center">Sản phẩm gợi ý:</h5><hr>';
+            $output = '<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="display:block;"><h5 style="text-align: center">Sản phẩm gợi ý</h5><hr>';
 
             foreach ($product as $prod) {
                 $output .= '<li>

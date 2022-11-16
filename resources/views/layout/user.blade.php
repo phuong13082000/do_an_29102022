@@ -49,6 +49,8 @@
 <script src="{{asset('frontend/js/jquery-validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery-validation/additional-methods.min.js')}}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
 @yield('scripts')

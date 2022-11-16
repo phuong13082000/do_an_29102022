@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -145,13 +146,20 @@ class CustomerController extends Controller
     public function cancel_order(Request $request)
     {
         $order = Order::where('id', $request['order_id'])->first();
-
+        $order_details = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->get();
         $status = $order->status;
 
         switch ($status) {
             case 1:
                 $order->status = 3;
                 $order->save();
+
+                foreach ($order_details as $order_detail) {
+                    $id_product = $order_detail->product_id;
+                    $product = Product::find($id_product);
+                    $product->number = $product->number + $order_detail->num;
+                    $product->save();
+                }
                 echo 'Đơn hàng đã hủy';
                 break;
             case 2:

@@ -4,81 +4,82 @@
     @include('frontend.includes.alert')
     @include('frontend.includes.breadcrumb')
     <div class="mt-3">
-        <div class="row">
-            <div class="col-sm-6">
-                {!! Form::open(['url'=>'#', 'id'=>'form_checkout']) !!}
+        @if(Cart::count() != 0)
 
-                <h3>Thông tin nhận hàng</h3>
-                <hr>
-                <div class="form-floating mb-4">
-                    {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
-                    {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
-                </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    {!! Form::open(['url'=>'#', 'method'=>'POST', 'id'=>'form_checkout']) !!}
 
-                <div class="form-floating mb-4">
-                    {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan', 'placeholder'=>'Số điện thoại nhận hàng']) !!}
-                    {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
-                </div>
-
-                <div class="mb-3">
-                    <div class="row">
-                        <span>Địa chỉ nhận hàng</span>
-
-                        <div class="col-sm-4">
-                            <select id='province' class="form-control">
-                                <option selected>Thành Phố</option>
-                            </select>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <select id='district' class="form-control">
-                                <option selected>Quận Huyện</option>
-                            </select>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <select id='ward' class="form-control">
-                                <option selected>Phường Xã</option>
-                            </select>
-                        </div>
-
-                        <span id="address"></span> {{-- Gui dia chi de checkout --}}
-
+                    <h3>Thông tin nhận hàng</h3>
+                    <hr>
+                    <div class="form-floating mb-4">
+                        {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
+                        {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
                     </div>
-                </div>
 
-                {{-- Service --}}
-                <div class="mb-3">
-                    <label for='service'>Dịch vụ bên giao hàng</label>
-                    <select id='service' class="form-control">
-                        <option selected>Dịch vụ</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-group">
-                        {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
-                        {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control', 'id'=>'payment_method']) !!}
+                    <div class="form-floating mb-4">
+                        {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan', 'placeholder'=>'Số điện thoại nhận hàng']) !!}
+                        {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <div class="form-group">
-                        {!! Form::label('note', 'Ghi chú', []) !!}
-                        {!! Form::textarea('note', '', ['class'=>'form-control', 'id'=>'note']) !!}
+                    <div class="mb-3">
+                        <div class="row">
+                            <span>Địa chỉ nhận hàng</span>
+
+                            <div class="col-sm-4">
+                                <select id='province' class="form-control">
+                                    <option selected>Thành Phố</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <select id='district' class="form-control">
+                                    <option selected>Quận Huyện</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <select id='ward' class="form-control">
+                                    <option selected>Phường Xã</option>
+                                </select>
+                            </div>
+
+                            <span id="address"></span> {{-- Gui dia chi de checkout --}}
+
+                        </div>
                     </div>
+
+                    {{-- Service --}}
+                    <div class="mb-3">
+                        <label for='service'>Dịch vụ bên giao hàng</label>
+                        <select id='service' class="form-control">
+                            <option selected>Dịch vụ</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-group">
+                            {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
+                            {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control', 'id'=>'payment_method']) !!}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-group">
+                            {!! Form::label('note', 'Ghi chú', []) !!}
+                            {!! Form::textarea('note', '', ['class'=>'form-control', 'id'=>'note']) !!}
+                        </div>
+                    </div>
+
+                    {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success btn-submit']) !!}
+
                 </div>
 
-                {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success btn-submit']) !!}
+                {{--thong tin don hang--}}
+                <div class="col-sm-6">
+                    <h3>Thông tin đơn hàng</h3>
+                    <hr>
 
-            </div>
-
-            {{--thong tin don hang--}}
-            <div class="col-sm-6">
-                <h3>Thông tin đơn hàng</h3>
-                <hr>
-
-                @if(Cart::count() != 0)
                     <div class="container">
                         <div class="mt-3">
                             <div class="table-responsive cart_info">
@@ -96,7 +97,8 @@
                                     <tbody>
                                     @foreach(Cart::content() as $content)
                                         <tr>
-                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
+                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}"
+                                                     width="90" alt="{{$content->name}}"/></td>
                                             <td><h4>{{$content->name}}</h4></td>
                                             <td>
                                                 <p>{{number_format($content->price).' '.'vnđ'}}</p>
@@ -121,25 +123,28 @@
                         <h4 id="fee_ship">Tiền ship :</h4> {{-- fee --}}
                         <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
                         <h4 id="total">Thành tiền :</h4> {{-- fee_hidden + total_hidden --}}
-                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
+                        <input type="hidden" id="total_hidden"
+                               value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
                         <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                     </div>
-                @else
-                    <div class="container">
-                        <div class="mt-3">
-                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để mua</a>
+                    @else
+                        <div class="container">
+                            <div class="mt-3">
+                                <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để
+                                    mua</a>
+                            </div>
                         </div>
-                    </div>
-                @endif
-                {!! Form::close() !!}
+                    @endif
+                    {!! Form::close() !!}
 
+                </div>
             </div>
-        </div>
     </div>
 @endsection
 
 @section('scripts')
     <script type="text/javascript">
+
         const TOKEN_GHN = 'ba8ec0ca-586b-11ed-b824-262f869eb1a7';
         const ID_GHN = 3404895;
 
@@ -157,10 +162,9 @@
                 let data_province = province.data;
                 let length_province;
 
-                if(province.data.length == null)
-                {
+                if (province.data.length == null) {
                     length_province = 63;
-                }else {
+                } else {
                     length_province = province.data.length;
                 }
 
@@ -188,10 +192,9 @@
                     let data_district = district.data;
                     let length_district;
 
-                    if(district.data.length == null)
-                    {
+                    if (district.data.length == null) {
                         length_district = 0;
-                    }else {
+                    } else {
                         length_district = district.data.length;
                     }
 
@@ -217,12 +220,11 @@
                 };
                 $.ajax(wards).done(function (ward) {
                     let data_ward = ward.data;
-                    let length_ward ;
+                    let length_ward;
 
-                    if(ward.data.length == null)
-                    {
+                    if (ward.data.length == null) {
                         length_ward = 0;
-                    }else {
+                    } else {
                         length_ward = ward.data.length;
                     }
 
@@ -283,19 +285,25 @@
                 };
                 $.ajax(calculatorFee).done(function (response) {
                     var fee = response['data']['total'];
-                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
+                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }) + '</span>');
                     $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
 
                     var total = $('#total_hidden').val();
                     let can_total;
 
-                    if(fee){
+                    if (fee) {
                         can_total = Number(total) + Number(fee);
-                    }else{
+                    } else {
                         can_total = Number(total);
                     }
 
-                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span>');
+                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }) + '</span>');
                     //$('#thanhtoan_hidden').append('<span id="paypal">' + can_total + '</span>');
 
                 });
@@ -332,23 +340,24 @@
                 var phone_nguoinhan = $('#phone_nguoinhan').val();
                 var payment_method = $('#payment_method').val();
                 var note = $('#note').val();
-
-                $.ajax({
-                    url: "{{url('/confirm-order')}}",
-                    method: "POST",
-                    data: {
-                        name_nguoinhan: name_nguoinhan,
-                        phone_nguoinhan: phone_nguoinhan,
-                        payment_method: payment_method,
-                        name_address: name_address,
-                        price_ship: price_ship,
-                        note: note,
-                        _token: _token
-                    },
-                    success: function (data) {
-                        window.location.href = "{{url('/')}}";
-                    }
-                });
+                if (payment_method === 'Tiền mặt') {
+                    $.ajax({
+                        url: "{{url('/confirm-order')}}",
+                        method: "POST",
+                        data: {
+                            name_nguoinhan: name_nguoinhan,
+                            phone_nguoinhan: phone_nguoinhan,
+                            payment_method: payment_method,
+                            name_address: name_address,
+                            price_ship: price_ship,
+                            note: note,
+                            _token: _token
+                        },
+                        success: function (data) {
+                            window.location.href = "{{ url('/hand-cash') }}";
+                        }
+                    });
+                }
             });
         });
 
