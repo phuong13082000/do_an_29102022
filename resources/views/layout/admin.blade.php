@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-          href="{{asset('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 
     <!-- iCheck -->
     <link rel="stylesheet" href="{{asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
@@ -139,8 +138,8 @@
 <!-- AdminLTE App -->
 <script src="{{asset('admin/js/adminlte.js')}}"></script>
 
-<!-- CKEditor 4 -->
-<script src="//cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
+<!-- Summernote -->
+<script src="{{asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
 <script src="{{asset('admin/js/main.js')}}"></script>
 

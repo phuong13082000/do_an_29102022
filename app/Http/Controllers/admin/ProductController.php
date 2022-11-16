@@ -125,7 +125,6 @@ class ProductController extends Controller
                 $product->image = $new_image;
             }
         }
-
         $product->save();
 
         return redirect()->route('product.index');
@@ -137,6 +136,14 @@ class ProductController extends Controller
         $product = Product::find($id);
         if (file_exists('public/uploads/product/' . $product->image)) {
             unlink('public/uploads/product/' . $product->image);
+        }
+
+        $comments = Comment::where('product_id', $id)->get();
+        $count_comment = $comments->count();
+        if ($count_comment <= 0) {
+            foreach ($comments as $comment) {
+                $comment->delete();
+            }
         }
 
         $product->delete();

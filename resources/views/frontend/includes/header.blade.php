@@ -46,7 +46,9 @@
                     @endif
                 </li>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">Giỏ hàng</a>
+                    <div class="row">
+                        <a type="button" class="btn btn-outline-secondary" href="{{url('show-cart')}}">Giỏ hàng</a>
+                    </div>
                 </div>
             </ul>
         </div>

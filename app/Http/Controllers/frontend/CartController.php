@@ -20,9 +20,6 @@ class CartController extends Controller
 
     public function save_cart(Request $request)
     {
-        $title = 'Cart';
-        $list_brand = Brand::take(5)->get();
-
         $sanpham_id = $request->productid_hidden;
         $chitiet_sanpham = Product::where('id', $sanpham_id)->first();
         $soluong = $request->qty;

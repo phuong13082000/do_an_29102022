@@ -15,10 +15,14 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        $title = 'Checkout';
         $list_brand = Brand::take(5)->get();
 
-        return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
+        if (Session::get('id')){
+            $title = 'Checkout';
+            return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
+        }
+        $title = 'Cart';
+        return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 
     public function confirm_order(Request $request)
@@ -46,7 +50,7 @@ class CheckoutController extends Controller
 
         foreach ($content as $cart) {
             $order_details = new OrderDetail();
-            $order_details->num = $cart->qty;
+            $order_details->number = $cart->qty;
             $order_details->price = $cart->price;
             $order_details->status = 1;
             $order_details->order_id = $order_id;

@@ -1,5 +1,3 @@
-CKEDITOR.replace('thongtin_chung'); //create_product
-
 <!--Page specific script -->
 $(function () {
     $("#example1").DataTable({

@@ -16,26 +16,14 @@ class Product extends Model
     ];
 
     protected $fillable = [
-        'id',
-        'title',
-        'image',
-        'number',
-        'price',
-        'price_sale',
-        'manhinh',
-        'mausac',
-        'camera_sau',
-        'camera_truoc',
-        'cpu',
-        'bonho',
-        'ram',
-        'ketnoi',
-        'pin_sac',
-        'tienich',
-        'thongtin_chung',
-        'status',
-        'brand_id',
-        'category_id',
+        'id', 'title', 'image',
+        'number', 'price', 'price_sale',
+        'manhinh', 'mausac', 'camera_sau',
+        'camera_truoc', 'cpu', 'bonho',
+        'ram', 'ketnoi', 'pin_sac',
+        'tienich', 'thongtin_chung', 'height',
+        'length', 'weight', 'width',
+        'status', 'brand_id', 'category_id',
     ];
 
     public function reBrand()

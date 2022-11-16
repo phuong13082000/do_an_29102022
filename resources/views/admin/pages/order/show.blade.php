@@ -83,13 +83,13 @@
                     @foreach($order_details as $key => $details)
                         @php
                             $i++;
-                            $subtotal = $details->price*$details->num;
+                            $subtotal = $details->price*$details->number;
                             $total+=$subtotal;
                         @endphp
                         <tr class="color_qty_{{$details->product_id}}">
                             <td>{{$details->reProduct->title}}</td>
                             <td>{{$details->reProduct->number}}</td>
-                            <td>{{$details->num}}</td>
+                            <td>{{$details->number}}</td>
                             <td>{{number_format($details->price ,0,',','.')}}đ</td>
                             <td>{{number_format($subtotal+$order->price_ship ,0,',','.')}}đ</td>
                         </tr>
@@ -217,12 +217,12 @@
                         @foreach($order_details as $key => $details)
                             @php
                                 $i++;
-                                $subtotal = $details->price * $details->num;
+                                $subtotal = $details->price * $details->number;
                                 $total+=$subtotal;
                             @endphp
                             <tr>
                                 <td>{{$details->reProduct->title}}</td>
-                                <td>{{$details->num}}</td>
+                                <td>{{$details->number}}</td>
                                 <td>{{number_format($details->price ,0,',','.')}}đ</td>
                                 <td>{{number_format($subtotal ,0,',','.')}}đ</td>
                             </tr>
@@ -231,9 +231,9 @@
                             <td colspan="2">
                                 @php
                                     $total_coupon = 0;
-                                    $total_coupon = $total + 50000 ;
+                                    $total_coupon = $total + $order->price_ship ;
                                 @endphp
-                                Phí ship : 50.000đ <br>
+                                Phí ship : {{number_format($order->price_ship,0,',','.')}}đ <br>
                                 Thanh toán: {{number_format($total_coupon,0,',','.')}}đ
                             </td>
                         </tr>

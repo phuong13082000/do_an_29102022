@@ -149,13 +149,13 @@ class OrderController extends Controller
 
         $total = 0;
         foreach ($order_details as $product) {
-            $subtotal = $product->price * $product->num;
+            $subtotal = $product->price * $product->number;
             $total += $subtotal;
 
             $output .= '
 					<tr>
 						<td>' . $product->reProduct->title . '</td>
-						<td>' . $product->num . '</td>
+						<td>' . $product->number . '</td>
 						<td>' . number_format($product->price, 0, ',', '.') . 'đ' . '</td>
 						<td>' . number_format($subtotal, 0, ',', '.') . 'đ' . '</td>
                     </tr>';
@@ -163,7 +163,7 @@ class OrderController extends Controller
         $output .= '
 					<tr>
                         <td colspan="2">
-                            <p>Phí ship: 50,000 đ</p>
+                            <p>Phí ship: ' . number_format($order->price_ship, 0, ',', '.') . 'đ' . '</p>
                             <p>Thanh toán : ' . number_format($total + 50000, 0, ',', '.') . 'đ' . '</p>
                         </td>
 		            </tr>

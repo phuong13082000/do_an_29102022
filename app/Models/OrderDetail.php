@@ -11,7 +11,7 @@ class OrderDetail extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'num',
+        'number',
         'price',
         'status',
         'order_id',

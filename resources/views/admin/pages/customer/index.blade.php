@@ -18,8 +18,6 @@
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Gender</th>
-                                    <th>Birthday</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Google_id</th>
@@ -35,8 +33,6 @@
                                         <td>{{$key}}</td>
                                         <td>{{$customer->fullname}}</td>
                                         <td>{{$customer->email}}</td>
-                                        <td>{{$customer->gender}}</td>
-                                        <td>{{$customer->birthday}}</td>
                                         <td>{{$customer->phone}}</td>
                                         <td>{{$customer->address}}</td>
                                         <td>{{$customer->google_id}}</td>
@@ -52,8 +48,6 @@
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Gender</th>
-                                    <th>Birthday</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Google_id</th>
