@@ -15,9 +15,9 @@ class IndexController extends Controller
     {
         $title = "Điện thoại di động";
 
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->get();
         $list_category = Category::where('status', 0)->get();
-        $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
+        $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
         $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
         $list_recommend = Product::orderBy('updated_at', 'DESC')->take(10)->get();
 
@@ -26,6 +26,56 @@ class IndexController extends Controller
 
         return view('frontend.pages.index')
             ->with(compact('title', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
+    }
+
+    public function product_loc(Request $request)
+    {
+        $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
+        if($request['value_loc'] == 0) {
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
+        } elseif($request['value_loc'] == 1){
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'ASC')->take(8)->get();
+        }elseif($request['value_loc'] == 2){
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();
+        }
+
+        $output = '';
+        foreach ($list_product as $product) {
+            $output .= '
+                <div class="col-sm-3">
+                    <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
+                        <img src="../public/uploads/product/'.$product->image.'" class="card-img-top" alt="'.$product->title.'">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">'.$product->title.'</h5>
+                            <p class="card-subtitle text-center">';
+                                if($product->number){
+                                    if($product->price_sale){
+                                    $output.='
+                                        <del>'. number_format($product->price, 0, '', ',') .' VND</del>
+                                        <b style="color: red"> -'.round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP).'%</b>
+                                        <br><b>'. number_format($product->price_sale, 0, '', ',') .' VND</b>';
+                                    }else{
+                                        $output.='
+                                        <b>'. number_format($product->price, 0, '', ',') .' VND</b>';
+                                    }
+                                }else{
+                                 $output.='
+                                    <b style="color: red">Hết Hàng</b>';
+                                }
+                            $output.='
+                            </p>
+                            <form method="POST" action="'.url('/save-cart').'" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="'. csrf_token() .'" />
+                                <input name="qty" type="hidden" min="1" max="'.$product->number.'" class="cart_product_qty_'.$product->id.'" value="1"/>
+                                <input type="hidden" name="productid_hidden" value="'.$product->id.'"/>
+                                <a href="'.route('detail', $product->id).'" class="btn btn-sm btn-outline-secondary">Detail</a>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>';
+        }
+        echo $output;
     }
 
     public function brand($id)

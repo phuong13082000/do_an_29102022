@@ -74,6 +74,7 @@ Route::get('/tinh-nang/{value}', [IndexController::class, 'tinh_nang'])->name('t
 
 Route::post('/search', [IndexController::class, 'search'])->name('search');
 Route::post('/search-ajax', [IndexController::class, 'search_ajax']);
+Route::post('/loc', [IndexController::class, 'product_loc']);
 
 //Cart
 Route::get('/show-cart', [CartController::class, 'show_cart']);
