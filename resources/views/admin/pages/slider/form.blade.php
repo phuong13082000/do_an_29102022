@@ -29,8 +29,7 @@
                             {!! Form::label('image', 'Image', []) !!}
                             {!! Form::file('image', ['class'=>'form-control']) !!}
                             @if(isset($slider))
-                                <img width="150" src="{{asset('uploads/slider/'.$slider->image )}}"
-                                     alt="{{$slider->image}}">
+                                <img width="150" src="{{asset('uploads/slider/'.$slider->image )}}" alt="{{$slider->image}}">
                             @endif
                         </div>
                     </div>
@@ -43,9 +42,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('url', 'URL', []) !!}
-                            {!! Form::text('url', isset($slider) ? $slider->url : 'dt', ['class'=>'form-control']) !!}
+                        <div class="input-group">
+                            {!! Form::label('product_id', 'Sản phẩm', ['class'=>'input-group', 'for'=>'inputGroupSelect01']) !!}
+                            {!! Form::select('product_id', $list_products, isset($slider) ? $slider->product_id : '', ['class'=>'form-control' ,'id'=>'inputGroupSelect01']) !!}
                         </div>
                     </div>
 

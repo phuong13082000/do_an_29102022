@@ -62,7 +62,7 @@ class ProductController extends Controller
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/uploads/product/', $new_image);
+            $get_image->move('../public/uploads/product/', $new_image);
             $product->image = $new_image;
         }
 
@@ -115,13 +115,13 @@ class ProductController extends Controller
 
         $get_image = $request->file('image');
         if ($get_image) {
-            if (file_exists('public/uploads/product/' . $product->image)) {
-                unlink('public/uploads/product/' . $product->image);
+            if (file_exists('../public/uploads/product/' . $product->image)) {
+                unlink('../public/uploads/product/' . $product->image);
             } else {
                 $get_name_image = $get_image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));
                 $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('public/uploads/product/', $new_image);
+                $get_image->move('../public/uploads/product/', $new_image);
                 $product->image = $new_image;
             }
         }
@@ -134,8 +134,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if (file_exists('public/uploads/product/' . $product->image)) {
-            unlink('public/uploads/product/' . $product->image);
+        if (file_exists('../public/uploads/product/' . $product->image)) {
+            unlink('../public/uploads/product/' . $product->image);
         }
 
         $comments = Comment::where('product_id', $id)->get();
@@ -215,7 +215,7 @@ class ProductController extends Controller
                 $get_name_image = $image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));
                 $new_image = $name_image . rand(0, 9999) . '.' . $image->getClientOriginalExtension();
-                $image->move('uploads/gallery', $new_image);
+                $image->move('../public/uploads/gallery', $new_image);
 
                 $gallery = new Gallery();
                 $gallery->title = $new_image;
@@ -243,7 +243,7 @@ class ProductController extends Controller
         $gall_id = $request['gall_id'];
 
         $gallery = Gallery::find($gall_id);
-        unlink('uploads/gallery/' . $gallery->title);
+        unlink('../public/uploads/gallery/' . $gallery->title);
         $gallery->delete();
     }
 
@@ -256,10 +256,10 @@ class ProductController extends Controller
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('uploads/gallery/', $new_image);
+            $get_image->move('../public/uploads/gallery/', $new_image);
 
             $gallery = Gallery::find($gall_id);
-            unlink('uploads/gallery/' . $gallery->title);
+            unlink('../public/uploads/gallery/' . $gallery->title);
 
             $gallery->title = $new_image;
             $gallery->image = $new_image;

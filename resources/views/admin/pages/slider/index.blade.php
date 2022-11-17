@@ -19,7 +19,7 @@
                                     <tr>
                                         <th>Image</th>
                                         <th>Name</th>
-                                        <th>URL</th>
+                                        <th>Product</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
@@ -31,7 +31,11 @@
                                                 <img width="500" src="{{asset('uploads/slider/'.$slider->image)}}" alt="{{$slider->image}}">
                                             </td>
                                             <td>{{$slider->title}}</td>
-                                            <td>{{$slider->url}}</td>
+                                            <td>
+                                                <a href="{{url('/detail/'.$slider->reProduct->id)}}" target="_blank">
+                                                    {{$slider->reProduct->title}}
+                                                </a>
+                                            </td>
                                             <td>
                                                 @if ($slider->status==0)
                                                     <span class="text text-success"><i class="fa fa-thumbs-up"></i></span>

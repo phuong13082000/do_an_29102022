@@ -13,7 +13,12 @@ class Slider extends Model
     protected $fillable = [
         'title',
         'image',
-        'url',
+        'product_id',
         'status',
     ];
+
+    public function reProduct()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

@@ -15,7 +15,7 @@ class SliderController extends Controller
     public function index()
     {
         $title = 'Slider';
-        $list_Slider = Slider::all();
+        $list_Slider = Slider::with('reProduct')->get();
         $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
         $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
@@ -25,10 +25,11 @@ class SliderController extends Controller
     public function create()
     {
         $title = 'Create Slider';
+        $list_products = Product::pluck('title', 'id');
         $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
         $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.slider.form')->with(compact('title', 'count_message', 'messages'));
+        return view('admin.pages.slider.form')->with(compact('title', 'count_message', 'messages', 'list_products'));
     }
 
     public function store(Request $request)
@@ -37,7 +38,7 @@ class SliderController extends Controller
 
         $slider = new Slider();
         $slider->title = $data['title'];
-        $slider->url = $data['url'];
+        $slider->product_id = $data['product_id'];
         $slider->status = $data['status'];
 
         $get_image = $request->file('image');
@@ -45,7 +46,7 @@ class SliderController extends Controller
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/uploads/slider/', $new_image);
+            $get_image->move('../public/uploads/slider/', $new_image);
             $slider->image = $new_image;
         }
 
@@ -62,11 +63,12 @@ class SliderController extends Controller
     public function edit($id)
     {
         $title = 'Edit Slider';
+        $list_products = Product::pluck('title', 'id');
         $slider = Slider::find($id);
         $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
         $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages'));
+        return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages', 'list_products'));
     }
 
     public function update(Request $request, $id)
@@ -80,13 +82,13 @@ class SliderController extends Controller
 
         $get_image = $request->file('image');
         if ($get_image) {
-            if (file_exists('public/uploads/slider/' . $slider->image)) {
-                unlink('public/uploads/slider/' . $slider->image);
+            if (file_exists('../public/uploads/slider/' . $slider->image)) {
+                unlink('../public/uploads/slider/' . $slider->image);
             } else {
                 $get_name_image = $get_image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));
                 $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('uploads/slider/', $new_image);
+                $get_image->move('../public/uploads/slider/', $new_image);
                 $slider->image = $new_image;
             }
         }
@@ -100,8 +102,8 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $slider = Slider::find($id);
-        if (file_exists('uploads/slider/' . $slider->image)) {
-            unlink('uploads/slider/' . $slider->image);
+        if (file_exists('../public/uploads/slider/' . $slider->image)) {
+            unlink('../public/uploads/slider/' . $slider->image);
         }
 
         $slider->delete();

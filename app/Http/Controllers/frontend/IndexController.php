@@ -21,8 +21,8 @@ class IndexController extends Controller
         $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
         $list_recommend = Product::orderBy('updated_at', 'DESC')->take(10)->get();
 
-        $first_slider = Slider::where('status', 0)->orderBy('id', 'ASC')->first();
-        $list_slider = Slider::where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
+        $first_slider = Slider::with('reProduct')->where('status', 0)->orderBy('id', 'ASC')->first();
+        $list_slider = Slider::with('reProduct')->where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
 
         return view('frontend.pages.index')
             ->with(compact('title', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
