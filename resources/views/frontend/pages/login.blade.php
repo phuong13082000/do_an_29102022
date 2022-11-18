@@ -45,13 +45,8 @@
                         <div class="text-center">
                             <p>Bạn không phải thành viên? <a class="text-decoration-none" href="{{ url('dang-ki') }}">Đăng kí</a></p>
                             <p>hoặc đăng nhập bằng:</p>
-                            <a type="button" class="btn btn-link btn-floating mx-1" href="{{ url('/login-facebook') }}">
-                                <i class="fa fa-facebook-f"></i>
-                            </a>
-
-                            <a type="button" class="btn btn-link btn-floating mx-1" href="{{ url('/login-google') }}">
-                                <i class="fa fa-google"></i>
-                            </a>
+                            <a type="button" class="btn btn-link btn-floating mx-1" href="{{ url('/login-facebook') }}"><i class="fa fa-facebook-f"></i></a>
+                            <a type="button" class="btn btn-link btn-floating mx-1" href="{{ url('/login-google') }}"><i class="fa fa-google"></i></a>
                         </div>
 
                     </div><!--/login form-->

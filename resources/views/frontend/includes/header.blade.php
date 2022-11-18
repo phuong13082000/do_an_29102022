@@ -10,7 +10,6 @@
         <div class="nav-item">
             <button class="btn btn-default position-relative text-decoration-none me-5" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-shopping-cart me-2"></i>
-                Giỏ Hàng
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ count(Cart::content()) }}
                     <span class="visually-hidden">New cart</span>
                 </span>

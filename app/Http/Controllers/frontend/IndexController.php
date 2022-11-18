@@ -33,7 +33,7 @@ class IndexController extends Controller
         $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
         if($request['value_loc'] == 0) {
             $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
-        } elseif($request['value_loc'] == 1){
+        }elseif($request['value_loc'] == 1){
             $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'ASC')->take(8)->get();
         }elseif($request['value_loc'] == 2){
             $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();

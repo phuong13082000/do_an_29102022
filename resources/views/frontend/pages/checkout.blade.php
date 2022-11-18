@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     {!! Form::open(['url'=>'#', 'method'=>'POST', 'id'=>'form_checkout']) !!}
 
-                    <h3>Thông tin nhận hàng</h3>
+                    <h3>Thông tin khách hàng</h3>
                     <hr>
                     <div class="form-floating mb-4">
                         {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
@@ -25,28 +25,32 @@
                     <div class="mb-3">
                         <div class="row">
                             <span>Địa chỉ nhận hàng</span>
-
-                            <div class="col-sm-4">
+                            <div class="col-sm-6 mb-3">
                                 <select id='province' class="form-control">
                                     <option selected>Thành Phố</option>
                                 </select>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-6 mb-3">
                                 <select id='district' class="form-control">
                                     <option selected>Quận Huyện</option>
                                 </select>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <select id='ward' class="form-control">
                                     <option selected>Phường Xã</option>
                                 </select>
                             </div>
 
+                            <div class="col-sm-6">
+                                <input type="text" id="sonha" class="form-control" placeholder="Số nhà, tên đường">
+                            </div>
+
                             <span id="address"></span> {{-- Gui dia chi de checkout --}}
 
                         </div>
+
                     </div>
 
                     {{-- Service --}}
@@ -97,9 +101,12 @@
                                     <tbody>
                                     @foreach(Cart::content() as $content)
                                         <tr>
-                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}"
-                                                     width="90" alt="{{$content->name}}"/></td>
-                                            <td><h4>{{$content->name}}</h4></td>
+                                            <td>
+                                                <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
+                                            </td>
+                                            <td>
+                                                <h4>{{$content->name}}</h4>
+                                            </td>
                                             <td>
                                                 <p>{{number_format($content->price).' '.'vnđ'}}</p>
                                                 <input type="hidden" id="product_price" value="{{$content->price}}">
@@ -130,8 +137,7 @@
                     @else
                         <div class="container">
                             <div class="mt-3">
-                                <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để
-                                    mua</a>
+                                <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để mua</a>
                             </div>
                         </div>
                     @endif
@@ -323,8 +329,9 @@
                 var name_province = $('#id_province_' + id_province).text();
                 var name_district = $('#id_district_' + district_id).text();
                 var name_ward = $('#id_ward_' + ward_code).text();
+                var sonha = $('#sonha').val();
 
-                $('#address').append('<input type="hidden" id="name_address" value="' + name_ward + '-' + name_district + '-' + name_province + '">');
+                $('#address').append('<input type="hidden" id="name_address" value="'+ sonha + '-' + name_ward + '-' + name_district + '-' + name_province + '">');
 
             });
         });

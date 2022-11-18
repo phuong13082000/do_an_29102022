@@ -113,13 +113,13 @@ class CustomerController extends Controller
                     </thead>
                     <tbody>';
 
-        $subtotal = $order_detail->price * $order_detail->num;
+        $subtotal = $order_detail->price * $order_detail->number;
 
         $output .= '
                     <tr class="color_qty_{{$details->product_id}}">
                         <td>' . $order_detail->reProduct->title . '</td>
                         <td>' . $order_detail->reProduct->number . '</td>
-                        <td>' . $order_detail->num . '</td>
+                        <td>' . $order_detail->number . '</td>
                         <td>' . number_format($order_detail->price, 0, ',', ' . ') . 'đ</td>
                         <td>' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ</td>
                     </tr>';
@@ -157,7 +157,7 @@ class CustomerController extends Controller
                 foreach ($order_details as $order_detail) {
                     $id_product = $order_detail->product_id;
                     $product = Product::find($id_product);
-                    $product->number = $product->number + $order_detail->num;
+                    $product->number = $product->number + $order_detail->number;
                     $product->save();
                 }
                 echo 'Đơn hàng đã hủy';
