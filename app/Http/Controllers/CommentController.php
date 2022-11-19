@@ -2,126 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Repositories\CommentRepository;
+use App\Services\CommentService;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    //admin
+    protected $commentService;
+    protected $commentRepository;
 
+    public function __construct(CommentRepository $commentRepository, CommentService $commentService)
+    {
+        $this->commentRepository = $commentRepository;
+        $this->commentService = $commentService;
+    }
+
+    //admin
     public function show_comment()
     {
         $title = 'Comment';
-        $list_Comment = Comment::with('reProduct', 'reCustomer')->orderBy('status', 'DESC')->get();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
-
+        $list_Comment = $this->commentRepository->getAll();
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
         return view('admin.pages.comment.index')->with(compact('title', 'list_Comment', 'count_message', 'messages'));
     }
 
     public function allow_comment(Request $request)
     {
-        $data = $request->all();
-        $comment = Comment::find($data['comment_id']);
-        $comment->status = $data['comment_status'];
-        $comment->save();
+        $this->commentService->allowComment($request);
     }
 
     public function reply_comment(Request $request)
     {
-        $data = $request->all();
-        $comment = new Comment();
-        $comment->title = $data['comment'];
-        $comment->product_id = $data['comment_product_id'];
-        $comment->comment_parent_id = $data['comment_id'];
-        $comment->status = 0;
-        $comment->admin_id = 1;
-        $comment->save();
+        $this->commentService->replyComment($request);
     }
 
     public function delete_comment(Request $request)
     {
-        $comment_id = $request['comment_id'];
-
-        $comment_parent = Comment::where('comment_parent_id', $comment_id)->get();
-        foreach ($comment_parent as $parrent){
-            $parrent->delete();
-        }
-
-        $comments = Comment::find($comment_id);
-        $comments->delete();
+        $this->commentService->deleteComment($request);
     }
 
     public function delete_reply_comment(Request $request)
     {
-        $comment_parent_id = $request['comment_parent_id'];
-
-        $comments = Comment::find($comment_parent_id);
-        $comments->delete();
+        $this->commentService->deleteReplyComment($request);
     }
 
     //user
     public function load_comment(Request $request)
     {
-        $product_id = $request->product_id;
-        $comment = Comment::with('reCustomer')
-            ->where('status', 0)
-            ->where('admin_id', NULL)
-            ->where('product_id', $product_id)->get();
-
-        $comment_reply = Comment::with('reAdmin')
-            ->where('status', 0)
-            ->where('customer_id', NULL)
-            ->where('product_id', $product_id)->get();
-
-        $output = '';
-        foreach ($comment as $comm) {
-            $output .= '
-            <div class="mt-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
-                                <p class="card-text">' . $comm->title . '</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> ';
-
-            foreach ($comment_reply as $comm_rep) {
-                if ($comm_rep->comment_parent_id == $comm->id) {
-                    $output .= '
-                    <div class="ms-5 mt-2">
-                        <div class="row">
-                            <div class="col-md-12 ">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
-                                        <p class="card-text">' . $comm_rep->title . '</p >
-                                    </div >
-                                </div>
-                            </div>
-                        </div>
-                    </div >';
-                }
-            }
-        }
-        echo $output;
+        $this->commentService->showCommmentDetail($request);
     }
 
     public function send_comment(Request $request)
     {
-        $product_id = $request->product_id;
-        $customer_id = $request->customer_id;
-        $title = $request->title;
-
-        $comment = new Comment();
-        $comment->title = $title;
-        $comment->customer_id = $customer_id;
-        $comment->product_id = $product_id;
-        $comment->status = 1;
-        $comment->save();
+        $this->commentService->sendComment($request);
     }
 }

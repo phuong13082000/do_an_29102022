@@ -4,18 +4,26 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Product;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     public function index()
     {
         $title = 'Category';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $list_Category = Category::all();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.category.index')->with(compact('title', 'list_Category', 'count_message', 'messages'));
     }
@@ -40,9 +48,10 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $title = 'Edit Category';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $category = Category::find($id);
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.category.form')->with(compact('title', 'category', 'count_message', 'messages'));
     }
@@ -63,7 +72,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category_id = Category::find($id);
-        $check_category = Product::where('category_id', '=', $id)->first();
+        $check_category = Product::where('category_id', $id)->first();
 
         if ($check_category) {
             return redirect()->route('category.index')->with('error', 'Category đang có sản phẩm');

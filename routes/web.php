@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CustomerController;
+use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
@@ -35,7 +36,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/customer', [CustomerController::class, 'show_customer']);
     Route::get('/comment', [CommentController::class, 'show_comment']);
     Route::get('/profile-admin', [AdminController::class, 'profile_admin']);
-    Route::get('/add-gallery/{id}', [ProductController::class, 'gallery_index']);
 
     Route::resource('/brand', BrandController::class);
     Route::resource('/category', CategoryController::class);
@@ -52,11 +52,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/change-password-admin/{id}', [AdminController::class, 'change_password_admin']);
 
     //gallery
-    Route::post('/select-gallery', [ProductController::class, 'select_gallery']);
-    Route::post('/insert-gallery/{id}', [ProductController::class, 'insert_gallery']);
-    Route::post('/update-gallery-name', [ProductController::class, 'update_gallery_name']);
-    Route::post('/delete-gallery', [ProductController::class, 'delete_gallery']);
-    Route::post('/update-gallery', [ProductController::class, 'update_gallery']);
+    Route::get('/add-gallery/{id}', [GalleryController::class, 'gallery_index']);
+    Route::post('/select-gallery', [GalleryController::class, 'select_gallery']);
+    Route::post('/insert-gallery/{id}', [GalleryController::class, 'insert_gallery']);
+    Route::post('/update-gallery-name', [GalleryController::class, 'update_gallery_name']);
+    Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery']);
+    Route::post('/update-gallery', [GalleryController::class, 'update_gallery']);
 
 });
 

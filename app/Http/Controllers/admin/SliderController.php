@@ -3,21 +3,27 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
+    protected $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     public function index()
     {
         $title = 'Slider';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $list_Slider = Slider::with('reProduct')->get();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_message', 'messages'));
     }
@@ -25,9 +31,10 @@ class SliderController extends Controller
     public function create()
     {
         $title = 'Create Slider';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $list_products = Product::pluck('title', 'id');
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.slider.form')->with(compact('title', 'count_message', 'messages', 'list_products'));
     }
@@ -63,10 +70,11 @@ class SliderController extends Controller
     public function edit($id)
     {
         $title = 'Edit Slider';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $list_products = Product::pluck('title', 'id');
         $slider = Slider::find($id);
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages', 'list_products'));
     }

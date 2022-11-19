@@ -3,22 +3,30 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
+    protected $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     public function view_order()
     {
         $title = 'Order';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $orders = Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.order.index')->with(compact('title', 'orders', 'count_message', 'messages'));
     }
@@ -26,9 +34,10 @@ class OrderController extends Controller
     public function view_order_detail($id)
     {
         $title = 'Order Detail';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $order_details = OrderDetail::with('reProduct')->where('order_id', $id)->get();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         $order = Order::where('id', $id)->first();
 

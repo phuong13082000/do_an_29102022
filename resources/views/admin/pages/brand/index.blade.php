@@ -24,7 +24,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($list_Brand as $key => $brand )
+                                @foreach ($listBrand as $key => $brand )
                                     <tr>
                                         <td>{{$key}}</td>
                                         <td>{{$brand->title}}</td>

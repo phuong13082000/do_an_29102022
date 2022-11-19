@@ -3,21 +3,33 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Comment;
-use App\Models\Product;
+use App\Repositories\BrandRepository;
+use App\Repositories\CommentRepository;
+use App\Services\BrandService;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
+    protected $brandRepository;
+    protected $brandService;
+    protected $commentRepository;
+
+    public function __construct(BrandRepository $brandRepository, BrandService $brandService, CommentRepository $commentRepository)
+    {
+        $this->brandRepository = $brandRepository;
+        $this->brandService = $brandService;
+        $this->commentRepository = $commentRepository;
+    }
+
     public function index()
     {
         $title = 'Brand';
-        $list_Brand = Brand::all();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
 
-        return view('admin.pages.brand.index')->with(compact('title', 'list_Brand', 'count_message', 'messages'));
+        $listBrand = $this->brandRepository->getAll();
+
+        return view('admin.pages.brand.index')->with(compact('title', 'listBrand', 'count_message', 'messages'));
     }
 
     public function create()
@@ -27,7 +39,7 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        Brand::create($request->all());
+        $this->brandService->create($request);
 
         return redirect()->route('brand.index');
     }
@@ -40,21 +52,17 @@ class BrandController extends Controller
     public function edit($id)
     {
         $title = 'Edit Brand';
-        $brand = Brand::find($id);
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
+        $brand = $this->brandRepository->findID($id);
 
         return view('admin.pages.brand.form')->with(compact('title', 'brand', 'count_message', 'messages'));
     }
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-
-        $brand = Brand::find($id);
-        $brand->title = $data['title'];
-        $brand->status = $data['status'];
-        $brand->save();
+        $this->brandService->update($request, $id);
 
         return redirect()->route('brand.index');
     }
@@ -62,24 +70,19 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $brand_id = Brand::find($id);
-        $check_brand = Product::where('brand_id', '=', $id)->first();
+        $brand = $this->brandRepository->findID($id);
+        $check_brand = $this->brandRepository->findBrandFromProductById($id);
 
         if ($check_brand) {
             return redirect()->route('brand.index')->with('error', 'Brand đang có sản phẩm');;
         } else {
-            $brand_id->delete();
+            $brand->delete();
             return redirect()->route('brand.index')->with('success', 'Xóa brand thành công');;
         }
     }
 
     public function update_Status_Brand(Request $request)
     {
-        $data = $request->all();
-
-        $brand = Brand::find($data['id']);
-        $brand->status = $data['status'];
-
-        $brand->save();
+        $this->brandService->updateStatus($request);
     }
 }

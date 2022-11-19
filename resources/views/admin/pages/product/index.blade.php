@@ -29,7 +29,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($list_Product as $key => $product)
+                                    @foreach ($listProduct as $key => $product)
                                         <tr>
                                             <td>
                                                 <img width="100px" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}">

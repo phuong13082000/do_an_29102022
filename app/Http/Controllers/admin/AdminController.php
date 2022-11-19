@@ -8,11 +8,19 @@ use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
+    protected $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     public function getHome()
     {
         $title = 'Dashboard';
@@ -20,8 +28,9 @@ class AdminController extends Controller
         $count_order = Order::count();
         $count_customer = Customer::count();
         $count_product = Product::where('status', 0)->where('number', '>', 2)->count();
-        $count_message = Comment::where('status', 1)->where('admin_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
+
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
 
         //chart
         $users = Order::select(DB::raw("COUNT(*) as count"))
@@ -38,8 +47,8 @@ class AdminController extends Controller
     public function profile_admin()
     {
         $title = 'Profile';
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
 
         $admin_detail = Admin::where('name', 'Admin')->first();
         return view('admin.pages.profile')->with(compact('title', 'count_message', 'messages', 'admin_detail'));

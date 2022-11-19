@@ -4,11 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -17,13 +17,21 @@ use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
+    protected $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     //admin
     public function show_customer()
     {
         $title = 'Customer';
+        $count_message = $this->commentRepository->countComment();
+        $messages = $this->commentRepository->getMessage();
+
         $list_Customer = Customer::all();
-        $count_message = Comment::where('status', 1)->where('comment_parent_id', NULL)->count();
-        $messages = Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.customer.index')->with(compact('title', 'list_Customer', 'count_message', 'messages'));
     }
