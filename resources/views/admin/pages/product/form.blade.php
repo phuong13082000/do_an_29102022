@@ -112,7 +112,7 @@
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('length', 'Chiều dài', []) !!}
+                                {!! Form::label('length', 'Chiều dày', []) !!}
                                 {!! Form::number('length', isset($product) ? $product->length : '', ['class'=>'form-control']) !!}
                             </div>
 

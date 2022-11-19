@@ -115,8 +115,7 @@
                         <h4>Bình luận về sản phẩm {{$product->title}}</h4>
                         <form>
                             @csrf
-                            <input type="hidden" name="comment_product_id" class="comment_product_id"
-                                   value="{{$product->id}}">
+                            <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$product->id}}">
                             <div id="comment_show"></div>
                         </form>
 
@@ -135,8 +134,7 @@
                                     <textarea name="title" class="form-control title" rows="3"></textarea>
                                 </div>
                                 <div class="mt-3">
-                                    <button type="button" class="btn btn-outline-secondary" id="send-comment">Submit
-                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" id="send-comment">Submit</button>
                                 </div>
                             </form>
                         @endif

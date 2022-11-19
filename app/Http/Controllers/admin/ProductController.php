@@ -53,6 +53,10 @@ class ProductController extends Controller
         $product->pin_sac = $data['pin_sac'];
         $product->tienich = $data['tienich'];
         $product->thongtin_chung = $data['thongtin_chung'];
+        $product->height = $data['height'];
+        $product->length = $data['length'];
+        $product->weight = $data['weight'];
+        $product->width = $data['width'];
         $product->status = $data['status'];
         $product->brand_id = $data['brand_id'];
         $product->category_id = $data['category_id'];
@@ -109,6 +113,10 @@ class ProductController extends Controller
         $product->pin_sac = $data['pin_sac'];
         $product->tienich = $data['tienich'];
         $product->thongtin_chung = $data['thongtin_chung'];
+        $product->height = $data['height'];
+        $product->length = $data['length'];
+        $product->weight = $data['weight'];
+        $product->width = $data['width'];
         $product->status = $data['status'];
         $product->brand_id = $data['brand_id'];
         $product->category_id = $data['category_id'];

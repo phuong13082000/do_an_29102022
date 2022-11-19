@@ -85,7 +85,7 @@
                                                         <b>Kết nối: </b>{{$product->ketnoi}}<br>
                                                         <b>Pin Sạc: </b>{{$product->pin_sac}}<br>
                                                         <b>Chiều cao: </b>{!! $product->height !!} cm<br>
-                                                        <b>Chiều dài: </b>{!! $product->length !!} cm<br>
+                                                        <b>Chiều dày: </b>{!! $product->length !!} cm<br>
                                                         <b>Trọng lượng: </b>{!! $product->weight !!} g<br>
                                                         <b>Chiều rộng: </b>{!! $product->width !!} cm<br>
                                                         <b>Tiện ích: </b>{{$product->tienich}}<br>
