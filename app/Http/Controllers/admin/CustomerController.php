@@ -3,28 +3,32 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\Product;
 use App\Repositories\BrandRepository;
 use App\Repositories\CommentRepository;
+use App\Repositories\CustomerRepository;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
-    protected $commentRepository;
-    protected $brandRepository;
+    protected $commentRepository, $brandRepository, $customerRepository, $customerService;
 
-    public function __construct(CommentRepository $commentRepository, BrandRepository $brandRepository)
+    public function __construct(
+        CommentRepository  $commentRepository,
+        BrandRepository    $brandRepository,
+        CustomerRepository $customerRepository,
+        CustomerService    $customerService
+    )
     {
         $this->commentRepository = $commentRepository;
         $this->brandRepository = $brandRepository;
+        $this->customerRepository = $customerRepository;
+        $this->customerService = $customerService;
     }
 
     //admin
@@ -34,9 +38,9 @@ class CustomerController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $list_Customer = Customer::all();
+        $listCustomer = $this->customerRepository->getAll();
 
-        return view('admin.pages.customer.index')->with(compact('title', 'list_Customer', 'count_message', 'messages'));
+        return view('admin.pages.customer.index')->with(compact('title', 'listCustomer', 'count_message', 'messages'));
     }
 
     //user
@@ -54,6 +58,7 @@ class CustomerController extends Controller
     {
         $title = 'Login';
         $list_brand = $this->brandRepository->getListBrandIndex();
+
         return view('frontend.pages.login')->with(compact('title', 'list_brand'));
     }
 
@@ -61,6 +66,7 @@ class CustomerController extends Controller
     {
         $title = 'Register';
         $list_brand = $this->brandRepository->getListBrandIndex();
+
         return view('frontend.pages.register')->with(compact('title', 'list_brand'));
     }
 
@@ -69,7 +75,7 @@ class CustomerController extends Controller
         $title = 'Profile';
         $list_brand = $this->brandRepository->getListBrandIndex();
 
-        $customer = Customer::find(Session::get('id'));
+        $customer = $this->customerRepository->findID(Session::get('id'));
         $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
 
         return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
@@ -77,179 +83,41 @@ class CustomerController extends Controller
 
     public function profile_order_detail(Request $request)
     {
-        $order = Order::where('id', $request['order_id'])->first();
-        $order_detail = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->first();
-
-        $output = '
-    <div class="table-agile-info">
-        <div class="panel panel-default">
-            <div class="panel-heading">Thông tin vận chuyển hàng</div>
-
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
-                    <thead>
-                    <tr>
-                        <th>Tên người nhận</th>
-                        <th>Địa chỉ</th>
-                        <th>Số điện thoại</th>
-                        <th>Ghi chú</th>
-                        <th>Phí ship</th>
-                        <th>Hình thức thanh toán</th>
-                        <th style="width:30px;"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>' . $order->name_nguoinhan . '</td>
-                        <td>' . $order->address_nguoinhan . '</td>
-                        <td>' . $order->phone_nguoinhan . '</td>
-                        <td>' . $order->note . '</td>
-                        <td>' . number_format($order->price_ship, 0, ',', ' . ') . 'đ</td>
-                        <td>' . $order->payment_method . '</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <br><br>
-
-    <div class="table-agile-info">
-        <div class="panel panel-default">
-            <div class="panel-heading">Liệt kê chi tiết đơn hàng</div>
-
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
-                    <thead>
-                    <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng kho còn</th>
-                        <th>Số lượng</th>
-                        <th>Giá sản phẩm</th>
-                        <th>Tổng tiền</th>
-                        <th style="width:30px;"></th>
-                    </tr>
-                    </thead>
-                    <tbody>';
-
-        $subtotal = $order_detail->price * $order_detail->number;
-
-        $output .= '
-                    <tr class="color_qty_{{$details->product_id}}">
-                        <td>' . $order_detail->reProduct->title . '</td>
-                        <td>' . $order_detail->reProduct->number . '</td>
-                        <td>' . $order_detail->number . '</td>
-                        <td>' . number_format($order_detail->price, 0, ',', ' . ') . 'đ</td>
-                        <td>' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ</td>
-                    </tr>';
-
-        $output .= '
-                    <tr>
-                        <td colspan="2">';
-
-        $output .= '
-                            Tổng : ' . number_format($subtotal, 0, ',', ' . ') . 'đ <br>
-                            Phí ship : ' . number_format($order->price_ship, 0, ',', ' . ') . 'đ <br>
-                            Thanh toán: ' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-        ';
-        echo $output;
+        $this->customerService->orderProfileDetail($request);
     }
 
     public function cancel_order(Request $request)
     {
-        $order = Order::where('id', $request['order_id'])->first();
-        $order_details = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->get();
-        $status = $order->status;
-
-        switch ($status) {
-            case 1:
-                $order->status = 3;
-                $order->save();
-
-                foreach ($order_details as $order_detail) {
-                    $id_product = $order_detail->product_id;
-                    $product = Product::find($id_product);
-                    $product->number = $product->number + $order_detail->number;
-                    $product->save();
-                }
-                echo 'Đơn hàng đã hủy';
-                break;
-            case 2:
-                echo 'Đơn hàng đang được giao, liên hệ với quản trị viên để hủy';
-                break;
-
-            default:
-                echo 'Đơn hàng đã hủy';
-                break;
-
-        }
+        $this->customerService->cancelOrderUser($request);
     }
 
     public function change_password_user(Request $request)
     {
-        $password_new_1 = $request['password_new'];
-        $password_new_2 = $request['re_password_new'];
+        $checkPassword = $this->customerService->changePasswordUser($request, Session::get('id'));
 
-        $customer = Customer::find(Session::get('id'));
-        $check_password = Hash::check($request['password'], $customer->password ?? '');
-
-        if ($check_password && $password_new_1 == $password_new_2) {
-            $customer->password = Hash::make($password_new_1);
-            $customer->save();
-            return redirect()->back()->with('success', 'Change password success');
+        if ($checkPassword) {
+            return redirect()->back()->with('success', 'Đổi mật khẩu thành công');
+        } else {
+            return redirect()->back()->with('error', 'Đổi mật khẩu không thành công');
         }
-        return redirect()->back()->with('error', 'Change password error');
     }
 
     public function update_profile(Request $request)
     {
-        $validated = Validator::make($request->all(), [
-            'name' => ['max:255'],
-            'phone' => ['max:11'],
-            'address' => ['string', 'max:255'],
-        ]);
+        $updateProfile = $this->customerService->updateProfile($request, Session::get('id'));
 
-        if ($validated->fails()) {
-            return response()->json(['code' => 400, 'msg' => $validated->errors()->first()]);
+        if ($updateProfile) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin cá nhân thành công');
+        } else {
+            return redirect()->back()->with('error', 'Cập nhật thông tin cá nhân không thành công');
         }
-
-        $customer = Customer::find(Session::get('id'));
-        $customer->fullname = $request['name'];
-        $customer->phone = $request['phone'];
-        $customer->email = $request['email'];
-        $customer->address = $request['address'];
-        $customer->save();
-
-        $user = Customer::where('email', $request['email'])->first();
-
-        Session::put('id', $user->id);
-        Session::put('name', $user->fullname);
-        Session::put('email', $user->email);
-        Session::put('phone', $user->phone);
-        Session::put('address', $user->address);
-        return response()->json(['code' => 200, 'msg' => 'Cập nhật thông tin cá nhân thành công']);
     }
 
     public function login_customer(Request $request)
     {
-        $customer = Customer::where('email', $request->email_login)->first();
+        $checkLogin = $this->customerService->loginCustomer($request);
 
-        $check_password = Hash::check($request->password_login, $customer->password ?? '');
-
-        if ($customer && $check_password) {
-            Session::put('id', $customer->id);
-            Session::put('name', $customer->fullname);
-            Session::put('email', $customer->email);
-            Session::put('address', $customer->address);
-            Session::put('phone', $customer->phone);
-
+        if ($checkLogin) {
             return redirect('/')->with('success', 'Đăng nhập thành công');
         } else {
             return redirect('/dang-nhap')->with('error', 'Đăng nhập không thành công');

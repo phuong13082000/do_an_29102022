@@ -54,4 +54,8 @@ class CommentRepository
         return Comment::with('reAdmin')->where('status', 0)->where('customer_id', NULL)->where('product_id', $product_id)->get();
     }
 
+    public function findCommentByProductId($id)
+    {
+        return Comment::where('product_id', $id)->get();
+    }
 }

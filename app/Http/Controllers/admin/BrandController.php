@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    protected $brandRepository;
-    protected $brandService;
-    protected $commentRepository;
+    protected $brandRepository, $brandService, $commentRepository;
 
     public function __construct(BrandRepository $brandRepository, BrandService $brandService, CommentRepository $commentRepository)
     {

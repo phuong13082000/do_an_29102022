@@ -24,10 +24,7 @@
 
                         <div class="row mb-4">
                             <div class="col d-flex">
-                                <div class="form-check">
-                                    {!! Form::checkbox('checkbox', 'checked', ['class'=>'form-check-input']) !!}
-                                    {!! Form::label('checkbox', 'Remember me', ['class'=>'form-check-label']) !!}
-                                </div>
+                                <div class="col"></div>
                                 <div class="col"></div>
                                 <div class="col">
                                     <a class="text-decoration-none" href="{{url('/forgot-password')}}">Quên mật khẩu?</a>

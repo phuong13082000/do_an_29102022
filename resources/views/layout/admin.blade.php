@@ -20,9 +20,6 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{asset('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{asset('admin/plugins/jqvmap/jqvmap.min.css')}}">
 
@@ -50,33 +47,28 @@
     @include('admin.includes.navbar')
     @include('admin.includes.sidebar')
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">{{$title}}</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         @include('admin.includes.breadcrumb')
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 @yield('content')
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-        <!-- /.content -->
 
     </div>
-    <!-- /.content-wrapper -->
+
     <footer class="main-footer">
         <strong>Copyright &copy; 2022 </strong>
     </footer>
@@ -140,6 +132,8 @@
 
 <!-- Summernote -->
 <script src="{{asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="{{asset('admin/js/main.js')}}"></script>
 

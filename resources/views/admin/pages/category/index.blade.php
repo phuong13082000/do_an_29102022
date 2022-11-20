@@ -1,7 +1,6 @@
 @extends('layout.admin')
 
 @section('content')
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -10,7 +9,6 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-category"> Add Category</button>
@@ -18,13 +16,13 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name Category</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($list_Category as $key => $category )
+                                @foreach ($listCategory as $key => $category )
                                     <tr>
                                         <td>{{$key}}</td>
                                         <td>{{$category->title}}</td>
@@ -46,17 +44,8 @@
                                             </div>
                                         </td>
                                     </tr>
-
                                 @endforeach
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name Brand</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -77,18 +66,14 @@
                 <div class="modal-body">
                     {!! Form::open(['route'=>'category.store', 'method'=>'POST', 'id'=>'formcategory', 'role'=>'form']) !!}
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('title', 'Name Category', []) !!}
-                            {!! Form::text('title', '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('title', 'Name', []) !!}
+                        {!! Form::text('title', '', ['class'=>'form-control']) !!}
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('status', 'Status', []) !!}
-                            {!! Form::select('status', ['0'=>'Hide', '1'=>'UnHide'], '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('status', 'Status', []) !!}
+                        {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], '', ['class'=>'form-control']) !!}
                     </div>
 
                     <div class="modal-footer justify-content-between">
@@ -110,14 +95,19 @@
     $('.category-status').change(function () {
         var id = $(this).attr('id');
         var status = $(this).find(':selected').val();
-        var _token = $('input[name="_token"]').val();
         $.ajax({
             url: "{{url('admin/update-status-category')}}",
             method: 'POST',
-            data: {id: id, status: status, _token: _token},
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {id: id, status: status},
             success: function () {
-                alert('Change status success!');
-                window.location.href = "{{route('category.index')}}";
+                Swal.fire(
+                    'Change status success!',
+                    '',
+                    'success',
+                )
             }
         });
     });

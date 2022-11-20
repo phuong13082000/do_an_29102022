@@ -8,12 +8,10 @@ use App\Models\Product;
 class ProductRepository
 {
     protected $product;
-    protected $comment;
 
-    public function __construct(Product $product, Comment $comment)
+    public function __construct(Product $product)
     {
         $this->product = $product;
-        $this->comment = $comment;
     }
 
     public function getAll()
@@ -34,11 +32,6 @@ class ProductRepository
     public function findByName($name)
     {
         return Product::where('title', $name)->get();
-    }
-
-    public function findCommentByProductId($id)
-    {
-        return Comment::where('product_id', $id)->get();
     }
 
     public function countProduct()

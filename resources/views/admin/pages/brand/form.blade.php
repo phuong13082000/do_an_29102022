@@ -13,18 +13,14 @@
 
                     {!! Form::open(['route'=>['brand.update', $brand->id], 'method'=>'PUT', 'id'=>'formbrand', 'role'=>'form']) !!}
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('title', 'Name Brand', []) !!}
-                            {!! Form::text('title', isset($brand) ? $brand->title : '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('title', 'Name', []) !!}
+                        {!! Form::text('title', isset($brand) ? $brand->title : '', ['class'=>'form-control']) !!}
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('status', 'Status', []) !!}
-                            {!! Form::select('status', ['0'=>'Hiển thị', '1'=>'Không hiển thị'], isset($brand) ? $brand->status : '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('status', 'Status', []) !!}
+                        {!! Form::select('status', ['0'=>'Hiển thị', '1'=>'Không hiển thị'], isset($brand) ? $brand->status : '', ['class'=>'form-control']) !!}
                     </div>
 
                     <div class="mb-3">

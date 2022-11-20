@@ -1,7 +1,6 @@
 @extends('layout.admin')
 
 @section('content')
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -10,15 +9,14 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
+
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-brand"> Add Brand</button>
-
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name Brand</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -41,22 +39,14 @@
                                                 <form action="{{route('brand.destroy', [$brand->id])}}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <button onclick="return confirm('Bạn có muốn xóa danh mục này?');" class="btn btn-sm btn-danger">Xóa</button>
+                                                    <button onclick="return confirm('Bạn có muốn xóa danh mục này?');" class="btn btn-sm btn-danger">Xóa
+                                                    </button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
-
                                 @endforeach
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name Brand</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -77,18 +67,14 @@
                 <div class="modal-body">
                     {!! Form::open(['route'=>'brand.store', 'method'=>'POST', 'id'=>'formbrand', 'role'=>'form']) !!}
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('title', 'Name Brand', []) !!}
-                            {!! Form::text('title', '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('title', 'Name', []) !!}
+                        {!! Form::text('title', '', ['class'=>'form-control']) !!}
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('status', 'Status', []) !!}
-                            {!! Form::select('status', ['0'=>'Hide', '1'=>'UnHide'], '', ['class'=>'form-control']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('status', 'Status', []) !!}
+                        {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], '', ['class'=>'form-control']) !!}
                     </div>
 
                     <div class="modal-footer justify-content-between">
@@ -110,14 +96,19 @@
         $('.brand-status').change(function () {
             var id = $(this).attr('id');
             var status = $(this).find(':selected').val();
-            var _token = $('input[name="_token"]').val();
             $.ajax({
                 url: "{{url('admin/update-status-brand')}}",
                 method: 'POST',
-                data: {id: id, status: status, _token: _token},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {id: id, status: status},
                 success: function () {
-                    alert('Change status success!');
-                    window.location.href = "{{route('brand.index')}}";
+                    Swal.fire(
+                        'Change status success!',
+                        '',
+                        'success',
+                    )
                 }
             });
         });

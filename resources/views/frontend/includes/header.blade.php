@@ -7,6 +7,14 @@
             <span class="fs-4">PhoneShop</span>
         </a>
 
+        <div class="nav-item col-lg-auto mb-3 mb-lg-0 pe-5">
+            <form action="{{ route('search') }}" method="POST" autocomplete="off">
+                @csrf
+                <input class="form-control" type="search" id="keywords" name="tukhoa" aria-label="Search" placeholder="Tìm kiếm">
+                <div id="search_ajax"></div>
+            </form>
+        </div>
+
         <div class="nav-item">
             <button class="btn btn-default position-relative text-decoration-none me-5" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-shopping-cart me-2"></i>
@@ -15,7 +23,7 @@
                 </span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 500px">
+            <ul class="dropdown-menu">
                 <li class="dropdown-item" href="#">
                     @if(Cart::count() != 0)
                         <div class="container">
@@ -50,13 +58,9 @@
                     </div>
                 </div>
             </ul>
+
         </div>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0" action="{{ route('search') }}" method="POST" autocomplete="off">
-            @csrf
-            <input class="form-control" type="search" id="keywords" name="tukhoa" aria-label="Search" placeholder="Tìm kiếm">
-            <div id="search_ajax"></div>
-        </form>
     </div>
 </header>
 

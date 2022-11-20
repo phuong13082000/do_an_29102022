@@ -32,7 +32,7 @@
                                 <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
                                 <td><h4>{{$content->name}}</a></h4></td>
                                 <td><p>{{number_format($content->price).' '.'vnđ'}}</p></td>
-                                
+
                                 <td class="cart_quantity">
                                     <div class="cart_quantity_button">
                                         {!! Form::open(['url'=>'/update-cart-quantity', 'method'=>'POST']) !!}
@@ -74,11 +74,11 @@
                                     <li>Thành tiền <span>{{Cart::total().' '.'vnđ'}}</span></li>
                                 </ul>
                                 @if($customer_id!=NULL)
-                                    <a type="button" href="{{ url('checkout') }}" class="btn btn-primary">Checkout</a>
-                                    <a class="btn btn-success" href="{{url('/')}}">Home</a>
+                                    <a class="btn btn-success" href="{{url('/')}}"><< Trang chủ</a>
+                                    <a type="button" href="{{ url('checkout') }}" class="btn btn-primary">Checkout >></a>
                                 @else
-                                    <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Login</a>
-                                    <a class="btn btn-primary" href="{{url('/')}}">Home</a>
+                                    <a class="btn btn-primary" href="{{url('/')}}"><< Trang chủ</a>
+                                    <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Đăng nhập >></a>
                                 @endif
 
                             </div>

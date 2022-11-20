@@ -1,7 +1,6 @@
 @extends('layout.admin')
 
 @section('content')
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -10,7 +9,6 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -28,7 +26,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($list_Customer as $key => $customer )
+                                @foreach ($listCustomer as $key => $customer )
                                     <tr>
                                         <td>{{$key}}</td>
                                         <td>{{$customer->fullname}}</td>
@@ -43,20 +41,6 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Google_id</th>
-                                    <th>Facebook_id</th>
-                                    <th>Provider</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

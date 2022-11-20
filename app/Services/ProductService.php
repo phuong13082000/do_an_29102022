@@ -3,15 +3,17 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Repositories\CommentRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductService
 {
-    public function __construct(ProductRepository $productRepository, ImageService $imageService)
+    public function __construct(ProductRepository $productRepository, ImageService $imageService, CommentRepository $commentRepository)
     {
         $this->productRepository = $productRepository;
         $this->imageService = $imageService;
+        $this->commentRepository = $commentRepository;
     }
 
     public function create(Request $request)
@@ -97,7 +99,7 @@ class ProductService
             unlink('../public/uploads/product/' . $product->image);
         }
 
-        $comments = $this->productRepository->findCommentByProductId($id);
+        $comments = $this->commentRepository->findCommentByProductId($id);
         $count_comment = $comments->count();
         if ($count_comment <= 0) {
             foreach ($comments as $comment) {
