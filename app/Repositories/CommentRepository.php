@@ -16,8 +16,7 @@ class CommentRepository
 
     public function getAll()
     {
-        return Comment::with('reProduct', 'reCustomer')
-            ->orderBy('status', 'DESC')->get();
+        return Comment::with('reProduct', 'reCustomer')->orderBy('status', 'DESC')->get();
     }
 
     public function findID($id)
@@ -32,9 +31,7 @@ class CommentRepository
 
     public function getMessage()
     {
-        return Comment::with('reCustomer')
-            ->where('status', 1)
-            ->where('comment_parent_id', NULL)->get();
+        return Comment::with('reCustomer')->where('status', 1)->where('comment_parent_id', NULL)->get();
     }
 
     public function create($attributes)
@@ -49,18 +46,12 @@ class CommentRepository
 
     public function getCommentIndex($product_id)
     {
-        return Comment::with('reCustomer')
-            ->where('status', 0)
-            ->where('admin_id', NULL)
-            ->where('product_id', $product_id)->get();
+        return Comment::with('reCustomer')->where('status', 0)->where('admin_id', NULL)->where('product_id', $product_id)->get();
     }
 
     public function getCommentParrentIndex($product_id)
     {
-        return Comment::with('reAdmin')
-            ->where('status', 0)
-            ->where('customer_id', NULL)
-            ->where('product_id', $product_id)->get();
+        return Comment::with('reAdmin')->where('status', 0)->where('customer_id', NULL)->where('product_id', $product_id)->get();
     }
 
 }

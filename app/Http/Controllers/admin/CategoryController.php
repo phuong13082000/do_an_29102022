@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
+use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     protected $commentRepository;
+    protected $categoryRepository;
+    protected $categoryService;
 
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(CommentRepository $commentRepository, CategoryRepository $categoryRepository, CategoryService $categoryService)
     {
         $this->commentRepository = $commentRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
     }
 
     public function index()
@@ -23,7 +27,7 @@ class CategoryController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $list_Category = Category::all();
+        $list_Category = $this->categoryRepository->getAll();
 
         return view('admin.pages.category.index')->with(compact('title', 'list_Category', 'count_message', 'messages'));
     }
@@ -35,7 +39,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        Category::create($request->all());
+        $this->categoryService->create($request);
 
         return redirect()->route('category.index');
     }
@@ -51,19 +55,14 @@ class CategoryController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $category = Category::find($id);
+        $category = $this->categoryRepository->findID($id);
 
         return view('admin.pages.category.form')->with(compact('title', 'category', 'count_message', 'messages'));
     }
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-
-        $category = Category::find($id);
-        $category->title = $data['title'];
-        $category->status = $data['status'];
-        $category->save();
+        $this->categoryService->update($request, $id);
 
         return redirect()->route('category.index');
     }
@@ -71,24 +70,18 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $category_id = Category::find($id);
-        $check_category = Product::where('category_id', $id)->first();
-
-        if ($check_category) {
+        $categoryId = $this->categoryRepository->findID($id);
+        $checkCategory = $this->categoryRepository->findCategoryFromProductById($id);
+        if ($checkCategory) {
             return redirect()->route('category.index')->with('error', 'Category đang có sản phẩm');
         } else {
-            $category_id->delete();
+            $categoryId->delete();
             return redirect()->route('category.index')->with('success', 'Xóa category thành công');
         }
     }
 
     public function update_Status_Category(Request $request)
     {
-        $data = $request->all();
-
-        $category = Category::find($data['id']);
-        $category->status = $data['status'];
-
-        $category->save();
+        $this->categoryService->updateStatus($request);
     }
 }

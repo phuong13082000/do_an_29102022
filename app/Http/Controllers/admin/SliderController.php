@@ -85,7 +85,7 @@ class SliderController extends Controller
 
         $slider = Slider::find($id);
         $slider->title = $data['title'];
-        $slider->url = $data['url'];
+        $slider->product_id = $data['product_id'];
         $slider->status = $data['status'];
 
         $get_image = $request->file('image');

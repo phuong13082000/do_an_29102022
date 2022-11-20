@@ -27,7 +27,6 @@
                 @endforeach
 
             </ul>
-            <hr>
         </div>
 
         <div class="col-sm-7">
@@ -194,6 +193,7 @@
                 slideMargin:0,
                 enableDrag: false,
                 currentPagerPosition:'left',
+                adaptiveHeight:true,
                 onSliderLoad: function(el) {
                     el.lightGallery({
                         selector: '#imageGallery .lslide'

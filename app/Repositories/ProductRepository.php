@@ -36,8 +36,13 @@ class ProductRepository
         return Product::where('title', $name)->get();
     }
 
-    public function findCommentByProductId($id){
+    public function findCommentByProductId($id)
+    {
         return Comment::where('product_id', $id)->get();
     }
 
+    public function countProduct()
+    {
+        return Product::count();
+    }
 }

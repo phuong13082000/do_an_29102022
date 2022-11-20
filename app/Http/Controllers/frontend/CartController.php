@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Product;
+use App\Repositories\BrandRepository;
 use Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    protected $brandRepository;
+
+    public function __construct(BrandRepository $brandRepository)
+    {
+        $this->brandRepository = $brandRepository;
+    }
+
     public function show_cart()
     {
         $title = 'Cart';
-        $list_brand = Brand::take(5)->get();
-
+        $list_brand = $this->brandRepository->getListBrandIndex();
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 
@@ -38,7 +44,6 @@ class CartController extends Controller
     public function delete_to_cart($rowId)
     {
         Cart::update($rowId, 0);
-
         return redirect('/show-cart');
     }
 
@@ -46,9 +51,7 @@ class CartController extends Controller
     {
         $rowId = $request->rowId_cart;
         $qty = $request->cart_quantity;
-
         Cart::update($rowId, $qty);
-
         return redirect('/show-cart');
     }
 

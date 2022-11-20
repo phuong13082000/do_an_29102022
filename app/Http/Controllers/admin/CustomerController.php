@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Repositories\BrandRepository;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,10 +19,12 @@ use Laravel\Socialite\Facades\Socialite;
 class CustomerController extends Controller
 {
     protected $commentRepository;
+    protected $brandRepository;
 
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(CommentRepository $commentRepository, BrandRepository $brandRepository)
     {
         $this->commentRepository = $commentRepository;
+        $this->brandRepository = $brandRepository;
     }
 
     //admin
@@ -37,26 +40,34 @@ class CustomerController extends Controller
     }
 
     //user
+    public function login_facebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function login_google()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
     public function dangnhap()
     {
         $title = 'Login';
-        $list_brand = Brand::take(5)->get();
-
+        $list_brand = $this->brandRepository->getListBrandIndex();
         return view('frontend.pages.login')->with(compact('title', 'list_brand'));
     }
 
     public function dangki()
     {
         $title = 'Register';
-        $list_brand = Brand::take(5)->get();
-
+        $list_brand = $this->brandRepository->getListBrandIndex();
         return view('frontend.pages.register')->with(compact('title', 'list_brand'));
     }
 
     public function profile()
     {
         $title = 'Profile';
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         $customer = Customer::find(Session::get('id'));
         $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
@@ -273,16 +284,6 @@ class CustomerController extends Controller
         Session::forget('email');
         Session::forget('phone');
         return redirect('/');
-    }
-
-    public function login_facebook()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
-
-    public function login_google()
-    {
-        return Socialite::driver('google')->redirect();
     }
 
     public function callback_facebook()

@@ -3,19 +3,26 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Repositories\BrandRepository;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    protected $brandRepository;
+
+    public function __construct(BrandRepository $brandRepository)
+    {
+        $this->brandRepository = $brandRepository;
+    }
+
     public function index()
     {
         $title = "Điện thoại di động";
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
-        $list_brand = Brand::where('status', 0)->get();
         $list_category = Category::where('status', 0)->get();
         $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
         $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
@@ -80,11 +87,12 @@ class IndexController extends Controller
 
     public function brand($id)
     {
-        $brand = Brand::find($id);
+        $brand = $this->brandRepository->findID($id);
         $title = $brand->title;
 
-        $list_brand = Brand::take(5)->get();
-        $list_product = Product::where('brand_id', '=', $id)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
+
+        $list_product = Product::where('brand_id', $id)->get();
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
     }
@@ -94,7 +102,7 @@ class IndexController extends Controller
         $category = Category::find($id);
         $title = $category->title;
 
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
         $list_product = Product::where('category_id', '=', $id)->get();
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -102,7 +110,7 @@ class IndexController extends Controller
 
     public function price($value)
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         if ($value == 'duoi-2-trieu') {
             $title = 'Điện thoại dưới 2 triệu';
@@ -129,7 +137,7 @@ class IndexController extends Controller
 
     public function ram($value)
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         if ($value == '2-gb') {
             $title = 'Điện thoại 2 GB Ram';
@@ -156,7 +164,7 @@ class IndexController extends Controller
 
     public function dung_luong($value)
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         if ($value == '32-gb') {
             $title = 'Điện thoại 32 GB Ram';
@@ -183,7 +191,7 @@ class IndexController extends Controller
 
     public function pin_sac($value)
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         if ($value == 'pin-khung-tren-5000-mah') {
             $title = 'Pin trên 5000 mAh';
@@ -201,7 +209,7 @@ class IndexController extends Controller
 
     public function tinh_nang($value)
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
 
         if ($value == 'khang-nuoc-bui') {
             $title = 'Kháng nước, Kháng bụi';
@@ -225,7 +233,7 @@ class IndexController extends Controller
         $data = $request->all();
         $title = $data['tukhoa'];
 
-        $list_brand = Brand::take(5)->get();
+        $list_brand = $this->brandRepository->getListBrandIndex();
         $list_product = Product::where('title', 'LIKE', '%' . $title . '%')->get();
 
         return view('frontend.pages.search')->with(compact('list_product', 'list_brand', 'title'));

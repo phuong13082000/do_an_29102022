@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class ProductService
 {
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ImageService $imageService)
     {
         $this->productRepository = $productRepository;
+        $this->imageService = $imageService;
     }
 
     public function create(Request $request)
@@ -45,16 +46,8 @@ class ProductService
             $product->status = $data['status'];
             $product->brand_id = $data['brand_id'];
             $product->category_id = $data['category_id'];
-
             $get_image = $request->file('image');
-            if ($get_image) {
-                $get_name_image = $get_image->getClientOriginalName();
-                $name_image = current(explode('.', $get_name_image));
-                $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('../public/uploads/product/', $new_image);
-                $product->image = $new_image;
-            }
-
+            $product->image = $this->imageService->saveImageProduct($get_image);
             return $product->save();
         }
     }
@@ -91,11 +84,7 @@ class ProductService
             if (file_exists('../public/uploads/product/' . $product->image)) {
                 unlink('../public/uploads/product/' . $product->image);
             } else {
-                $get_name_image = $get_image->getClientOriginalName();
-                $name_image = current(explode('.', $get_name_image));
-                $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('../public/uploads/product/', $new_image);
-                $product->image = $new_image;
+                $product->image = $this->imageService->saveImageProduct($get_image);
             }
         }
         $product->save();

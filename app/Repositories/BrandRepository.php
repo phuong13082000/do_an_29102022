@@ -40,4 +40,9 @@ class BrandRepository
     {
         return Product::where('brand_id', $id)->first();
     }
+
+    public function getListBrandIndex()
+    {
+        return Brand::where('status', 0)->take(5)->get();
+    }
 }

@@ -7,18 +7,20 @@ use App\Models\Admin;
 use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Models\Product;
 use App\Repositories\CommentRepository;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     protected $commentRepository;
+    protected $productRepository;
 
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(CommentRepository $commentRepository, ProductRepository $productRepository)
     {
         $this->commentRepository = $commentRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function getHome()
@@ -27,7 +29,7 @@ class AdminController extends Controller
         $count_message_db = Comment::where('admin_id', NULL)->count();
         $count_order = Order::count();
         $count_customer = Customer::count();
-        $count_product = Product::where('status', 0)->where('number', '>', 2)->count();
+        $count_product = $this->productRepository->countProduct();
 
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();

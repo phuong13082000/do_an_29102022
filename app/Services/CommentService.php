@@ -15,37 +15,36 @@ class CommentService
 
     public function showCommmentDetail(Request $request)
     {
-        $product_id = $request->product_id;
+        $productId = $request['product_id'];
 
-        $comment = $this->commentRepository->getCommentIndex($product_id);
-        $comment_reply = $this->commentRepository->getCommentParrentIndex($product_id);
+        $comments = $this->commentRepository->getCommentIndex($productId);
+        $commentReplys = $this->commentRepository->getCommentParrentIndex($productId);
 
         $output = '';
-        foreach ($comment as $comm) {
+        foreach ($comments as $comment) {
             $output .= '
             <div class="mt-3">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="color: green">@' . $comm->reCustomer->fullname . '<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
-                                <p class="card-text">' . $comm->title . '</p>
+                                <h5 class="card-title" style="color: green">@' . $comment->reCustomer->fullname . '<span style="float:right; font-size: 13px">' . $comment->created_at . '</span></h5>
+                                <p class="card-text">' . $comment->title . '</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> ';
-
-            foreach ($comment_reply as $comm_rep) {
-                if ($comm_rep->comment_parent_id == $comm->id) {
+            foreach ($commentReplys as $commentReply) {
+                if ($commentReply->comment_parent_id == $comment->id) {
                     $output .= '
             <div class="ms-5 mt-2">
                 <div class="row">
                     <div class="col-md-12 ">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">' . $comm->created_at . '</span></h5>
-                                <p class="card-text">' . $comm_rep->title . '</p >
+                                <h5 class="card-title" style="color: green">@Admin<span style="float:right; font-size: 13px">' . $comment->created_at . '</span></h5>
+                                <p class="card-text">' . $commentReply->title . '</p >
                             </div >
                         </div>
                     </div>
