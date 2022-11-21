@@ -65,22 +65,89 @@ class ProductRepository
     public function getListProductRecommentIndex()
     {
         return Product::orderBy('updated_at', 'DESC')
+            ->where('number', '>', 2)
+            ->where('status', 0)
             ->take(10)
             ->get();
     }
 
     public function getListProductFromBrandId($id)
     {
-        return Product::where('brand_id', $id)->get();
+        return Product::where('brand_id', $id)
+            ->where('status', 0)
+            ->get();
     }
 
     public function getListProductFromCategoryId($id)
     {
-        return Product::where('category_id', $id)->get();
+        return Product::where('category_id', $id)
+            ->where('status', 0)
+            ->get();
     }
 
     public function getListProductFromSearch($tukhoa)
     {
-        return Product::where('title', 'LIKE', '%' . $tukhoa . '%')->get();
+        return Product::where('title', 'LIKE', '%' . $tukhoa . '%')
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWhereBoNho($bonho)
+    {
+        return Product::where('bonho', $bonho)
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWhereRam($ram)
+    {
+        return Product::where('ram', $ram)
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWherePrice($operation , $price)
+    {
+        return Product::where('price', $operation, $price)
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWherePrices($operation_s , $operation_e, $price_s, $price_e)
+    {
+        return Product::where('price', $operation_s, $price_s)
+            ->where('price', $operation_e, $price_e)
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWherePinSac($pinsac)
+    {
+        return Product::where('pin_sac', 'LIKE', '%'. $pinsac. '%')
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductWhereTienIch($tienich)
+    {
+        return Product::where('tienich', 'LIKE', '%'. $tienich. '%')
+            ->where('number', '>', 2)
+            ->where('status', 0)
+            ->get();
+    }
+
+    public function getListProductArrange($column, $arrange)
+    {
+        return Product::where('number', '>', 2)
+            ->where('status', 0)
+            ->orderBy($column, $arrange)
+            ->take(8)
+            ->get();
     }
 }
