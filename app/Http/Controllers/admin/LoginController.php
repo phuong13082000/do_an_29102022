@@ -11,7 +11,6 @@ class LoginController extends Controller
     public function getLogin()
     {
         $title = 'Login Admin';
-
         return view('admin.auth.login')->with(compact('title'));
     }
 

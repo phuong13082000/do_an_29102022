@@ -152,12 +152,7 @@ class CustomerService
 
     public function updateProfile(Request $request, $id)
     {
-        $validated = Validator::make($request->all(), [
-            'name' => ['max:255'],
-            'phone' => ['max:10'],
-            'address' => ['string', 'max:255'],
-        ]);
-
+        $validated = Validator::make($request->all(), ['name' => ['max:255'], 'phone' => ['max:10'], 'address' => ['string', 'max:255'],]);
         if ($validated->fails()) {
             return false;
         }
@@ -182,8 +177,7 @@ class CustomerService
     public function loginCustomer(Request $request)
     {
         $customer = $this->customerRepository->findEmail($request['email_login']);
-
-        $check_password = Hash::check($request->password_login, $customer->password ?? '');
+        $check_password = Hash::check($request['password_login'], $customer->password ?? '');
 
         if ($customer && $check_password) {
             Session::put('id', $customer->id);
@@ -195,5 +189,24 @@ class CustomerService
         } else {
             return false;
         }
+    }
+
+    public function createCustomer(Request $request)
+    {
+        $customer = new Customer();
+        $customer->fullname = $request['fullname'] ?? NULL;
+        $customer->phone = $request['phone'] ?? NULL;
+        $customer->email = $request['email'] ?? NULL;
+        $customer->address = $request['address'] ?? NULL;
+        $customer->password = Hash::make($request['password']);
+        $customer->save();
+
+        $user = $this->customerRepository->findEmail($request['email']);
+
+        Session::put('id', $user->id);
+        Session::put('name', $user->fullname);
+        Session::put('email', $user->email);
+        Session::put('phone', $user->phone);
+        Session::put('address', $user->phone);
     }
 }

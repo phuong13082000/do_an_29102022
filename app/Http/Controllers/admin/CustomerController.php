@@ -10,7 +10,6 @@ use App\Repositories\CommentRepository;
 use App\Repositories\CustomerRepository;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -126,21 +125,7 @@ class CustomerController extends Controller
 
     public function add_customer(Request $request)
     {
-        $data = $request->all();
-
-        $customer = new Customer();
-        $customer->fullname = $data['fullname'];
-        $customer->phone = $data['phone'];
-        $customer->email = $data['email'];
-        $customer->password = Hash::make($data['password']);
-        $customer->save();
-
-        $user = Customer::where('email', $data['email'])->first();
-
-        Session::put('id', $user->id);
-        Session::put('name', $user->fullname);
-        Session::put('email', $user->email);
-        Session::put('phone', $user->phone);
+        $this->customerService->createCustomer($request);
 
         return redirect('/')->with('success', 'Đăng kí thành công');
     }
@@ -151,6 +136,7 @@ class CustomerController extends Controller
         Session::forget('name');
         Session::forget('email');
         Session::forget('phone');
+        Session::forget('address');
         return redirect('/');
     }
 

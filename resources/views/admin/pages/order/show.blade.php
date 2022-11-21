@@ -77,16 +77,14 @@
                     </thead>
                     <tbody>
                     @php
-                        $i = 0;
                         $total = 0;
                     @endphp
-                    @foreach($order_details as $key => $details)
+                    @foreach($order_details as $details)
                         @php
-                            $i++;
                             $subtotal = $details->price*$details->number;
                             $total+=$subtotal;
                         @endphp
-                        <tr class="color_qty_{{$details->product_id}}">
+                        <tr>
                             <td>{{$details->reProduct->title}}</td>
                             <td>{{$details->reProduct->number}}</td>
                             <td>{{$details->number}}</td>
@@ -95,14 +93,10 @@
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="2">
-                            @php
-                                $total_coupon = 0;
-                                $total_coupon = $total + $order->price_ship ;
-                            @endphp
+                        <td colspan="5">
                             Tổng : {{number_format($total,0,',','.')}}đ <br>
                             Phí ship : {{number_format($order->price_ship,0,',','.')}}đ <br>
-                            Thanh toán: {{number_format($total_coupon,0,',','.')}}đ
+                            Thanh toán: {{number_format($total + $order->price_ship,0,',','.')}}đ
                         </td>
                     </tr>
                     <tr>
@@ -214,27 +208,25 @@
                         </tr>
                         </thead>
                         <tbody>;
-                        @foreach($order_details as $key => $details)
+                        @php
+                            $total_modal = 0;
+                        @endphp
+                        @foreach($order_details as $orders)
                             @php
-                                $i++;
-                                $subtotal = $details->price * $details->number;
-                                $total+=$subtotal;
+                                $subtotal_modal = $orders->price * $orders->number;
+                                $total_modal+=$subtotal_modal;
                             @endphp
                             <tr>
-                                <td>{{$details->reProduct->title}}</td>
-                                <td>{{$details->number}}</td>
-                                <td>{{number_format($details->price ,0,',','.')}}đ</td>
-                                <td>{{number_format($subtotal ,0,',','.')}}đ</td>
+                                <td>{{$orders->reProduct->title}}</td>
+                                <td>{{$orders->number}}</td>
+                                <td>{{number_format($orders->price ,0,',','.')}}đ</td>
+                                <td>{{number_format($subtotal_modal ,0,',','.')}}đ</td>
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="2">
-                                @php
-                                    $total_coupon = 0;
-                                    $total_coupon = $total + $order->price_ship ;
-                                @endphp
-                                Phí ship : {{number_format($order->price_ship,0,',','.')}}đ <br>
-                                Thanh toán: {{number_format($total_coupon,0,',','.')}}đ
+                            <td colspan="4">
+                                Phí ship : {{number_format($order->price_ship ,0,',','.')}}đ <br>
+                                Thanh toán: {{number_format($total_modal + $order->price_ship ,0,',','.')}}đ
                             </td>
                         </tr>
                         </tbody>
@@ -253,7 +245,7 @@
                     </table>
 
                     <div class="modal-footer justify-content-between">
-                        <a target="_blank" type="button" class="btn btn-default" href="{{url('admin/print-order/'.$details->order_id)}}">In đơn hàng</a>
+                        <a target="_blank" type="button" class="btn btn-default" href="{{url('admin/print-order/'.$orders->order_id)}}">In đơn hàng</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
 

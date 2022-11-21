@@ -12,11 +12,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $productRepository;
-    protected $productService;
-    protected $commentRepository;
+    protected $productRepository, $productService, $commentRepository;
 
-    public function __construct(ProductRepository $productRepository, ProductService $productService, CommentRepository $commentRepository)
+    public function __construct(
+        ProductRepository $productRepository,
+        ProductService    $productService,
+        CommentRepository $commentRepository
+    )
     {
         $this->productRepository = $productRepository;
         $this->productService = $productService;

@@ -5,18 +5,25 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
+use App\Repositories\ProductRepository;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $commentRepository, $categoryRepository, $categoryService;
+    protected $commentRepository, $categoryRepository, $categoryService, $productRepository;
 
-    public function __construct(CommentRepository $commentRepository, CategoryRepository $categoryRepository, CategoryService $categoryService)
+    public function __construct(
+        CommentRepository  $commentRepository,
+        CategoryRepository $categoryRepository,
+        CategoryService    $categoryService,
+        ProductRepository  $productRepository,
+    )
     {
         $this->commentRepository = $commentRepository;
         $this->categoryRepository = $categoryRepository;
         $this->categoryService = $categoryService;
+        $this->productRepository = $productRepository;
     }
 
     public function index()
@@ -69,7 +76,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categoryId = $this->categoryRepository->findID($id);
-        $checkCategory = $this->categoryRepository->findCategoryFromProductById($id);
+        $checkCategory = $this->productRepository->findCategoryFromProductById($id);
 
         if ($checkCategory) {
             return redirect()->route('category.index')->with('error', 'Category đang có sản phẩm');

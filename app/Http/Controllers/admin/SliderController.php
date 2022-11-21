@@ -4,17 +4,24 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Slider;
 use App\Repositories\CommentRepository;
+use App\Repositories\SliderRepository;
+use App\Services\SliderService;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    protected $commentRepository;
+    protected $commentRepository, $sliderRepository, $sliderService;
 
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(
+        CommentRepository $commentRepository,
+        SliderRepository  $sliderRepository,
+        SliderService     $sliderService,
+    )
     {
         $this->commentRepository = $commentRepository;
+        $this->sliderRepository = $sliderRepository;
+        $this->sliderService = $sliderService;
     }
 
     public function index()
@@ -23,7 +30,7 @@ class SliderController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $list_Slider = Slider::with('reProduct')->get();
+        $list_Slider = $this->sliderRepository->getSliderWithProduct();
 
         return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_message', 'messages'));
     }
@@ -41,23 +48,7 @@ class SliderController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        $slider = new Slider();
-        $slider->title = $data['title'];
-        $slider->product_id = $data['product_id'];
-        $slider->status = $data['status'];
-
-        $get_image = $request->file('image');
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('../public/uploads/slider/', $new_image);
-            $slider->image = $new_image;
-        }
-
-        $slider->save();
+        $this->sliderService->create($request);
 
         return redirect()->route('slider.index');
     }
@@ -74,34 +65,14 @@ class SliderController extends Controller
         $messages = $this->commentRepository->getMessage();
 
         $list_products = Product::pluck('title', 'id');
-        $slider = Slider::find($id);
+        $slider = $this->sliderRepository->findID($id);
 
         return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages', 'list_products'));
     }
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-
-        $slider = Slider::find($id);
-        $slider->title = $data['title'];
-        $slider->product_id = $data['product_id'];
-        $slider->status = $data['status'];
-
-        $get_image = $request->file('image');
-        if ($get_image) {
-            if (file_exists('../public/uploads/slider/' . $slider->image)) {
-                unlink('../public/uploads/slider/' . $slider->image);
-            } else {
-                $get_name_image = $get_image->getClientOriginalName();
-                $name_image = current(explode('.', $get_name_image));
-                $new_image = $name_image . rand(0, 9999) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('../public/uploads/slider/', $new_image);
-                $slider->image = $new_image;
-            }
-        }
-
-        $slider->save();
+        $this->sliderService->update($request, $id);
 
         return redirect()->route('slider.index');
     }
@@ -109,7 +80,8 @@ class SliderController extends Controller
 
     public function destroy($id)
     {
-        $slider = Slider::find($id);
+        $slider = $this->sliderRepository->findID($id);
+
         if (file_exists('../public/uploads/slider/' . $slider->image)) {
             unlink('../public/uploads/slider/' . $slider->image);
         }

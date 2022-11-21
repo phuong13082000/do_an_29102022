@@ -3,17 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Category;
-use App\Models\Product;
 
 class CategoryRepository
 {
     protected $category;
-    protected $product;
 
-    public function __construct(Category $category, Product $product)
+    public function __construct(Category $category)
     {
         $this->category = $category;
-        $this->product = $product;
     }
 
     public function getAll()
@@ -36,8 +33,8 @@ class CategoryRepository
         return Category::where('title', $name)->get();
     }
 
-    public function findCategoryFromProductById($id)
+    public function getListCategoryIndex()
     {
-        return Product::where('category_id', $id)->first();
+        return Category::where('status', 0)->get();
     }
 }
