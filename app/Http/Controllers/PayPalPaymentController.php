@@ -33,12 +33,13 @@ class PayPalPaymentController extends Controller
     {
         $order = $this->orderRepository->findIDWhereCustomerId(Session::get('id'));
         $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($order->id);
+
         $total = 0;
         foreach ($order_details as $order_detail){
-            $subtotal = $order_detail->price * $order_detail->number;
-            $total += $subtotal;
+            $subtotal = $order_detail->price*$order_detail->number;
+            $total+=$subtotal;
         }
-        $fee_ship = ($total + $order->price_ship)/23000;
+        $fee_ship = ($total + $order->price_ship)/25000;
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -54,7 +55,7 @@ class PayPalPaymentController extends Controller
                 0 => [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => round($fee_ship, PHP_ROUND_HALF_UP), //PHP_ROUND_HALF_UP làm tròn 1,5->2
+                        "value" => $fee_ship,
                     ]
                 ]
             ]

@@ -25,11 +25,17 @@ class OrderRepository
 
     public function findIDWhereCustomerId($id)
     {
-        return Order::where('customer_id', $id)->orderBy('created_at', 'ASC')->first();
+        return Order::where('customer_id', $id)
+            ->where('status', 1)
+            ->where('payment_method', 'Trả bằng thẻ ngân hàng')
+            ->orderBy('created_at', 'DESC')
+            ->first();
     }
 
     public function getOrderWithCustomer()
     {
-        return Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();
+        return Order::with('reCustomer')
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 }

@@ -39,8 +39,8 @@ class CheckoutController extends Controller
         $order->payment_method = $data['payment_method'];
         $order->customer_id = Session::get('id');
 
-        $order->name_nguoinhan = $data['name_nguoinhan'] ?? Session::get('phone');
-        $order->phone_nguoinhan = $data['phone_nguoinhan'] ?? Session::get('name');
+        $order->name_nguoinhan = $data['name_nguoinhan'] ?? Session::get('name');
+        $order->phone_nguoinhan = $data['phone_nguoinhan'] ?? Session::get('phone');
         $order->address_nguoinhan = $data['name_address'] ?? Session::get('address') ?? '';
 
         $order->save();
