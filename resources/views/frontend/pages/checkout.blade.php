@@ -130,8 +130,7 @@
                         <h4 id="fee_ship">Tiền ship :</h4> {{-- fee --}}
                         <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
                         <h4 id="total">Thành tiền :</h4> {{-- fee_hidden + total_hidden --}}
-                        <input type="hidden" id="total_hidden"
-                               value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
+                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
                         <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                     </div>
                     @else
@@ -260,11 +259,9 @@
                 "headers": {"token": TOKEN_GHN},
             };
             $.ajax(service_fee).done(function (response) {
-
                 for (let w = 0; w < response['data']['length']; w++) {
                     $('#service').append('<option id="service_' + response['data'][w]['service_id'] + '" name="name-service" value="' + response['data'][w]['service_id'] + '">' + response['data'][w]['short_name'] + '</option>');
                 }
-
                 var service_id = response['data'][0]['service_id'];
                 $('#fee_ship').append('<input type="hidden" id="fee_service" value="' + service_id + '">');
             });
@@ -291,10 +288,7 @@
                 };
                 $.ajax(calculatorFee).done(function (response) {
                     var fee = response['data']['total'];
-                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {
-                        style: 'currency',
-                        currency: 'VND'
-                    }) + '</span>');
+                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {style: 'currency', currency: 'VND'}) + '</span>');
                     $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
 
                     var total = $('#total_hidden').val();
@@ -306,11 +300,7 @@
                         can_total = Number(total);
                     }
 
-                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {
-                        style: 'currency',
-                        currency: 'VND'
-                    }) + '</span>');
-                    //$('#thanhtoan_hidden').append('<span id="paypal">' + can_total + '</span>');
+                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {style: 'currency', currency: 'VND'}) + '</span>');
 
                 });
                 $.ajax(calculatorFee).fail(function (response) {
@@ -322,7 +312,6 @@
                 $('#fees').remove();
                 $('#total_span').remove();
                 $('#name_address').remove();
-                //$('#paypal').remove();
 
                 var id_province = $('#province').val();
 
@@ -347,7 +336,25 @@
                 var phone_nguoinhan = $('#phone_nguoinhan').val();
                 var payment_method = $('#payment_method').val();
                 var note = $('#note').val();
-                if (payment_method === 'Tiền mặt') {
+
+                if (payment_method === 'Trả bằng thẻ ngân hàng') {
+                    $.ajax({
+                        url: "{{url('/confirm-order')}}",
+                        method: "POST",
+                        data: {
+                            name_nguoinhan: name_nguoinhan,
+                            phone_nguoinhan: phone_nguoinhan,
+                            payment_method: payment_method,
+                            name_address: name_address,
+                            price_ship: price_ship,
+                            note: note,
+                            _token: _token
+                        },
+                        success: function (data) {
+                            window.location.href = "{{route('processTransaction')}}";
+                        }
+                    });
+                }else {
                     $.ajax({
                         url: "{{url('/confirm-order')}}",
                         method: "POST",

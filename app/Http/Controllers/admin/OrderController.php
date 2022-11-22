@@ -7,7 +7,6 @@ use App\Repositories\CommentRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderRepository;
-use App\Repositories\ProductRepository;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

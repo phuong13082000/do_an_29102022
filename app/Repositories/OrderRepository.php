@@ -23,6 +23,11 @@ class OrderRepository
         return Order::find($id);
     }
 
+    public function findIDWhereCustomerId($id)
+    {
+        return Order::where('customer_id', $id)->orderBy('created_at', 'ASC')->first();
+    }
+
     public function getOrderWithCustomer()
     {
         return Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();

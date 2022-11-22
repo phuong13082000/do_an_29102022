@@ -15,13 +15,13 @@ class MailController extends Controller
 {
     public function admin_forget_password()
     {
-        $title = 'Forget Password';
+        $title = 'Quên mật khẩu';
         return view('admin.auth.quen-mat-khau')->with(compact('title'));
     }
 
     public function admin_update_new_password()
     {
-        $title = 'Update New Password';
+        $title = 'Cập nhật mật khẩu mới';
         return view('admin.auth.update-new-password')->with(compact('title'));
     }
 
@@ -88,14 +88,14 @@ class MailController extends Controller
 
     public function user_forgot_password()
     {
-        $title = 'Forgot Password';
+        $title = 'Quên mật khẩu';
         $list_brand = Brand::take(5)->get();
         return view('frontend.pages.forgot-password')->with(compact('title', 'list_brand'));
     }
 
     public function user_update_new_password()
     {
-        $title = 'Update New Password';
+        $title = 'Cập nhật mật khẩu mới';
         $list_brand = Brand::take(5)->get();
         return view('frontend.pages.new-password')->with(compact('title', 'list_brand'));
     }

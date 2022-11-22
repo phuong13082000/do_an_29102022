@@ -70,7 +70,7 @@ class CheckoutController extends Controller
     public function handcash()
     {
         $list_brand = Brand::take(5)->get();
-        $title = 'Thanh toán tiền mặt';
+        $title = 'Thanh toán';
 
         return view('frontend.pages.handcash')->with(compact('title', 'list_brand'));
     }

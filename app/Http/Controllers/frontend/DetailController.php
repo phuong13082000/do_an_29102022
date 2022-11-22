@@ -14,7 +14,7 @@ class DetailController extends Controller
         $product = Product::find($id);
         $title = $product->title;
         $list_brand = Brand::take(5)->get();
-        $list_recommend = Product::where('brand_id', '=', $product->brand_id)->get();
+        $list_recommend = Product::where('brand_id', $product->brand_id)->get();
         $list_gallery = Gallery::where('product_id', $id)->get();
 
         return view('frontend.pages.detail')->with(compact('title', 'list_brand', 'product', 'list_recommend', 'list_gallery'));

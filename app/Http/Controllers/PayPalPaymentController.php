@@ -2,11 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\OrderDetailRepository;
+use App\Repositories\OrderRepository;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Illuminate\Support\Facades\Session;
 
 class PayPalPaymentController extends Controller
 {
+    protected $orderService, $orderRepository, $orderDetailRepository;
+
+    public function __construct(
+        OrderRepository       $orderRepository,
+        OrderService          $orderService,
+        OrderDetailRepository $orderDetailRepository,
+    )
+    {
+        $this->orderRepository = $orderRepository;
+        $this->orderService = $orderService;
+        $this->orderDetailRepository = $orderDetailRepository;
+    }
+
     public function createTransaction()
     {
         return view('transaction');
@@ -14,6 +31,15 @@ class PayPalPaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
+        $order = $this->orderRepository->findIDWhereCustomerId(Session::get('id'));
+        $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($order->id);
+        $total = 0;
+        foreach ($order_details as $order_detail){
+            $subtotal = $order_detail->price * $order_detail->number;
+            $total += $subtotal;
+        }
+        $fee_ship = ($total + $order->price_ship)/23000;
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
@@ -28,7 +54,7 @@ class PayPalPaymentController extends Controller
                 0 => [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => "5.00"
+                        "value" => round($fee_ship, PHP_ROUND_HALF_UP), //PHP_ROUND_HALF_UP làm tròn 1,5->2
                     ]
                 ]
             ]
@@ -44,12 +70,12 @@ class PayPalPaymentController extends Controller
             }
 
             return redirect()
-                ->route('createTransaction')
+                ->route('handcash')
                 ->with('error', 'Something went wrong.');
 
         } else {
             return redirect()
-                ->route('createTransaction')
+                ->route('handcash')
                 ->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }
@@ -63,11 +89,11 @@ class PayPalPaymentController extends Controller
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             return redirect()
-                ->route('createTransaction')
+                ->route('handcash')
                 ->with('success', 'Transaction complete.');
         } else {
             return redirect()
-                ->route('createTransaction')
+                ->route('handcash')
                 ->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }
@@ -75,7 +101,7 @@ class PayPalPaymentController extends Controller
     public function cancelTransaction(Request $request)
     {
         return redirect()
-            ->route('createTransaction')
+            ->route('handcash')
             ->with('error', $response['message'] ?? 'You have canceled the transaction.');
     }
 }

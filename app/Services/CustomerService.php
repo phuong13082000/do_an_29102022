@@ -22,7 +22,7 @@ class CustomerService
     public function orderProfileDetail(Request $request)
     {
         $order = Order::where('id', $request['order_id'])->first();
-        $order_detail = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->first();
+        $order_details = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->get();
 
         $output = '
         <div class="table-agile-info">
@@ -74,9 +74,12 @@ class CustomerService
                         </thead>
                         <tbody>';
 
-        $subtotal = $order_detail->price * $order_detail->number;
+        $total = 0;
+        foreach($order_details as $order_detail) {
+            $subtotal = $order_detail->price * $order_detail->number;
+            $total += $subtotal;
 
-        $output .= '
+            $output .= '
                     <tr>
                         <td>' . $order_detail->reProduct->title . '</td>
                         <td>' . $order_detail->reProduct->number . '</td>
@@ -84,15 +87,15 @@ class CustomerService
                         <td>' . number_format($order_detail->price, 0, ',', ' . ') . 'đ</td>
                         <td>' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ</td>
                     </tr>';
-
+        }
         $output .= '
                     <tr>
                         <td colspan="2">';
 
         $output .= '
-                            Tổng : ' . number_format($subtotal, 0, ',', ' . ') . 'đ <br>
+                            Tổng : ' . number_format($total, 0, ',', ' . ') . 'đ <br>
                             Phí ship : ' . number_format($order->price_ship, 0, ',', ' . ') . 'đ <br>
-                            Thanh toán: ' . number_format($subtotal + $order->price_ship, 0, ',', ' . ') . 'đ
+                            Thanh toán: ' . number_format($total + $order->price_ship, 0, ',', ' . ') . 'đ
                         </td>
                     </tr>
                     </tbody>
