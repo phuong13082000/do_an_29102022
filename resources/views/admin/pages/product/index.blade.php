@@ -10,7 +10,6 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="example1" class="table table-bordered table-striped">
@@ -29,7 +28,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($listProduct as $key => $product)
+                                    @foreach ($listProduct as $product)
                                         <tr>
                                             <td>
                                                 <img width="100px" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}">
@@ -42,11 +41,10 @@
                                             <td>{{$product->reBrand->title}}</td>
                                             <td>{{$product->reCategory->title}}</td>
                                             <td>
-                                                @if ($product->status==0)
-                                                    <span class="text text-success"><i class="fa fa-thumbs-up"></i></span>
-                                                @else
-                                                    <span class="text text-danger"><i class="fa fa-thumbs-down"></i></span>
-                                                @endif
+                                                <form method="POST">
+                                                    @csrf
+                                                    {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $product->status ?? '', ['class'=>'form-select product-status', 'id'=>$product->id]) !!}
+                                                </form>
                                             </td>
                                             <td>
                                                 <div class="row">
@@ -55,8 +53,7 @@
                                                     <a href="{{route('product.edit', [$product->id])}}"
                                                        class="btn btn-sm btn-primary">Edit</a>
 
-                                                    <form action="{{route('product.destroy', [$product->id])}}"
-                                                          method="POST">
+                                                    <form action="{{route('product.destroy', [$product->id])}}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button onclick="return confirm('Bạn có muốn xóa Product này?');" class="btn btn-sm btn-danger">Delete</button>
@@ -84,33 +81,18 @@
                                                         <b>Ram: </b>{{$product->ram}}<br>
                                                         <b>Kết nối: </b>{{$product->ketnoi}}<br>
                                                         <b>Pin Sạc: </b>{{$product->pin_sac}}<br>
-                                                        <b>Chiều cao: </b>{!! $product->height !!} cm<br>
-                                                        <b>Chiều dày: </b>{!! $product->length !!} cm<br>
-                                                        <b>Trọng lượng: </b>{!! $product->weight !!} g<br>
-                                                        <b>Chiều rộng: </b>{!! $product->width !!} cm<br>
+                                                        <b>Chiều cao: </b>{{ $product->height }} cm<br>
+                                                        <b>Chiều dày: </b>{{ $product->length }} cm<br>
+                                                        <b>Trọng lượng: </b>{{ $product->weight }} g<br>
+                                                        <b>Chiều rộng: </b>{{ $product->width }} cm<br>
                                                         <b>Tiện ích: </b>{{$product->tienich}}<br>
                                                         <b>Thông tin chung: </b>{!! $product->thongtin_chung !!}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     @endforeach
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Number</th>
-                                        <th>Price</th>
-                                        <th>Price Sale</th>
-                                        <th>Gallery</th>
-                                        <th>Brand</th>
-                                        <th>Category</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -119,4 +101,31 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('script_admin')
+    <!-- Update Status -->
+    <script type="text/javascript">
+        $('.product-status').change(function () {
+            var id = $(this).attr('id');
+            var status = $(this).find(':selected').val();
+            $.ajax({
+                url: "{{url('admin/update-status-product')}}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {id: id, status: status},
+                success: function () {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Change status succes',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        });
+    </script>
 @endsection

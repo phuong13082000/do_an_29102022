@@ -28,6 +28,11 @@ class CategoryRepository
         return $this->category->create($attributes);
     }
 
+    public function getCategoryProduct()
+    {
+        return Category::pluck('title', 'id');
+    }
+
     public function findByName($name)
     {
         return Category::where('title', $name)->get();

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
+use App\Repositories\BrandRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\ProductRepository;
 use App\Services\ProductService;
@@ -12,17 +12,20 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $productRepository, $productService, $commentRepository;
+    protected $productRepository, $productService, $commentRepository, $categoryRepository, $brandRepository;
 
     public function __construct(
-        ProductRepository $productRepository,
-        ProductService    $productService,
-        CommentRepository $commentRepository
+        ProductRepository  $productRepository, ProductService $productService,
+        CommentRepository  $commentRepository,
+        BrandRepository    $brandRepository,
+        CategoryRepository $categoryRepository
     )
     {
         $this->productRepository = $productRepository;
         $this->productService = $productService;
         $this->commentRepository = $commentRepository;
+        $this->brandRepository = $brandRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index()
@@ -32,7 +35,6 @@ class ProductController extends Controller
         $messages = $this->commentRepository->getMessage();
 
         $listProduct = $this->productRepository->getAll();
-
         return view('admin.pages.product.index')->with(compact('title', 'listProduct', 'count_message', 'messages'));
     }
 
@@ -42,8 +44,8 @@ class ProductController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $list_brand = Brand::pluck('title', 'id');
-        $list_category = Category::pluck('title', 'id');
+        $list_brand = $this->brandRepository->getBrandProduct();
+        $list_category = $this->categoryRepository->getCategoryProduct();
 
         return view('admin.pages.product.form')->with(compact('title', 'list_brand', 'list_category', 'count_message', 'messages'));
     }
@@ -66,8 +68,8 @@ class ProductController extends Controller
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        $list_brand = Brand::pluck('title', 'id');
-        $list_category = Category::pluck('title', 'id');
+        $list_brand = $this->brandRepository->getBrandProduct();
+        $list_category = $this->categoryRepository->getCategoryProduct();
 
         $product = $this->productRepository->findID($id);
 
@@ -81,7 +83,6 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-
     public function destroy($id)
     {
         $this->productService->delete($id);
@@ -89,4 +90,9 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
+    public function update_Status_Product(Request $request)
+    {
+        $this->productService->updateStatus($request);
+
+    }
 }

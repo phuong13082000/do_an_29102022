@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Comment;
 use App\Repositories\CommentRepository;
-use Illuminate\Http\Request;
 
 class CommentService
 {
@@ -13,7 +12,7 @@ class CommentService
         $this->commentRepository = $commentRepository;
     }
 
-    public function showCommmentDetail(Request $request)
+    public function showCommmentDetail($request)
     {
         $productId = $request['product_id'];
 
@@ -56,14 +55,14 @@ class CommentService
         echo $output;
     }
 
-    public function allowComment(Request $request)
+    public function allowComment($request)
     {
         $comment = $this->commentRepository->findID($request['comment_id']);
         $comment->status = $request['comment_status'];
         $comment->save();
     }
 
-    public function sendComment(Request $request)
+    public function sendComment($request)
     {
         $comment = new Comment();
         $comment->title = $request['title'];
@@ -73,7 +72,7 @@ class CommentService
         $comment->save();
     }
 
-    public function replyComment(Request $request)
+    public function replyComment($request)
     {
         $comment = new Comment();
         $comment->title = $request['comment'];
@@ -84,7 +83,7 @@ class CommentService
         $comment->save();
     }
 
-    public function deleteComment(Request $request)
+    public function deleteComment($request)
     {
         $comment_parent = $this->commentRepository->commentParrent($request['comment_id']);
         foreach ($comment_parent as $parrent) {
@@ -94,7 +93,7 @@ class CommentService
         $comments->delete();
     }
 
-    public function deleteReplyComment(Request $request)
+    public function deleteReplyComment($request)
     {
         $comments = $this->commentRepository->findID($request['comment_parent_id']);
         $comments->delete();

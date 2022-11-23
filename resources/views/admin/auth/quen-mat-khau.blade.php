@@ -20,7 +20,6 @@
         <a href="#"><b>Admin</b>Login</a>
     </div>
 
-    <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
@@ -42,21 +41,18 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Request new password</button>
+                        <button type="submit" class="btn btn-primary btn-block">Lấy lại mật khẩu</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
 
             <p class="mt-3 mb-1">
-                <a href="{{url('admin/login')}}">Login</a>
+                <a href="{{url('admin/login')}}">Đăng nhập</a>
             </p>
 
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script><!-- jQuery -->
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- Bootstrap 4 -->

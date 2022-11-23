@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Slider;
 use App\Repositories\SliderRepository;
-use Illuminate\Http\Request;
 
 class SliderService
 {
@@ -14,7 +13,7 @@ class SliderService
         $this->imageService = $imageService;
     }
 
-    public function create(Request $request)
+    public function create($request)
     {
         $sliderName = $request['title'];
         $sliders = $this->sliderRepository->findByName($sliderName);
@@ -34,7 +33,7 @@ class SliderService
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($request, $id)
     {
         $sliderId = $this->sliderRepository->findID($id);
 

@@ -15,8 +15,7 @@ class CategoryController extends Controller
 
     public function __construct(
         CommentRepository  $commentRepository,
-        CategoryRepository $categoryRepository,
-        CategoryService    $categoryService,
+        CategoryRepository $categoryRepository, CategoryService $categoryService,
         ProductRepository  $productRepository,
     )
     {

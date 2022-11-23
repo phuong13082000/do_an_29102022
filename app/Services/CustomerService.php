@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Repositories\CustomerRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +18,7 @@ class CustomerService
         $this->customerRepository = $customerRepository;
     }
 
-    public function orderProfileDetail(Request $request)
+    public function orderProfileDetail($request)
     {
         $order = Order::where('id', $request['order_id'])->first();
         $order_details = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->get();
@@ -107,7 +106,7 @@ class CustomerService
         echo $output;
     }
 
-    public function cancelOrderUser(Request $request)
+    public function cancelOrderUser($request)
     {
         $order = Order::where('id', $request['order_id'])->first();
         $order_details = OrderDetail::with('reProduct')->where('order_id', $request['order_id'])->get();
@@ -137,7 +136,7 @@ class CustomerService
         }
     }
 
-    public function changePasswordUser(Request $request, $id)
+    public function changePasswordUser($request, $id)
     {
         $password_new_1 = $request['password_new'];
         $password_new_2 = $request['re_password_new'];
@@ -153,7 +152,7 @@ class CustomerService
         return false;
     }
 
-    public function updateProfile(Request $request, $id)
+    public function updateProfile($request, $id)
     {
         $validated = Validator::make($request->all(), ['name' => ['max:255'], 'phone' => ['max:10'], 'address' => ['string', 'max:255'],]);
         if ($validated->fails()) {
@@ -177,7 +176,7 @@ class CustomerService
         return true;
     }
 
-    public function loginCustomer(Request $request)
+    public function loginCustomer($request)
     {
         $customer = $this->customerRepository->findEmail($request['email_login']);
         $check_password = Hash::check($request['password_login'], $customer->password ?? '');
@@ -194,7 +193,7 @@ class CustomerService
         }
     }
 
-    public function createCustomer(Request $request)
+    public function createCustomer($request)
     {
         $customer = new Customer();
         $customer->fullname = $request['fullname'] ?? NULL;

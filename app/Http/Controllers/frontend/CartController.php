@@ -38,12 +38,14 @@ class CartController extends Controller
         $data['options']['image'] = $chitiet_sanpham->image;
 
         Cart::add($data);
+
         return redirect()->back();
     }
 
     public function delete_to_cart($rowId)
     {
         Cart::update($rowId, 0);
+
         return redirect('/show-cart');
     }
 
@@ -52,6 +54,7 @@ class CartController extends Controller
         $rowId = $request->rowId_cart;
         $qty = $request->cart_quantity;
         Cart::update($rowId, $qty);
+
         return redirect('/show-cart');
     }
 

@@ -17,8 +17,7 @@ class OrderController extends Controller
 
     public function __construct(
         CommentRepository     $commentRepository,
-        OrderRepository       $orderRepository,
-        OrderService          $orderService,
+        OrderRepository       $orderRepository, OrderService $orderService,
         OrderDetailRepository $orderDetailRepository,
         CustomerRepository    $customerRepository,
     )

@@ -36,10 +36,11 @@ class AdminController extends Controller
 
         //chart
         $users = Order::select(DB::raw("COUNT(*) as count"))
-            ->whereYear('created_at', date('Y'))
+            ->whereYear('created_at', date(2022))
             ->groupBy(DB::raw("Month(created_at)"))
             ->pluck('count');
-        $labels = $users->keys();
+        //$labels = $users->keys();
+        $labels = [1,2,3,4,5,6,7,8,9,10,11,12];
         $data = $users->values();
 
         return view('admin.pages.home')

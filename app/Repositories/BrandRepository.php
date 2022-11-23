@@ -3,17 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Brand;
-use App\Models\Product;
 
 class BrandRepository
 {
     protected $brand;
-    protected $product;
 
-    public function __construct(Brand $brand, Product $product)
+    public function __construct(Brand $brand)
     {
         $this->brand = $brand;
-        $this->product = $product;
     }
 
     public function getAll()
@@ -31,14 +28,14 @@ class BrandRepository
         return $this->brand->create($attributes);
     }
 
+    public function getBrandProduct()
+    {
+        return Brand::pluck('title', 'id');
+    }
+
     public function findByName($name)
     {
         return Brand::where('title', $name)->get();
-    }
-
-    public function findBrandFromProductById($id)
-    {
-        return Product::where('brand_id', $id)->first();
     }
 
     public function getListBrandIndex()

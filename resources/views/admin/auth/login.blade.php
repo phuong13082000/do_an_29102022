@@ -19,7 +19,6 @@
     <div class="login-logo">
         <a href="#"><b>Admin</b>Login</a>
     </div>
-    <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <form action="{{ url('admin/postLogin') }}" method="POST">
@@ -39,7 +38,7 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -48,23 +47,19 @@
                 </div>
 
                 <p class="mb-1">
-                    <a href="{{url('admin/quen-mat-khau')}}">I forgot my password</a>
+                    <a href="{{url('admin/quen-mat-khau')}}">Quên mật khẩu?</a>
                 </p>
 
                 <div class="row">
-                    <!-- /.col -->
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
 
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script><!-- jQuery -->
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- Bootstrap 4 -->

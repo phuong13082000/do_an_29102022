@@ -20,7 +20,6 @@
         <a href="#"><b>Admin</b>Login</a>
     </div>
 
-    <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
@@ -57,9 +56,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Change password</button>
+                        <button type="submit" class="btn btn-primary btn-block">Đổi mật khẩu</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
 
@@ -67,10 +65,8 @@
                 <a href="{{url('admin/login')}}">Login</a>
             </p>
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script><!-- jQuery -->
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- Bootstrap 4 -->

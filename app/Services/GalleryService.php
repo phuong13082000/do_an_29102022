@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Gallery;
 use App\Repositories\GalleryRepository;
-use Illuminate\Http\Request;
 
 class GalleryService
 {
@@ -14,7 +13,7 @@ class GalleryService
         $this->imageService = $imageService;
     }
 
-    public function selectGallery(Request $request)
+    public function selectGallery($request)
     {
         $productId = $request['pro_id'];
         $galleries = $this->galleryRepository->findProductId($productId);
@@ -58,7 +57,7 @@ class GalleryService
         echo $output;
     }
 
-    public function insertGallery(Request $request, $id)
+    public function insertGallery($request, $id)
     {
         $get_image = $request->file('file');
 
@@ -75,14 +74,14 @@ class GalleryService
         }
     }
 
-    public function updateNameGallery(Request $request)
+    public function updateNameGallery($request)
     {
         $gallery = $this->galleryRepository->findID($request['gall_id']);
         $gallery->title = $request['gall_text'];
         $gallery->save();
     }
 
-    public function updateGallery(Request $request)
+    public function updateGallery($request)
     {
         $get_image = $request->file('file');
 
@@ -99,7 +98,7 @@ class GalleryService
         }
     }
 
-    public function deleteGallery(Request $request)
+    public function deleteGallery($request)
     {
         $gallery =$this->galleryRepository->findID($request['gall_id']);
         unlink('../public/uploads/gallery/' . $gallery->title);

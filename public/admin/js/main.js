@@ -11,9 +11,7 @@ $(function () {
 $(function () {
     $("#formbrand").validate({
         rules: {
-            title: {
-                required: true,
-            },
+            title: {required: true,},
             action: "required"
         },
         messages: {
@@ -29,12 +27,8 @@ $(function () {
 $(function () {
     $("#formslider").validate({
         rules: {
-            title: {
-                required: true,
-            },
-            url: {
-                required: true,
-            },
+            title: {required: true,},
+            url: {required: true,},
             action: "required"
         },
         messages: {
@@ -53,9 +47,7 @@ $(function () {
 $(function () {
     $("#formcategory").validate({
         rules: {
-            title: {
-                required: true,
-            },
+            title: {required: true,},
             action: "required"
         },
         messages: {
@@ -71,54 +63,22 @@ $(function () {
 $(function () {
     $("#formproduct-create").validate({
         rules: {
-            title: {
-                required: true,
-            },
-            image: {
-                required: true,
-            },
-            number: {
-                required: true,
-            },
-            price: {
-                required: true,
-            },
-            price_sale: {
-                required: true,
-            },
-            manhinh: {
-                required: true,
-            },
-            mausac: {
-                required: true,
-            },
-            camera_sau: {
-                required: true,
-            },
-            camera_truoc: {
-                required: true,
-            },
-            cpu: {
-                required: true,
-            },
-            bonho: {
-                required: true,
-            },
-            ram: {
-                required: true,
-            },
-            ketnoi: {
-                required: true,
-            },
-            pin_sac: {
-                required: true,
-            },
-            tienich: {
-                required: true,
-            },
-            thongtin_chung: {
-                required: true,
-            },
+            title: {required: true,},
+            image: {required: true,},
+            number: {required: true,},
+            price: {required: true,},
+            price_sale: {required: true,},
+            manhinh: {required: true,},
+            mausac: {required: true,},
+            camera_sau: {required: true,},
+            camera_truoc: {required: true,},
+            cpu: {required: true,},
+            bonho: {required: true,},
+            ram: {required: true,},
+            ketnoi: {required: true,},
+            pin_sac: {required: true,},
+            tienich: {required: true,},
+            thongtin_chung: {required: true,},
             action: "required"
         },
         messages: {

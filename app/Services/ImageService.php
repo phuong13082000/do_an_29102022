@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
-
 class ImageService
 {
     public function saveImageProduct($getImage)

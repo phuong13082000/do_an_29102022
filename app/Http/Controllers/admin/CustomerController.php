@@ -20,8 +20,7 @@ class CustomerController extends Controller
     public function __construct(
         CommentRepository  $commentRepository,
         BrandRepository    $brandRepository,
-        CustomerRepository $customerRepository,
-        CustomerService    $customerService
+        CustomerRepository $customerRepository, CustomerService $customerService
     )
     {
         $this->commentRepository = $commentRepository;

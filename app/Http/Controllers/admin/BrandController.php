@@ -12,7 +12,10 @@ class BrandController extends Controller
 {
     protected $brandRepository, $brandService, $commentRepository;
 
-    public function __construct(BrandRepository $brandRepository, BrandService $brandService, CommentRepository $commentRepository)
+    public function __construct(
+        BrandRepository $brandRepository, BrandService $brandService,
+        CommentRepository $commentRepository,
+    )
     {
         $this->brandRepository = $brandRepository;
         $this->brandService = $brandService;
@@ -68,14 +71,12 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $brand = $this->brandRepository->findID($id);
-        $check_brand = $this->brandRepository->findBrandFromProductById($id);
+        $check_brand = $this->brandService->checkProductBrand($id);
 
         if ($check_brand) {
-            return redirect()->route('brand.index')->with('error', 'Brand đang có sản phẩm');;
+            return redirect()->route('brand.index')->with('error', 'Brand đang có sản phẩm');
         } else {
-            $brand->delete();
-            return redirect()->route('brand.index')->with('success', 'Xóa brand thành công');;
+            return redirect()->route('brand.index')->with('success', 'Xóa brand thành công');
         }
     }
 

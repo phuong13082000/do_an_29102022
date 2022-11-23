@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/delete-reply-comment', [CommentController::class, 'delete_reply_comment']);
     Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
     Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
+    Route::post('/update-status-product', [ProductController::class, 'update_Status_Product']);
     Route::post('/change-password-admin/{id}', [AdminController::class, 'change_password_admin']);
 
     //gallery

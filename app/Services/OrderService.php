@@ -6,7 +6,6 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
 
 class OrderService
 {
@@ -23,7 +22,7 @@ class OrderService
         $this->productRepository = $productRepository;
     }
 
-    public function updateStatusOrder(Request $request)
+    public function updateStatusOrder($request)
     {
         $data = $request->all();
         $id = $data['id'];

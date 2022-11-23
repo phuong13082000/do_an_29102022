@@ -12,7 +12,6 @@
 
             <div class="mb-3">
                 <a href="{{ route('product.index') }}" type="button" class="btn btn-default">Back</a>
-
             </div>
 
             <div class="row">

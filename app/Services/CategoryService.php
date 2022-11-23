@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
 
 class CategoryService
 {
@@ -12,7 +11,7 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function create(Request $request)
+    public function create($request)
     {
         $attributes = $request->all();
 
@@ -26,7 +25,7 @@ class CategoryService
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($request, $id)
     {
         $categoryId = $this->categoryRepository->findID($id);
 
@@ -43,7 +42,7 @@ class CategoryService
         }
     }
 
-    public function updateStatus(Request $request)
+    public function updateStatus($request)
     {
         $brand = $this->categoryRepository->findID($request['id']);
         $brand->status = $request['status'];

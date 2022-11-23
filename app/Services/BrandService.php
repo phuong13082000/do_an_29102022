@@ -3,16 +3,17 @@
 namespace App\Services;
 
 use App\Repositories\BrandRepository;
-use Illuminate\Http\Request;
+use App\Repositories\ProductRepository;
 
 class BrandService
 {
-    public function __construct(BrandRepository $brandRepository)
+    public function __construct(BrandRepository $brandRepository, ProductRepository $productRepository)
     {
         $this->brandRepository = $brandRepository;
+        $this->productRepository = $productRepository;
     }
 
-    public function create(Request $request)
+    public function create($request)
     {
         $attributes = $request->all();
 
@@ -26,7 +27,7 @@ class BrandService
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($request, $id)
     {
         $brandId = $this->brandRepository->findID($id);
 
@@ -43,11 +44,23 @@ class BrandService
         }
     }
 
-    public function updateStatus(Request $request)
+    public function updateStatus($request)
     {
         $brand = $this->brandRepository->findID($request['id']);
         $brand->status = $request['status'];
         $brand->save();
     }
 
+    public function checkProductBrand($id)
+    {
+        $brand = $this->brandRepository->findID($id);
+        $check_brand = $this->productRepository->findBrandFromProductById($id);
+
+        if ($check_brand){
+            return true;
+        }else{
+            $brand->delete();
+            return false;
+        }
+    }
 }

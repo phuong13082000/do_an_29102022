@@ -28,14 +28,14 @@ class ProductRepository
         return $this->product->create($attributes);
     }
 
-    public function findByName($name)
-    {
-        return Product::where('title', $name)->get();
-    }
-
     public function countProduct()
     {
         return Product::count();
+    }
+
+    public function findBrandFromProductById($id)
+    {
+        return Product::where('brand_id', $id)->first();
     }
 
     public function findCategoryFromProductById($id)
