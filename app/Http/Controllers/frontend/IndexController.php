@@ -80,8 +80,8 @@ class IndexController extends Controller
                                 <input type="hidden" name="_token" value="' . csrf_token() . '" />
                                 <input name="qty" type="hidden" min="1" max="' . $product->number . '" class="cart_product_qty_' . $product->id . '" value="1"/>
                                 <input type="hidden" name="productid_hidden" value="' . $product->id . '"/>
-                                <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-outline-secondary">Detail</a>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </form>
                         </div>
                     </div>

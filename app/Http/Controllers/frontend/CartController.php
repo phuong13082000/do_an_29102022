@@ -19,7 +19,7 @@ class CartController extends Controller
 
     public function show_cart()
     {
-        $title = 'Cart';
+        $title = 'Giỏ hàng';
         $list_brand = $this->brandRepository->getListBrandIndex();
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }

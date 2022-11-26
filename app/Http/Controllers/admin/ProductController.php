@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
@@ -50,7 +51,7 @@ class ProductController extends Controller
         return view('admin.pages.product.form')->with(compact('title', 'list_brand', 'list_category', 'count_message', 'messages'));
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $this->productService->create($request);
 
@@ -76,7 +77,7 @@ class ProductController extends Controller
         return view('admin.pages.product.form')->with(compact('title', 'product', 'list_brand', 'list_category', 'count_message', 'messages'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $this->productService->update($request, $id);
 

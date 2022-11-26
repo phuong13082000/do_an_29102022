@@ -35,8 +35,8 @@
                                             </td>
                                             <td>{{$product->title}}</td>
                                             <td>{{$product->number}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td>{{$product->price_sale}}</td>
+                                            <td>{{ number_format($product->price, 0, '', ',');}}</td>
+                                            <td>{{ number_format($product->price_sale, 0, '', ',');}}</td>
                                             <td><a href="{{url('admin/add-gallery/'.$product->id)}}">Add Gallery</a></td>
                                             <td>{{$product->reBrand->title}}</td>
                                             <td>{{$product->reCategory->title}}</td>
@@ -50,8 +50,7 @@
                                                 <div class="row">
                                                     <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-product_{{$product->id}}">View</button>
 
-                                                    <a href="{{route('product.edit', [$product->id])}}"
-                                                       class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="{{route('product.edit', [$product->id])}}" class="btn btn-sm btn-primary">Edit</a>
 
                                                     <form action="{{route('product.destroy', [$product->id])}}" method="POST">
                                                         @method('DELETE')

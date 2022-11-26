@@ -32,9 +32,9 @@ class MailController extends Controller
         $title_mail = "Lấy lại mật khẩu admin" . ' ' . $now;
         $email = $data['email'];
 
-        //so sanh voi email trong database
+        //so sánh voi email trong database
         $admin = Admin::where('email', $email)->get();
-        foreach ($admin as $key => $value) {
+        foreach ($admin as $value) {
             $admin_id = $value->admin_id;
         }
         if ($admin) {

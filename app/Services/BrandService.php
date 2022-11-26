@@ -30,18 +30,10 @@ class BrandService
     public function update($request, $id)
     {
         $brandId = $this->brandRepository->findID($id);
+        $brandId->title = $request['title'];
+        $brandId->status = $request['status'];
+        $brandId->save();
 
-        $brandName = $request['title'];
-        $brands = $this->brandRepository->findByName($brandName);
-        $count = count($brands);
-
-        if ($count > 0) {
-            $brandId->delete();
-        } else {
-            $brandId->title = $request['title'];
-            $brandId->status = $request['status'];
-            $brandId->save();
-        }
     }
 
     public function updateStatus($request)
@@ -56,9 +48,9 @@ class BrandService
         $brand = $this->brandRepository->findID($id);
         $check_brand = $this->productRepository->findBrandFromProductById($id);
 
-        if ($check_brand){
+        if ($check_brand) {
             return true;
-        }else{
+        } else {
             $brand->delete();
             return false;
         }

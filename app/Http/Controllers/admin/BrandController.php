@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BrandRequest;
 use App\Repositories\BrandRepository;
 use App\Repositories\CommentRepository;
 use App\Services\BrandService;
@@ -38,7 +39,7 @@ class BrandController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $this->brandService->create($request);
 

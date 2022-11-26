@@ -111,18 +111,12 @@
                 </select>
             </label>
         </div>
-
         <div class="row" id="product_loc"></div>
     </div>
 
     <h3 class="text-center mb-3 mt-3">Sảm phẩm mới nhất</h3>
     <div class="row mt-3">
         @foreach($list_product as $product)
-            @php
-                $gia = number_format($product->price, 0, '', ',');
-                $giaGiam = number_format($product->price_sale, 0, '', ',');
-                $phanTramGiam = round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP); //PHP_ROUND_HALF_UP làm tròn 1,5->2
-            @endphp
             <div class="col-sm-3">
                 <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
                     <img src="{{asset('uploads/product/'.$product->image)}}" class="card-img-top"
@@ -132,10 +126,11 @@
                         <p class="card-subtitle">
                             @if($product->number)
                                 @if($product->price_sale)
-                                    <del>{{ $gia }} VND</del><b style="color: red"> -{{ $phanTramGiam }}%</b>
-                                    <br><b>{{ $giaGiam }} VND</b>
+                                    <del>{{ number_format($product->price, 0, '', ',') }} VND</del>
+                                    <b style="color: red"> -{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b>
+                                    <br><b>{{ number_format($product->price_sale, 0, '', ',') }} VND</b>
                                 @else
-                                    <b>{{ $gia }} VND</b>
+                                    <b>{{ number_format($product->price, 0, '', ',') }} VND</b>
                                 @endif
                             @else
                                 <b style="color: red">Hết Hàng</b>
@@ -145,12 +140,12 @@
 
                         </p>
 
-                        {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         {{--soluong--}}
+                        {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product->id) !!}
-                        <a href="{{route('detail', $product->id)}}" class="btn btn-sm btn-outline-secondary">Detail</a>
-                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        <a href="{{route('detail', $product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -161,11 +156,6 @@
     <h3 class="text-center mt-3">Sảm phẩm bán chạy</h3>
     <div class="row mt-3">
         @foreach($list_product_sale as $product_sale)
-            @php
-                $gia = number_format($product_sale->price, 0, '', ',');
-                $giaGiam = number_format($product_sale->price_sale, 0, '', ',');
-                $phanTramGiam = round(100 - ($product_sale->price_sale / $product_sale->price * 100), PHP_ROUND_HALF_UP); //PHP_ROUND_HALF_UP làm tròn 1,5->2
-            @endphp
             <div class="col-sm-3">
                 <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
                     <img src="{{asset('uploads/product/'.$product_sale->image)}}" class="card-img-top"
@@ -175,10 +165,11 @@
                         <p class="card-subtitle">
                             @if($product_sale->number)
                                 @if($product_sale->price_sale)
-                                    <del>{{ $gia }} VND</del><b style="color: red"> -{{ $phanTramGiam }}%</b>
-                                    <br><b>{{ $giaGiam }} VND</b>
+                                    <del>{{ number_format($product_sale->price, 0, '', ',') }} VND</del>
+                                    <b style="color: red"> -{{ round(100 - ($product_sale->price_sale / $product_sale->price * 100), PHP_ROUND_HALF_UP) }}%</b>
+                                    <br><b>{{ number_format($product_sale->price_sale, 0, '', ',') }} VND</b>
                                 @else
-                                    <b>{{ $gia }} VND</b>
+                                    <b>{{ number_format($product_sale->price, 0, '', ',') }} VND</b>
                                 @endif
                             @else
                                 <b style="color: red">Hết Hàng</b>
@@ -188,12 +179,12 @@
 
                         </p>
 
-                        {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         {{--soluong--}}
+                        {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product_sale->id) !!}
-                        <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-outline-secondary">Detail</a>
-                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                         {!! Form::close() !!}
                     </div>
                 </div>

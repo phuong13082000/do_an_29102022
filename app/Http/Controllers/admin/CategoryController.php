@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\ProductRepository;
@@ -41,7 +42,7 @@ class CategoryController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $this->categoryService->create($request);
 

@@ -36,28 +36,20 @@ class SliderService
     public function update($request, $id)
     {
         $sliderId = $this->sliderRepository->findID($id);
-
-        $sliderName = $request['title'];
-        $sliders = $this->sliderRepository->findByName($sliderName);
-        $count = count($sliders);
-
-        if ($count > 0) {
-            $sliderId->delete();
-        } else {
-            $sliderId->title = $request['title'];
-            $sliderId->product_id = $request['product_id'];
-            $sliderId->status = $request['status'];
-            $get_image = $request->file('image');
-            if ($get_image) {
-                if (file_exists('../public/uploads/slider/' . $sliderId->image)) {
-                    unlink('../public/uploads/slider/' . $sliderId->image);
-                } else {
-                    $new_image = $this->imageService->saveImageSlider($get_image);
-                    $sliderId->image = $new_image;
-                }
+        $sliderId->title = $request['title'];
+        $sliderId->product_id = $request['product_id'];
+        $sliderId->status = $request['status'];
+        $get_image = $request->file('image');
+        if ($get_image) {
+            if (file_exists('../public/uploads/slider/' . $sliderId->image)) {
+                unlink('../public/uploads/slider/' . $sliderId->image);
+            } else {
+                $new_image = $this->imageService->saveImageSlider($get_image);
+                $sliderId->image = $new_image;
             }
-
-            $sliderId->save();
         }
+
+        $sliderId->save();
     }
+
 }

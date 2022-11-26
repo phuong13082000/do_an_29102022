@@ -21,7 +21,7 @@ class CheckoutController extends Controller
             $title = 'Checkout';
             return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
         }
-        $title = 'Cart';
+        $title = 'Giỏ hàng';
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 

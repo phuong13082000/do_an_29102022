@@ -1,4 +1,3 @@
-@if($first_slider && $list_slider)
 <div class="mt-2">
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -26,4 +25,3 @@
         </button>
     </div>
 </div>
-@endif

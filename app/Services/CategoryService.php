@@ -28,18 +28,9 @@ class CategoryService
     public function update($request, $id)
     {
         $categoryId = $this->categoryRepository->findID($id);
-
-        $categoryName = $request['title'];
-        $categories = $this->categoryRepository->findByName($categoryName);
-        $count = count($categories);
-
-        if ($count > 0) {
-            $categoryId->delete();
-        } else {
-            $categoryId->title = $request['title'];
-            $categoryId->status = $request['status'];
-            $categoryId->save();
-        }
+        $categoryId->title = $request['title'];
+        $categoryId->status = $request['status'];
+        $categoryId->save();
     }
 
     public function updateStatus($request)
