@@ -27,9 +27,7 @@
             <form action="{{url('admin/recover-password')}}" method="post">
                 @csrf
                 @if (session('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ session('error') }}
-                    </div>
+                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                 @endif
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email">

@@ -5,7 +5,6 @@
     @include('frontend.includes.breadcrumb')
     <div class="mt-3">
         @if(Cart::count() != 0)
-
             <div class="row">
                 <div class="col-sm-6">
                     {!! Form::open(['url'=>'#', 'method'=>'POST', 'id'=>'form_checkout']) !!}
@@ -61,18 +60,14 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
-                            {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control', 'id'=>'payment_method']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
+                        {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control', 'id'=>'payment_method']) !!}
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-group">
-                            {!! Form::label('note', 'Ghi chú', []) !!}
-                            {!! Form::textarea('note', '', ['class'=>'form-control', 'id'=>'note']) !!}
-                        </div>
+                    <div class="form-group mb-3">
+                        {!! Form::label('note', 'Ghi chú', []) !!}
+                        {!! Form::textarea('note', '', ['class'=>'form-control', 'id'=>'note']) !!}
                     </div>
 
                     {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success btn-submit']) !!}
@@ -100,26 +95,30 @@
                                     </thead>
                                     <tbody>
                                     @foreach(Cart::content() as $content)
+                                        @php
+                                            $totalWeight = 0;
+                                            $totalLength = 0;
+                                        @endphp
+                                        @php
+                                            $totalWeight += ($content->options->weight * $content->qty);
+                                            $totalLength += $content->options->length;
+                                            $totalWidth = $content->options->width;
+                                            $totalHeight = $content->options->height;
+                                        @endphp
+                                        <input type="hidden" id="total_length_hidden" value="{{$totalLength}}">
+                                        <input type="hidden" id="total_weight_hidden" value="{{$totalWeight}}">
+                                        <input type="hidden" id="total_height_hidden" value="{{$totalHeight}}">
+                                        <input type="hidden" id="total_width_hidden" value="{{$totalWidth}}">
+
                                         <tr>
-                                            <td>
-                                                <img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/>
-                                            </td>
-                                            <td>
-                                                <h4>{{$content->name}}</h4>
-                                            </td>
+                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
+                                            <td><h4>{{$content->name}}</h4></td>
                                             <td>
                                                 <p>{{number_format($content->price).' '.'vnđ'}}</p>
                                                 <input type="hidden" id="product_price" value="{{$content->price}}">
                                             </td>
                                             <td>{{$content->qty}}</td>
-                                            <td>
-                                                <p>
-                                                    @php
-                                                        $subtotal = $content->price * $content->qty;
-                                                        echo number_format($subtotal).' '.'vnđ';
-                                                    @endphp
-                                                </p>
-                                            </td>
+                                            <td>{{number_format($content->price * $content->qty).' '.'vnđ'}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -275,10 +274,10 @@
                 var price_product = $('#product_price').val();
                 var service_id = $(this).val();
                 var from_district_id = $('#footer_id_address').val(); // 1450 q8-tphcm
-                var height = 15; //cm
-                var length = 15; //cm
-                var weight = 400; //g
-                var width = 8; //cm
+                var height = $('#total_height_hidden').val(); //cm
+                var length = $('#total_length_hidden').val(); //cm
+                var weight = $('#total_weight_hidden').val(); //g
+                var width = $('#total_width_hidden').val(); //cm
 
                 var calculatorFee = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" + service_id + "&insurance_value=" + price_product + "&coupon=&from_district_id=" + from_district_id + "&to_district_id=" + district_id + "&to_ward_code=" + ward_code + "&height=" + height + "&length=" + length + "&weight=" + weight + "&width=" + width + "",
@@ -288,7 +287,10 @@
                 };
                 $.ajax(calculatorFee).done(function (response) {
                     var fee = response['data']['total'];
-                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {style: 'currency', currency: 'VND'}) + '</span>');
+                    $('#fee_ship').append('<span id="fees" >' + fee.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }) + '</span>');
                     $('#fee_ship_hidden').append('<input type="hidden" id="fee_input" value="' + fee + '">');
 
                     var total = $('#total_hidden').val();
@@ -300,7 +302,10 @@
                         can_total = Number(total);
                     }
 
-                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {style: 'currency', currency: 'VND'}) + '</span>');
+                    $('#total').append('<span id="total_span">' + can_total.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }) + '</span>');
 
                 });
                 $.ajax(calculatorFee).fail(function (response) {
@@ -320,7 +325,7 @@
                 var name_ward = $('#id_ward_' + ward_code).text();
                 var sonha = $('#sonha').val();
 
-                $('#address').append('<input type="hidden" id="name_address" value="'+ sonha + '-' + name_ward + '-' + name_district + '-' + name_province + '">');
+                $('#address').append('<input type="hidden" id="name_address" value="' + sonha + '-' + name_ward + '-' + name_district + '-' + name_province + '">');
 
             });
         });
@@ -354,7 +359,7 @@
                             window.location.href = "{{route('processTransaction')}}";
                         }
                     });
-                }else {
+                } else {
                     $.ajax({
                         url: "{{url('/confirm-order')}}",
                         method: "POST",

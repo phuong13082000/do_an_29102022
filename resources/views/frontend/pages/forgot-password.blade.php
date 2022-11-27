@@ -11,16 +11,13 @@
                     <div class="login-form"><!--login form-->
                         <h2 class="text-center mb-4">Quên mật khẩu</h2>
                         {!! Form::open(['url'=>'/recover-password', 'method'=>'POST']) !!}
-
                             <div class="form-floating mb-4">
                                 {!! Form::email('email',  old('email') , ['class'=>'form-control', 'placeholder'=>'Email']) !!}
                                 {!! Form::label('email', 'Email', []) !!}
                             </div>
-
                             <div class="d-grid gap-2 mb-3">
                                 {!! Form::submit('Lấy lại mật khẩu', ['class'=>'btn btn-primary']) !!}
                             </div>
-
                         {!! Form::close() !!}
 
                     </div><!--/login form-->

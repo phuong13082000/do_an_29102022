@@ -11,12 +11,10 @@
                     <div class="login-form"><!--login form-->
                         <h2 class="text-center mb-4">Đăng Nhập</h2>
                         {!! Form::open(['url'=>'/login-customer', 'method'=>'POST', 'id'=>'login_form']) !!}
-
                         <div class="form-floating mb-4">
                             {!! Form::email('email_login',  old('email_account') , ['class'=>'form-control', 'placeholder'=>'Email']) !!}
                             {!! Form::label('email_login', 'Email', []) !!}
                         </div>
-
                         <div class="form-floating mb-4">
                             {!! Form::password('password_login', ['class'=>'form-control', 'placeholder'=>'Password']) !!}
                             {!! Form::label('password_login', 'Mật khẩu', []) !!}

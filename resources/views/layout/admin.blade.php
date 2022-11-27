@@ -8,10 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{$title}}</title>
 
-    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
 
     <!-- Ionicons -->
@@ -28,9 +25,6 @@
 
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{asset('admin/plugins/daterangepicker/daterangepicker.css')}}">
 
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
@@ -51,9 +45,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">{{$title}}</h1>
-                    </div>
+                    <div class="col-sm-6"><h1 class="m-0">{{$title}}</h1></div>
                     <div class="col-sm-6">
                         @include('admin.includes.breadcrumb')
                     </div>
@@ -64,9 +56,7 @@
         <section class="content">
             <div class="container-fluid">
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
+                    <div class="alert alert-success" role="alert">{{ session('status') }}</div>
                 @endif
 
                 @if ($errors->any())
@@ -91,7 +81,6 @@
 
 </div>
 
-<!-- jQuery -->
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 
@@ -109,12 +98,6 @@
 
 <!-- jQuery Knob Chart -->
 <script src="{{asset('admin/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-
-<!-- daterangepicker -->
-<script src="{{asset('admin/plugins/moment/moment.min.js')}}"></script>
-
-<!-- daterangepicker -->
-<script src="{{asset('admin/plugins/daterangepicker/daterangepicker.js')}}"></script>
 
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
@@ -145,9 +128,6 @@
 
 <!-- AdminLTE App -->
 <script src="{{asset('admin/js/adminlte.js')}}"></script>
-
-<!-- Summernote -->
-<script src="{{asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

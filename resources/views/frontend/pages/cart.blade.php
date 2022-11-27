@@ -4,7 +4,6 @@
     @include('frontend.includes.alert')
     @include('frontend.includes.breadcrumb')
     @php
-        $customer_id = Session::get('id');
         $customer_name = Session::get('name');
         $customer_email = Session::get('email');
         $customer_address = Session::get('address');
@@ -33,8 +32,8 @@
                                 <td><h4>{{$content->name}}</a></h4></td>
                                 <td><p>{{number_format($content->price).' '.'vnđ'}}</p></td>
 
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
+                                <td>
+                                    <div>
                                         {!! Form::open(['url'=>'/update-cart-quantity', 'method'=>'POST']) !!}
                                         <label>
                                             <input name="cart_quantity" type="number" min="1" max="{{$content->weight}}" class="cart_quantity_input" value="{{$content->qty}}">
@@ -45,18 +44,9 @@
                                     </div>
                                 </td>
 
-                                <td class="cart_total">
-                                    <p class="cart_total_price">
-                                        @php
-                                            $subtotal = $content->price * $content->qty;
-                                            echo number_format($subtotal).' '.'vnđ';
-                                        @endphp
-                                    </p>
-                                </td>
+                                <td><p class="cart_total_price">{{ number_format($content->price * $content->qty).' '.'vnđ'}}</p></td>
 
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="{{url('/delete-to-cart/'.$content->rowId)}}"><i class="fa fa-times"></i></a>
-                                </td>
+                                <td><a class="cart_quantity_delete" href="{{url('/delete-to-cart/'.$content->rowId)}}"><i class="fa fa-times"></i></a></td>
 
                             </tr>
                         @endforeach
@@ -71,9 +61,9 @@
                         <div class="col-sm-6">
                             <div class="total_area">
                                 <ul>
-                                    <li>Thành tiền <span>{{Cart::total().' '.'vnđ'}}</span></li>
+                                    <li>Tiền tạm tính: <span>{{number_format(Cart::total()).' '.'vnđ'}}</span></li>
                                 </ul>
-                                @if($customer_id!=NULL)
+                                @if(Session::get('id')!=NULL)
                                     <a class="btn btn-success" href="{{url('/')}}"><< Trang chủ</a>
                                     <a type="button" href="{{ url('checkout') }}" class="btn btn-primary">Checkout >></a>
                                 @else

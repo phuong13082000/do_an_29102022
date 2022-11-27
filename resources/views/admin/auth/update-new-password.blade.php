@@ -27,9 +27,7 @@
             <form action="{{url('admin/reset-new-password')}}" method="post">
                 @csrf
                 @if (session('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ session('error') }}
-                    </div>
+                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                 @endif
                 @php
                     $token = $_GET['token'];

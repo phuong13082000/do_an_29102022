@@ -31,11 +31,15 @@ class CartController extends Controller
         $soluong = $request->qty;
 
         $data['id'] = $sanpham_id;
-        $data['qty'] = $soluong; //số lượng chọn
         $data['name'] = $chitiet_sanpham->title;
+        $data['qty'] = $soluong; //số lượng chọn
         $data['price'] = $chitiet_sanpham->price_sale ?: $chitiet_sanpham->price;
         $data['weight'] = $chitiet_sanpham->number; //soluong tổng
         $data['options']['image'] = $chitiet_sanpham->image;
+        $data['options']['height'] = $chitiet_sanpham->height;
+        $data['options']['length'] = $chitiet_sanpham->length;
+        $data['options']['weight'] = $chitiet_sanpham->weight;
+        $data['options']['width'] = $chitiet_sanpham->width;
 
         Cart::add($data);
 

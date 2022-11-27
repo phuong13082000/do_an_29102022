@@ -24,15 +24,11 @@
 
 </head>
 <body>
-
     @include('frontend.includes.top-header')
-
     @include('frontend.includes.header')
-
 <div class="container">
     @yield('index')
 </div>
-
     @include('frontend.includes.footer')
 
 <script src="{{asset('frontend/js/jquery.js')}}"></script>

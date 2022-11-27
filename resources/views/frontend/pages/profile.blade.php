@@ -16,7 +16,7 @@
 
                             <div class="row mt-2">
                                 <div class="col-md-6">
-                                    <label class="labels">Name</label>
+                                    <label class="labels">Tên</label>
                                     <input type="text" id="name" name="name" class="form-control" placeholder="first name" value="{{ $customer->fullname }}">
                                 </div>
                                 <div class="col-md-6">
@@ -27,11 +27,11 @@
 
                             <div class="row mt-2">
                                 <div class="col-md-6">
-                                    <label class="labels">Phone</label>
+                                    <label class="labels">Số điện thoại</label>
                                     <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone Number" value="{{ $customer->phone }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="labels">Address</label>
+                                    <label class="labels">Địa chỉ</label>
                                     <input type="text" id="address" name="address" class="form-control" value="{{ $customer->address }}" placeholder="Address">
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                             @if($customer->provider == 'facebook')
                                 <div class="row mt-2">
                                     <div class="col-md-6">
-                                        <label class="labels">Provider</label>
+                                        <label class="labels">Dịch vụ</label>
                                         <input type="text" id="provider" name="provider" disabled class="form-control" placeholder="provider" value="{{ $customer->provider }}">
                                     </div>
                                     <div class="col-md-6">
@@ -51,7 +51,7 @@
                             @if($customer->provider == 'google')
                                 <div class="row mt-2">
                                     <div class="col-md-6">
-                                        <label class="labels">Provider</label>
+                                        <label class="labels">Dịch vụ</label>
                                         <input type="text" id="provider" name="provider" disabled class="form-control" placeholder="provider" value="{{ $customer->provider }}">
                                     </div>
                                     <div class="col-md-6">
@@ -62,12 +62,12 @@
                             @endif
                             @if($customer->provider !== 'google' && $customer->provider !== 'facebook')
                                 <div class="mt-5 text-center">
-                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
+                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Cập nhật</button>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#changePassword">Đổi mật khẩu</button>
                                 </div>
                             @else
                                 <div class="mt-5 text-center">
-                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                    <button id="btn" class="btn btn-primary profile-button" type="submit">Cập nhật</button>
                                 </div>
                             @endif
                         </div>
@@ -127,7 +127,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
+                    <h5 class="modal-title" id="changePasswordLabel">Đổi mật khẩu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -135,17 +135,17 @@
 
                     <div class="form-floating mb-4">
                         {!! Form::password('password', ['class'=>'form-control']) !!}
-                        {!! Form::label('password', 'Password old', []) !!}
+                        {!! Form::label('password', 'Mật khẩu cũ', []) !!}
                     </div>
 
                     <div class="form-floating mb-4">
                         {!! Form::password('password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('password_new', 'Password new', []) !!}
+                        {!! Form::label('password_new', 'Mật khẩu mới', []) !!}
                     </div>
 
                     <div class="form-floating mb-4">
                         {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('re_password_new', 'Re-Password new', []) !!}
+                        {!! Form::label('re_password_new', 'Nhập lại mật khẩu mới', []) !!}
                     </div>
 
                     <div class="modal-footer justify-content-between">

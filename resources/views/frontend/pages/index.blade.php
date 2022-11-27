@@ -119,8 +119,7 @@
         @foreach($list_product as $product)
             <div class="col-sm-3">
                 <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
-                    <img src="{{asset('uploads/product/'.$product->image)}}" class="card-img-top"
-                         alt="{{$product->title}}">
+                    <img src="{{asset('uploads/product/'.$product->image)}}" class="card-img-top" alt="{{$product->title}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$product->title}}</h5>
                         <p class="card-subtitle">
@@ -158,8 +157,7 @@
         @foreach($list_product_sale as $product_sale)
             <div class="col-sm-3">
                 <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
-                    <img src="{{asset('uploads/product/'.$product_sale->image)}}" class="card-img-top"
-                         alt="{{$product_sale->title}}">
+                    <img src="{{asset('uploads/product/'.$product_sale->image)}}" class="card-img-top" alt="{{$product_sale->title}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$product_sale->title}}</h5>
                         <p class="card-subtitle">

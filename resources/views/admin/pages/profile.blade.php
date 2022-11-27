@@ -10,7 +10,6 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <div class="col-lg-12">
                                 <div class="card mb-4">
@@ -59,7 +58,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modallable">Add Brand</h5>
+                    <h5 class="modal-title" id="modallable">Change password</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

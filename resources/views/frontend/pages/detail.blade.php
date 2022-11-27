@@ -4,16 +4,8 @@
     @include('frontend.includes.alert')
     @include('frontend.includes.breadcrumb')
     <div class="row mt-3">
-        @php
-            $gia = number_format($product->price, 0, '', ',');
-            $giaKhuyenMai =  number_format($product->price_sale, 0, '', ',');
-            $phanTramGiam = round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP);
-        @endphp
+        <div class="mb-3"><b style="font-size: 18px">{{$product->title}}</b><br></div><hr>
 
-        <div class="mb-3">
-            <b style="font-size: 18px">{{$product->title}}</b><br>
-        </div>
-        <hr>
         <div class="col-sm-5">
             {{--Gallery--}}
             <ul id="imageGallery">
@@ -21,9 +13,9 @@
                     <img width="100%" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}"/>
                 </li>
                 @foreach($list_gallery as $gallery)
-                <li data-thumb="{{asset('uploads/gallery/'.$gallery->image)}}" data-src="{{asset('uploads/gallery/'.$gallery->image)}}">
-                    <img width="100%" src="{{asset('uploads/gallery/'.$gallery->image)}}" alt="{{$gallery->title}}"/>
-                </li>
+                    <li data-thumb="{{asset('uploads/gallery/'.$gallery->image)}}" data-src="{{asset('uploads/gallery/'.$gallery->image)}}">
+                        <img width="100%" src="{{asset('uploads/gallery/'.$gallery->image)}}" alt="{{$gallery->title}}"/>
+                    </li>
                 @endforeach
 
             </ul>
@@ -31,13 +23,14 @@
 
         <div class="col-sm-7">
             {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
-
             @if($product->number)
                 @if($product->price_sale)
-                    Giá: <br> <b style="color: red">{{ $giaKhuyenMai }} VND</b>
-                    <del>&nbsp;{{ $gia }} VND</del><b style="color: red"> -{{ $phanTramGiam }}%</b><br>
+                    Giá: <br> <b style="color: red">{{ number_format($product->price_sale, 0, '') }} VND</b>
+                    <del>&nbsp;{{ number_format($product->price, 0, '') }} VND</del>
+                    <b style="color: red">
+                        -{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b><br>
                 @else
-                    <b>Giá: <br> {{ $gia }} VND</b><br>
+                    <b>Giá: <br> {{ number_format($product->price, 0, '') }} VND</b><br>
                 @endif
             @else
                 <b style="color: red">Hết Hàng</b><br>
@@ -46,8 +39,7 @@
             {{--soluong--}}
             <span>
                 <label for="qty">Số lượng
-                    <input name="qty" type="number" min="1" max="{{$product->number}}"
-                           class="cart_product_qty_{{$product->id}}" value="1">
+                    <input name="qty" type="number" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1">
                 </label>
                 {!! Form::hidden('productid_hidden', $product->id) !!}
             </span>
@@ -64,16 +56,46 @@
 
                         <div class="card-body">
                             <table class="table table-striped">
-                                <tr><td style="width: 150px; font-weight: bold">Màn hình</td><td>{{$product->manhinh}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Màu sắc</td><td>{{$product->mausac}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Camera sau</td><td>{{$product->camera_sau}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Camera trước</td><td>{{$product->camera_truoc}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">CPU</td><td>{{$product->cpu}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Bộ nhớ</td><td>{{$product->bonho}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Ram</td><td>{{$product->ram}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Kết nối</td><td>{{$product->ketnoi}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Pin sạc</td><td>{{$product->pin_sac}}</td></tr>
-                                <tr><td style="width: 150px; font-weight: bold">Tiện ích</td><td>{{$product->tienich}}</td></tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Màn hình</td>
+                                    <td>{{$product->manhinh}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Màu sắc</td>
+                                    <td>{{$product->mausac}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Camera sau</td>
+                                    <td>{{$product->camera_sau}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Camera trước</td>
+                                    <td>{{$product->camera_truoc}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">CPU</td>
+                                    <td>{{$product->cpu}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Bộ nhớ</td>
+                                    <td>{{$product->bonho}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Ram</td>
+                                    <td>{{$product->ram}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Kết nối</td>
+                                    <td>{{$product->ketnoi}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Pin sạc</td>
+                                    <td>{{$product->pin_sac}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px; font-weight: bold">Tiện ích</td>
+                                    <td>{{$product->tienich}}</td>
+                                </tr>
                             </table>
 
                         </div>
@@ -119,9 +141,7 @@
                         </form>
 
                         @if(Session::get('name'))
-                            <div class="mt-3">
-                                <p><b>Viết bình luận của bạn</b></p>
-                            </div>
+                            <div class="mt-3"><p><b>Viết bình luận của bạn</b></p></div>
                             <div id="thongbao-comment"></div>
                             <form action="#">
                                 @csrf
@@ -184,17 +204,17 @@
             });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#imageGallery').lightSlider({
-                gallery:true,
-                item:1,
-                loop:true,
-                thumbItem:3,
-                slideMargin:0,
+                gallery: true,
+                item: 1,
+                loop: true,
+                thumbItem: 3,
+                slideMargin: 0,
                 enableDrag: false,
-                currentPagerPosition:'left',
-                adaptiveHeight:true,
-                onSliderLoad: function(el) {
+                currentPagerPosition: 'left',
+                adaptiveHeight: true,
+                onSliderLoad: function (el) {
                     el.lightGallery({
                         selector: '#imageGallery .lslide'
                     });

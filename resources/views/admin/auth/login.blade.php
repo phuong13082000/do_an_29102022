@@ -8,7 +8,6 @@
     <title>{{$title}}</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}"><!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('admin/css/adminlte.min.css')}}"><!-- Theme style -->
 
@@ -24,9 +23,7 @@
             <form action="{{ url('admin/postLogin') }}" method="POST">
                 @csrf
                 @if (session('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ session('error') }}
-                    </div>
+                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                 @endif
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control" placeholder="Email">
