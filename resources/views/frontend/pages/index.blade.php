@@ -3,6 +3,22 @@
 @section('index')
     @include('frontend.includes.slider')
     @include('frontend.includes.alert')
+
+    <style>
+        .zoom {
+            transition: transform .2s; /* Animation */
+            margin: 0 auto;
+        }
+
+        .zoom:hover {
+            transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+        td:hover {
+            box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2)
+        }
+    </style>
+
     <div class="border mt-2 rounded">
         <nav class="navbar navbar-expand-lg navbar-light bg-light m-2">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,79 +131,73 @@
     </div>
 
     <h3 class="text-center mb-3 mt-3">Sảm phẩm mới nhất</h3>
-    <div class="row mt-3">
-        @foreach($list_product as $product)
-            <div class="col-sm-3">
-                <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
-                    <img src="{{asset('uploads/product/'.$product->image)}}" class="card-img-top" alt="{{$product->title}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$product->title}}</h5>
-                        <p class="card-subtitle">
-                            @if($product->number)
-                                @if($product->price_sale)
-                                    <del>{{ number_format($product->price, 0, '', ',') }} VND</del>
-                                    <b style="color: red"> -{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b>
-                                    <br><b>{{ number_format($product->price_sale, 0, '', ',') }} VND</b>
-                                @else
-                                    <b>{{ number_format($product->price, 0, '', ',') }} VND</b>
-                                @endif
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                @foreach($list_product as $product)
+                    <td>
+                        <img src="{{asset('uploads/product/'.$product->image)}}" class="img-thumbnail border-0 zoom" alt="{{$product->title}}">
+                        <h5 class="mt-2">{{$product->title}}</h5>
+                        @if($product->number)
+                            @if($product->price_sale)
+                                <del>{{ number_format($product->price, 0, '', ',') }} VND</del>
+                                <b style="color: red"> -{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b><br>
+                                <b>{{ number_format($product->price_sale, 0, '', ',') }} VND</b>
                             @else
-                                <b style="color: red">Hết Hàng</b>
+                                <b>{{ number_format($product->price, 0, '', ',') }} VND</b>
                             @endif
-                        </p>
-                        <p class="card-text">
-
-                        </p>
+                        @else
+                            <b style="color: red">Hết Hàng</b>
+                        @endif
 
                         {{--soluong--}}
                         {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product->id) !!}
-                        <a href="{{route('detail', $product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        <div class="text-center">
+                            <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        </div>
                         {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        @endforeach
+                    </td>
+                @endforeach
+            </tr>
+        </table>
     </div>
 
     <h3 class="text-center mt-3">Sảm phẩm bán chạy</h3>
-    <div class="row mt-3">
-        @foreach($list_product_sale as $product_sale)
-            <div class="col-sm-3">
-                <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
-                    <img src="{{asset('uploads/product/'.$product_sale->image)}}" class="card-img-top" alt="{{$product_sale->title}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$product_sale->title}}</h5>
-                        <p class="card-subtitle">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                @foreach($list_product_sale as $product_sale)
+                    <td>
+                        <img src="{{asset('uploads/product/'.$product_sale->image)}}" class="img-thumbnail border-0 zoom" alt="{{$product_sale->title}}">
+                        <h5 class="mt-2">{{$product_sale->title}}</h5>
                             @if($product_sale->number)
                                 @if($product_sale->price_sale)
                                     <del>{{ number_format($product_sale->price, 0, '', ',') }} VND</del>
-                                    <b style="color: red"> -{{ round(100 - ($product_sale->price_sale / $product_sale->price * 100), PHP_ROUND_HALF_UP) }}%</b>
-                                    <br><b>{{ number_format($product_sale->price_sale, 0, '', ',') }} VND</b>
+                                    <b style="color: red"> -{{ round(100 - ($product_sale->price_sale / $product_sale->price * 100), PHP_ROUND_HALF_UP) }}%</b><br>
+                                    <b>{{ number_format($product_sale->price_sale, 0, '', ',') }} VND</b>
                                 @else
                                     <b>{{ number_format($product_sale->price, 0, '', ',') }} VND</b>
                                 @endif
                             @else
                                 <b style="color: red">Hết Hàng</b>
                             @endif
-                        </p>
-                        <p class="card-text">
-
-                        </p>
 
                         {{--soluong--}}
                         {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                         <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product_sale->id) !!}
-                        <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        <div class="text-center">
+                            <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        </div>
                         {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        @endforeach
+                    </td>
+                @endforeach
+            </tr>
+        </table>
     </div>
 
     @include('frontend.includes.recommend-items')

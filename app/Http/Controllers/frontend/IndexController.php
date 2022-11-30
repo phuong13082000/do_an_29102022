@@ -51,42 +51,55 @@ class IndexController extends Controller
             $list_product = $this->productRepository->getListProductArrange('price', 'DESC');
         }
 
-        $output = '';
+        $output = '
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+        ';
+        $i = 0;
         foreach ($list_product as $product) {
             $output .= '
-                <div class="col-sm-3">
-                    <div class="card p-3 mb-5 bg-body rounded" style="width: 18rem;">
-                        <img src="../public/uploads/product/' . $product->image . '" class="card-img-top" alt="' . $product->title . '">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">' . $product->title . '</h5>
-                            <p class="card-subtitle text-center">';
+            <td>
+                <img src="../public/uploads/product/' . $product->image . '" class="img-thumbnail border-0 zoom" alt="' . $product->title . '">
+                <h5 class="mt-2">' . $product->title . '</h5>';
             if ($product->number) {
                 if ($product->price_sale) {
                     $output .= '
-                                        <del>' . number_format($product->price, 0, '', ',') . ' VND</del>
-                                        <b style="color: red"> -' . round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) . '%</b>
-                                        <br><b>' . number_format($product->price_sale, 0, '', ',') . ' VND</b>';
+                            <del>' . number_format($product->price, 0, '', ',') . ' VND</del>
+                            <b style="color: red"> -' . round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) . '%</b>
+                            <br><b>' . number_format($product->price_sale, 0, '', ',') . ' VND</b>';
                 } else {
                     $output .= '
-                                        <b>' . number_format($product->price, 0, '', ',') . ' VND</b>';
+                            <b>' . number_format($product->price, 0, '', ',') . ' VND</b>';
                 }
             } else {
                 $output .= '
-                                    <b style="color: red">Hết Hàng</b>';
+                            <b style="color: red">Hết Hàng</b>';
             }
             $output .= '
-                            </p>
-                            <form method="POST" action="' . url('/save-cart') . '" enctype="multipart/form-data">
-                                <input type="hidden" name="_token" value="' . csrf_token() . '" />
-                                <input name="qty" type="hidden" min="1" max="' . $product->number . '" class="cart_product_qty_' . $product->id . '" value="1"/>
-                                <input type="hidden" name="productid_hidden" value="' . $product->id . '"/>
-                                <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            </form>
-                        </div>
+                <form method="POST" action="' . url('/save-cart') . '" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="' . csrf_token() . '" />
+                    <input name="qty" type="hidden" min="1" max="' . $product->number . '" class="cart_product_qty_' . $product->id . '" value="1"/>
+                    <input type="hidden" name="productid_hidden" value="' . $product->id . '"/>
+                    <div class="text-center">
+                        <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                     </div>
-                </div>';
+                </form>
+
+            </td>';
+            $i++;
+            if ($i == 4) {
+                $output .= '</tr>';
+            } else {
+                $output .= '';
+            }
+
         }
+        $output .= '</tr>
+            </table>
+        </div>';
+
         echo $output;
     }
 
