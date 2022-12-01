@@ -91,6 +91,7 @@ class IndexController extends Controller
             $i++;
             if ($i == 4) {
                 $output .= '</tr>';
+                $i = 0;
             } else {
                 $output .= '';
             }
@@ -99,7 +100,6 @@ class IndexController extends Controller
         $output .= '</tr>
             </table>
         </div>';
-
         echo $output;
     }
 
