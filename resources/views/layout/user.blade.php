@@ -23,6 +23,49 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
+
+<style>
+    #button {
+        display: inline-block;
+        background-color: #FF9800;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transition: background-color .3s,
+        opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    #button::after {
+        content: "\f077";
+        font-family: FontAwesome, serif;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    #button:hover {
+        cursor: pointer;
+        background-color: #333;
+    }
+    #button:active {
+        background-color: #555;
+    }
+    #button.show {
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+
+<!-- Back to top button -->
+<a id="button"></a>
+
 <body>
     @include('frontend.includes.top-header')
     @include('frontend.includes.header')
@@ -73,6 +116,22 @@
         $('#keywords').val($(this).text());
         $('#search_ajax').fadeOut();
     });
+
+    <!--scroll top-->
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            $('#button').addClass('show');
+        } else {
+            $('#button').removeClass('show');
+        }
+    });
+
+    $('#button').on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+    });
+
+
 </script>
 
 </body>

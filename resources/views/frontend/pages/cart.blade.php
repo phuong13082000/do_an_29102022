@@ -10,6 +10,9 @@
         $customer_phone = Session::get('phone');
         $customer_gender = Session::get('gender');
     @endphp
+
+    <h5 class="mb-3"><a href="#" class="text-body"><i class="fa fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+
     @if(Cart::count() != 0)
         <div class="container">
             <div class="mt-3">

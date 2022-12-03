@@ -24,7 +24,7 @@
             </button>
 
             <ul class="dropdown-menu">
-                <li class="dropdown-item" href="#">
+                <li class="dropdown-item shopping-cart" id="cart" href="#">
                     @if(Cart::count() != 0)
                         <div class="container">
                             <div class="mt-3">
@@ -58,7 +58,6 @@
                     </div>
                 </div>
             </ul>
-
         </div>
 
     </div>

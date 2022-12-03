@@ -81,54 +81,55 @@
 
                     <div class="container">
                         <div class="mt-3">
-                            <div class="table-responsive cart_info">
-                                <table class="table table-condensed">
-                                    <thead>
-                                    <tr>
-                                        <td>Hình ảnh</td>
-                                        <td>Tên sản phẩm</td>
-                                        <td>Giá</td>
-                                        <td>Số lượng</td>
-                                        <td>Tổng</td>
-                                        <td></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach(Cart::content() as $content)
-                                        @php
-                                            $totalWeight = 0;
-                                            $totalLength = 0;
-                                        @endphp
-                                        @php
-                                            $totalWeight += ($content->options->weight * $content->qty);
-                                            $totalLength += $content->options->length;
-                                            $totalWidth = $content->options->width;
-                                            $totalHeight = $content->options->height;
-                                        @endphp
-                                        <input type="hidden" id="total_length_hidden" value="{{$totalLength}}">
-                                        <input type="hidden" id="total_weight_hidden" value="{{$totalWeight}}">
-                                        <input type="hidden" id="total_height_hidden" value="{{$totalHeight}}">
-                                        <input type="hidden" id="total_width_hidden" value="{{$totalWidth}}">
+                            @foreach(Cart::content() as $content)
+                                @php
+                                    $totalWeight = 0;
+                                    $totalLength = 0;
+                                @endphp
+                                @php
+                                    $totalWeight += ($content->options->weight * $content->qty);
+                                    $totalLength += $content->options->length;
+                                    $totalWidth = $content->options->width;
+                                    $totalHeight = $content->options->height;
+                                @endphp
+                                <input type="hidden" id="total_length_hidden" value="{{$totalLength}}">
+                                <input type="hidden" id="total_weight_hidden" value="{{$totalWeight}}">
+                                <input type="hidden" id="total_height_hidden" value="{{$totalHeight}}">
+                                <input type="hidden" id="total_width_hidden" value="{{$totalWidth}}">
 
-                                        <tr>
-                                            <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
-                                            <td><h4>{{$content->name}}</h4></td>
-                                            <td>
-                                                <p>{{number_format($content->price).' '.'vnđ'}}</p>
-                                                <input type="hidden" id="product_price" value="{{$content->price}}">
-                                            </td>
-                                            <td>{{$content->qty}}</td>
-                                            <td>{{number_format($content->price * $content->qty).' '.'vnđ'}}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{asset('uploads/product/'.$content->options->image)}}" class="img-fluid" style="width: 150px;" alt="{{$content->name}}">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="text-primary">{{$content->name}}</h5>
+                                        <h6 style="color: #9e9e9e;">{{number_format($content->price).' '.'vnđ'}}</h6>
+                                        <input type="hidden" id="product_price" value="{{$content->price}}">
+                                        <div class="d-flex align-items-center">
+                                            <p class="fw-bold mb-0 me-5 pe-3">{{$content->qty}}</p>
+                                            <p class="fw-bold mb-0 me-5 pe-3">{{number_format($content->price * $content->qty).' '.'vnđ'}}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            @endforeach
                             </div>
                         </div>
-                        <h4>Tạm tính :{{number_format(Cart::total()).' '.'vnđ'}}</h4>
-                        <h4 id="fee_ship">Tiền ship :</h4> {{-- fee --}}
+
+                        <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
+
+                        <div class="d-flex justify-content-between px-x">
+                            <p class="fw-bold">Tiền ship:</p>
+                            <p id="fee_ship" class="fw-bold"></p> {{-- fee --}}
+                        </div>
+
+                        <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;">
+                            <h5 class="fw-bold mb-0">Thành tiền:</h5>
+                            <h5 id="total" class="fw-bold mb-0"></h5>{{-- fee_hidden + total_hidden --}}
+                        </div>
+
                         <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
-                        <h4 id="total">Thành tiền :</h4> {{-- fee_hidden + total_hidden --}}
                         <input type="hidden" id="total_hidden" value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
                         <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                     </div>
