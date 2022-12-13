@@ -153,6 +153,6 @@ class ProductRepository
 
     public function getAllProductIndex()
     {
-        return Product::where('status', 0)->get();
+        return Product::where('status', 0)->paginate(6);
     }
 }
