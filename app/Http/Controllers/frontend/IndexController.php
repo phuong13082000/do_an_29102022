@@ -273,4 +273,14 @@ class IndexController extends Controller
             echo $output;
         }
     }
+
+    public function supermarket()
+    {
+        $title = 'Supermarket';
+        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_all_product = $this->productRepository->getAllProductIndex();
+        $list_all_category = $this->categoryRepository->getListCategoryIndex();
+
+        return view('frontend.pages.supermarket')->with(compact('list_brand', 'title', 'list_all_product', 'list_all_category'));
+    }
 }

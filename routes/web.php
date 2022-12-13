@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
 Route::get('/brand/{id}', [IndexController::class, 'brand'])->name('brand');
+Route::get('/supermarket', [IndexController::class, 'supermarket']);
 
 //search
 Route::get('/category/{id}', [IndexController::class, 'category'])->name('category');

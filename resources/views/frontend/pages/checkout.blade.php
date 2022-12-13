@@ -7,70 +7,77 @@
         @if(Cart::count() != 0)
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::open(['url'=>'#', 'method'=>'POST', 'id'=>'form_checkout']) !!}
 
-                    <h3>Thông tin khách hàng</h3>
-                    <hr>
-                    <div class="form-floating mb-4">
-                        {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
-                        {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
-                    </div>
+                    <div class="card">
+                        <div class="card-header">Thông tin khách hàng</div>
+                        <div class="card-body">
+                            {!! Form::open(['url'=>'#', 'method'=>'POST', 'id'=>'form_checkout']) !!}
 
-                    <div class="form-floating mb-4">
-                        {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan', 'placeholder'=>'Số điện thoại nhận hàng']) !!}
-                        {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="row">
-                            <span>Địa chỉ nhận hàng</span>
-                            <div class="col-sm-6 mb-3">
-                                <select id='province' class="form-control">
-                                    <option selected>Thành Phố</option>
-                                </select>
+                            <div class="form-floating">
+                                {!! Form::text('name_nguoinhan', '', ['class'=>'form-control', 'id'=>'name_nguoinhan', 'placeholder'=>'Tên người nhận hàng']) !!}
+                                {!! Form::label('name_nguoinhan', 'Tên người nhận hàng', []) !!}
                             </div>
 
-                            <div class="col-sm-6 mb-3">
-                                <select id='district' class="form-control">
-                                    <option selected>Quận Huyện</option>
-                                </select>
+                            <div class="form-floating mt-3">
+                                {!! Form::text('phone_nguoinhan', '', ['class'=>'form-control', 'id'=>'phone_nguoinhan', 'placeholder'=>'Số điện thoại nhận hàng']) !!}
+                                {!! Form::label('phone_nguoinhan', 'Số điện thoại nhận hàng', []) !!}
                             </div>
-
-                            <div class="col-sm-6">
-                                <select id='ward' class="form-control">
-                                    <option selected>Phường Xã</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input type="text" id="sonha" class="form-control" placeholder="Số nhà, tên đường">
-                            </div>
-
-                            <span id="address"></span> {{-- Gui dia chi de checkout --}}
-
                         </div>
-
                     </div>
 
-                    {{-- Service --}}
-                    <div class="mb-3">
-                        <label for='service'>Dịch vụ bên giao hàng</label>
-                        <select id='service' class="form-control">
-                            <option selected>Dịch vụ</option>
-                        </select>
+
+                    <div class="card mt-3">
+                        <div class="card-header">Địa chỉ nhận hàng</div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <select id='province' class="form-control">
+                                        <option selected>Thành Phố</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <select id='district' class="form-control">
+                                        <option selected>Quận Huyện</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <select id='ward' class="form-control">
+                                        <option selected>Phường Xã</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input type="text" id="sonha" class="form-control" placeholder="Số nhà, tên đường">
+                                </div>
+
+                                {{-- Service --}}
+                                <div class="mt-3">
+                                    <label for='service'>Dịch vụ bên giao hàng</label>
+                                    <select id='service' class="form-control">
+                                        <option selected>Dịch vụ</option>
+                                    </select>
+                                </div>
+
+                                <span id="address"></span> {{-- Gui dia chi de checkout --}}
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group mb-3">
+                    <div class="form-group mt-3">
                         {!! Form::label('payment_method', 'Phương thức thanh toán', []) !!}
                         {!! Form::select('payment_method', ['Tiền mặt'=>'Tiền mặt', 'Trả bằng thẻ ngân hàng'=>'Trả bằng thẻ ngân hàng'], '', ['class'=>'form-control', 'id'=>'payment_method']) !!}
                     </div>
 
-                    <div class="form-group mb-3">
+                    <div class="form-group mt-3">
                         {!! Form::label('note', 'Ghi chú', []) !!}
                         {!! Form::textarea('note', '', ['class'=>'form-control', 'id'=>'note']) !!}
                     </div>
 
-                    {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success btn-submit']) !!}
+                    {!! Form::submit('Xác nhận đơn hàng', ['class'=>'btn btn-success btn-submit mt-3']) !!}
 
                 </div>
 
@@ -85,8 +92,6 @@
                                 @php
                                     $totalWeight = 0;
                                     $totalLength = 0;
-                                @endphp
-                                @php
                                     $totalWeight += ($content->options->weight * $content->qty);
                                     $totalLength += $content->options->length;
                                     $totalWidth = $content->options->width;
@@ -99,7 +104,8 @@
 
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{asset('uploads/product/'.$content->options->image)}}" class="img-fluid" style="width: 150px;" alt="{{$content->name}}">
+                                        <img src="{{asset('uploads/product/'.$content->options->image)}}"
+                                             class="img-fluid" style="width: 150px;" alt="{{$content->name}}">
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="text-primary">{{$content->name}}</h5>
@@ -114,36 +120,38 @@
                                 </div>
 
                             @endforeach
-                            </div>
                         </div>
-
-                        <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
-
-                        <div class="d-flex justify-content-between px-x">
-                            <p class="fw-bold">Tiền ship:</p>
-                            <p id="fee_ship" class="fw-bold"></p> {{-- fee --}}
-                        </div>
-
-                        <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;">
-                            <h5 class="fw-bold mb-0">Thành tiền:</h5>
-                            <h5 id="total" class="fw-bold mb-0"></h5>{{-- fee_hidden + total_hidden --}}
-                        </div>
-
-                        <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
-                        <input type="hidden" id="total_hidden" value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
-                        <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                     </div>
-                    @else
-                        <div class="container">
-                            <div class="mt-3">
-                                <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để mua</a>
-                            </div>
-                        </div>
-                    @endif
-                    {!! Form::close() !!}
 
+                    <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
+
+                    <div class="d-flex justify-content-between px-x">
+                        <p class="fw-bold">Tiền ship:</p>
+                        <p id="fee_ship" class="fw-bold"></p> {{-- fee --}}
+                    </div>
+
+                    <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;">
+                        <h5 class="fw-bold mb-0">Thành tiền:</h5>
+                        <h5 id="total" class="fw-bold mb-0"></h5>{{-- fee_hidden + total_hidden --}}
+                    </div>
+
+                    <div id="fee_ship_hidden"></div> {{-- tien ship gui ve checkout --}}
+                    <input type="hidden" id="total_hidden"
+                           value="{{Cart::total()}}"> {{-- tong tien gui len de tinh total+fee --}}
+                    <div id="thanhtoan_hidden"></div> {{-- tong tien da cong fee chua format --}}
                 </div>
+                @else
+                    <div class="container">
+                        <div class="mt-3">
+                            <a href="{{url('/')}}" style="text-decoration: none"> Quay lại trang chủ và chọn đồ để
+                                mua</a>
+                        </div>
+                    </div>
+                @endif
+                {!! Form::close() !!}
+
             </div>
+    </div>
     </div>
 @endsection
 

@@ -11,18 +11,16 @@
         $customer_gender = Session::get('gender');
     @endphp
 
-    <h5 class="mb-3"><a href="#" class="text-body"><i class="fa fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
-
     @if(Cart::count() != 0)
         <div class="container">
             <div class="mt-3">
-                <div class="table-responsive cart_info">
+                <div class="table-responsive border border-dark rounded cart_info">
                     <table class="table table-condensed">
                         <thead>
                         <tr class="cart_menu">
                             <td class="image">Hình ảnh</td>
                             <td class="description">Tên sản phẩm</td>
-                            <td class="price">Giá</td>
+                            <td class="price">Đơn giá</td>
                             <td class="quantity">Số lượng</td>
                             <td class="total">Tổng</td>
                             <td></td>
@@ -55,30 +53,28 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
-            </div>
 
-            <section id="do_action">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="total_area">
-                                <ul>
-                                    <li>Tiền tạm tính: <span>{{number_format(Cart::total()).' '.'vnđ'}}</span></li>
-                                </ul>
-                                @if(Session::get('id')!=NULL)
-                                    <a class="btn btn-success" href="{{url('/')}}"><< Trang chủ</a>
-                                    <a type="button" href="{{ url('checkout') }}" class="btn btn-primary">Checkout >></a>
-                                @else
-                                    <a class="btn btn-primary" href="{{url('/')}}"><< Trang chủ</a>
-                                    <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Đăng nhập >></a>
-                                @endif
+                    <div class="container mb-3">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="total_area">
+                                    @if(Session::get('id')!=NULL)
+                                        <a class="btn btn-secondary" href="{{url('/')}}"><< Trở lại mua sắm</a>
+                                        <a type="button" href="{{ url('checkout') }}" class="btn btn-primary">Checkout >></a>
+                                    @else
+                                        <a class="btn btn-secondary" href="{{url('/')}}"><< Trở lại mua sắm</a>
+                                        <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Đăng nhập >></a>
+                                    @endif
 
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </section><!--/#do_action-->
+            </div>
+
+
         </div>
     @else
         <div class="container">

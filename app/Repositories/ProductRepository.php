@@ -109,7 +109,7 @@ class ProductRepository
             ->get();
     }
 
-    public function getListProductWherePrice($operation , $price)
+    public function getListProductWherePrice($operation, $price)
     {
         return Product::where('price', $operation, $price)
             ->where('number', '>', 2)
@@ -117,7 +117,7 @@ class ProductRepository
             ->get();
     }
 
-    public function getListProductWherePrices($operation_s , $operation_e, $price_s, $price_e)
+    public function getListProductWherePrices($operation_s, $operation_e, $price_s, $price_e)
     {
         return Product::where('price', $operation_s, $price_s)
             ->where('price', $operation_e, $price_e)
@@ -128,7 +128,7 @@ class ProductRepository
 
     public function getListProductWherePinSac($pinsac)
     {
-        return Product::where('pin_sac', 'LIKE', '%'. $pinsac. '%')
+        return Product::where('pin_sac', 'LIKE', '%' . $pinsac . '%')
             ->where('number', '>', 2)
             ->where('status', 0)
             ->get();
@@ -136,7 +136,7 @@ class ProductRepository
 
     public function getListProductWhereTienIch($tienich)
     {
-        return Product::where('tienich', 'LIKE', '%'. $tienich. '%')
+        return Product::where('tienich', 'LIKE', '%' . $tienich . '%')
             ->where('number', '>', 2)
             ->where('status', 0)
             ->get();
@@ -149,5 +149,10 @@ class ProductRepository
             ->orderBy($column, $arrange)
             ->take(8)
             ->get();
+    }
+
+    public function getAllProductIndex()
+    {
+        return Product::where('status', 0)->get();
     }
 }

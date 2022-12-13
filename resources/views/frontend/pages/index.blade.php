@@ -116,7 +116,7 @@
         </div>
     </div>
 
-    <h3 class="text-center mb-3 mt-3">Sảm phẩm</h3>
+    <h3 class="text-center mb-3 mt-3"><a href="{{url("/supermarket")}}" class="text-decoration-none">Sản phẩm</a></h3>
     <div class="mt-3">
         <div class="mb-3">
             <label for='loc'> Sắp xếp theo:
@@ -130,7 +130,7 @@
         <div class="row" id="product_loc"></div>
     </div>
 
-    <h3 class="text-center mb-3 mt-3">Sảm phẩm mới nhất</h3>
+    <h3 class="text-center mb-3 mt-3">Sản phẩm mới nhất</h3>
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
@@ -165,7 +165,7 @@
         </table>
     </div>
 
-    <h3 class="text-center mt-3">Sảm phẩm bán chạy</h3>
+    <h3 class="text-center mt-3">Sản phẩm bán chạy</h3>
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
