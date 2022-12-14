@@ -7,15 +7,14 @@ use App\Models\Admin;
 use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Repositories\CommentRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    protected $commentRepository;
-    protected $productRepository;
+    protected $commentRepository, $productRepository;
 
     public function __construct(CommentRepository $commentRepository, ProductRepository $productRepository)
     {
@@ -31,20 +30,27 @@ class AdminController extends Controller
         $count_customer = Customer::count();
         $count_product = $this->productRepository->countProduct();
 
+        $data_order = Order::where('status', 2)->get();
+        $data_orderDetail = OrderDetail::all();
+        $count_priceShip = 0;
+        $count_priceOrder = 0;
+        foreach ($data_order as $order) {
+            $count_priceShip += $order->price_ship;
+
+            foreach ($data_orderDetail as $orderDetail) {
+                if ($orderDetail->order_id == $order->id) {
+                    $count_priceOrder += $orderDetail->price;
+
+                }
+            }
+        }
+
+
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();
 
-        //chart
-        $users = Order::select(DB::raw("COUNT(*) as count"))
-            ->whereYear('created_at', date(2022))
-            ->groupBy(DB::raw("Month(created_at)"))
-            ->pluck('count');
-        //$labels = $users->keys();
-        $labels = [1,2,3,4,5,6,7,8,9,10,11,12];
-        $data = $users->values();
-
         return view('admin.pages.home')
-            ->with(compact('title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db', 'labels', 'data'));
+            ->with(compact('count_priceOrder', 'count_priceShip', 'title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
     }
 
     public function profile_admin()

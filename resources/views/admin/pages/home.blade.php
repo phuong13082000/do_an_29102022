@@ -10,17 +10,15 @@
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
 
+                        <div class="card-body">
                             <section class="content">
                                 <div class="container-fluid">
-                                    <h5 class="mb-2">Info Box</h5>
+                                    <h5 class="mb-2"></h5>
                                     <div class="row">
                                         <div class="col-md-3 col-sm-6 col-12">
                                             <div class="info-box">
                                                 <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
-
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Message</span>
                                                     <span class="info-box-number">
@@ -31,11 +29,8 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.col -->
                                         <div class="col-md-3 col-sm-6 col-12">
                                             <div class="info-box">
                                                 <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
@@ -50,11 +45,8 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.col -->
                                         <div class="col-md-3 col-sm-6 col-12">
                                             <div class="info-box">
                                                 <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
@@ -69,11 +61,8 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.col -->
                                         <div class="col-md-3 col-sm-6 col-12">
                                             <div class="info-box">
                                                 <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
@@ -88,19 +77,48 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.col -->
                                     </div>
                                 </div>
                             </section>
-
-                            <canvas id="myChart" height="100px"></canvas>
-                            <div class="text-center">Chart Order</div>
-
                         </div>
+
+                        <div class="card-body">
+                            <section class="content">
+                                <div class="container-fluid">
+                                    <h5 class="mb-2"></h5>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">All Price Ship</span>
+                                                    <span class="info-box-number">
+                                                        {{ number_format($count_priceShip, 0, '') }} VND
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">All Price Order</span>
+                                                    <span class="info-box-number">
+                                                        {{ number_format($count_priceOrder, 0, '') }} VND
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -109,37 +127,5 @@
 @endsection
 
 @section('script_admin')
-    <!-- ChartJs -->
-    <script src="{{asset('admin/plugins/chart.js/Chart.js')}}"></script>
 
-    <script type="text/javascript">
-        //char js
-        var labels =  {{ Js::from($labels) }};
-        var users =  {{ Js::from($data) }};
-
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Số đơn hàng',
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1,
-                data: users,
-            }]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-            options: {}
-        };
-
-        const myChart = new Chart(
-            document.getElementById('myChart'), config
-        );
-    </script>
 @endsection
