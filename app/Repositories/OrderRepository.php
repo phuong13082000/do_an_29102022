@@ -23,6 +23,16 @@ class OrderRepository
         return Order::find($id);
     }
 
+    public function countOrder()
+    {
+        return Order::count();
+    }
+
+    public function findOrderStatus2()
+    {
+        return Order::where('status', 2)->get();
+    }
+
     public function findIDWhereCustomerId($id)
     {
         return Order::where('customer_id', $id)

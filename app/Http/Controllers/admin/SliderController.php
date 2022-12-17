@@ -15,7 +15,8 @@ class SliderController extends Controller
 
     public function __construct(
         CommentRepository $commentRepository,
-        SliderRepository  $sliderRepository, SliderService $sliderService,
+        SliderRepository  $sliderRepository,
+        SliderService     $sliderService,
     )
     {
         $this->commentRepository = $commentRepository;

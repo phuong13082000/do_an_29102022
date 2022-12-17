@@ -24,7 +24,13 @@ class CustomerRepository
         return Customer::find($id);
     }
 
-    public function findEmail($email){
+    public function findEmail($email)
+    {
         return Customer::where('email', $email)->first();
+    }
+
+    public function countCustomer()
+    {
+        return Customer::count();
     }
 }

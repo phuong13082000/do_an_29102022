@@ -14,7 +14,8 @@ class BrandController extends Controller
     protected $brandRepository, $brandService, $commentRepository;
 
     public function __construct(
-        BrandRepository $brandRepository, BrandService $brandService,
+        BrandRepository   $brandRepository,
+        BrandService      $brandService,
         CommentRepository $commentRepository,
     )
     {

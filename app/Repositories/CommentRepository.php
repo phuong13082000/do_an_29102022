@@ -58,4 +58,9 @@ class CommentRepository
     {
         return Comment::where('product_id', $id)->get();
     }
+
+    public function countCommentAdmin()
+    {
+        return Comment::where('admin_id', NULL)->count();
+    }
 }

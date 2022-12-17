@@ -4,34 +4,42 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Comment;
-use App\Models\Customer;
-use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Repositories\CommentRepository;
+use App\Repositories\CustomerRepository;
+use App\Repositories\OrderDetailRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    protected $commentRepository, $productRepository;
+    protected $commentRepository, $productRepository, $orderRepository, $orderDetailRepository, $customerRepository;
 
-    public function __construct(CommentRepository $commentRepository, ProductRepository $productRepository)
+    public function __construct(
+        CommentRepository     $commentRepository,
+        ProductRepository     $productRepository,
+        OrderDetailRepository $orderDetailRepository,
+        OrderRepository       $orderRepository,
+        CustomerRepository    $customerRepository
+    )
     {
         $this->commentRepository = $commentRepository;
         $this->productRepository = $productRepository;
+        $this->orderDetailRepository = $orderDetailRepository;
+        $this->orderRepository = $orderRepository;
+        $this->customerRepository = $customerRepository;
     }
 
     public function getHome()
     {
         $title = 'Dashboard';
-        $count_message_db = Comment::where('admin_id', NULL)->count();
-        $count_order = Order::count();
-        $count_customer = Customer::count();
+        $count_message_db = $this->commentRepository->countCommentAdmin();
+        $count_order = $this->orderRepository->countOrder();
+        $count_customer = $this->customerRepository->countCustomer();
         $count_product = $this->productRepository->countProduct();
 
-        $data_order = Order::where('status', 2)->get();
-        $data_orderDetail = OrderDetail::all();
+        $data_order = $this->orderRepository->findOrderStatus2();
+        $data_orderDetail = $this->orderDetailRepository->getAll();
         $count_priceShip = 0;
         $count_priceOrder = 0;
         foreach ($data_order as $order) {
@@ -44,7 +52,6 @@ class AdminController extends Controller
                 }
             }
         }
-
 
         $count_message = $this->commentRepository->countComment();
         $messages = $this->commentRepository->getMessage();

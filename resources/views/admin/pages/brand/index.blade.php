@@ -29,7 +29,7 @@
                                         <td>
                                             <form method="POST">
                                                 @csrf
-                                                {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $brand->status ?? '', ['class'=>'form-select brand-status', 'id'=>$brand->id]) !!}
+                                                {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $brand->status ?? '', ['class'=>'form-select brand-status ', 'id'=>$brand->id]) !!}
                                             </form>
                                         </td>
                                         <td>

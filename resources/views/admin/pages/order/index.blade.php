@@ -33,11 +33,11 @@
                                         <td>{{$order->payment_method}}</td>
                                         <td>
                                             @if($order->status==1)
-                                                Chưa xử lý
+                                                <span class="badge badge-info">Chưa xử lý</span>
                                             @elseif($order->status==2)
-                                                Đã xử lý-Đã giao hàng
+                                                <span class="badge badge-success">Đã xử lý-Đã giao hàng</span>
                                             @else
-                                                Hủy đơn hàng-tạm giữ
+                                                <span class="badge badge-dark">Hủy đơn hàng-tạm giữ</span>
                                             @endif
                                         </td>
                                         <td>{{$order->created_at}}</td>
@@ -49,18 +49,6 @@
                                     </tr>
 
                                 @endforeach
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Người mua</th>
-                                    <th>Người nhận</th>
-                                    <th>Phương thức</th>
-                                    <th>Trạng thái</th>
-                                    <th>Ngày tạo</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

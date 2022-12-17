@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2022 at 02:05 PM
+-- Generation Time: Dec 14, 2022 at 10:36 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `token`) VALUES
-(1, 'Admin', 'hoangphuong0813@gmail.com', '9256f07cf3c731a53e71937461aa7950', '0356929673', 'OWmQoWK5XP3TDsze');
+(1, 'Admin', 'hoangphuong0813@gmail.com', '9256f07cf3c731a53e71937461aa7950', '0356929673', 'tnNmAFXM6yUNc5FZ');
 
 -- --------------------------------------------------------
 
@@ -214,7 +214,7 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `price_ship`, `note`, `status`, `payment_method`, `name_nguoinhan`, `phone_nguoinhan`, `address_nguoinhan`, `customer_id`, `created_at`, `updated_at`) VALUES
 ('14c7e', 29000, '123', 3, 'Trả bằng thẻ ngân hàng', 'Hoang Phuong', '0356929673', 'A2/47a, Ấp 1-Xã Tống Trân-Huyện Phù Cừ-Hưng Yên', 1, '2022-12-22 16:45:09', '2022-12-02 02:46:35'),
-('1ab06', 21000, '123', 1, 'Trả bằng thẻ ngân hàng', 'Hoang Phuong', '0356929673', 'A2/47a, Ấp 1-Xã Lý Nhơn-Huyện Cần Giờ-Hồ Chí Minh', 1, '2022-11-28 12:21:42', '2022-11-28 12:21:42'),
+('1ab06', 21000, '123', 2, 'Trả bằng thẻ ngân hàng', 'Hoang Phuong', '0356929673', 'A2/47a, Ấp 1-Xã Lý Nhơn-Huyện Cần Giờ-Hồ Chí Minh', 1, '2022-11-28 12:21:42', '2022-12-14 14:28:33'),
 ('2760b', 29000, '123', 1, 'Trả bằng thẻ ngân hàng', '456', '1234343542', 'A2/47a, Ấp 1-Xã Văn Môn-Huyện Yên Phong-Bắc Ninh', 1, '2022-11-22 16:16:14', '2022-11-22 16:16:14'),
 ('3249c', 29000, 'qwe', 1, 'Trả bằng thẻ ngân hàng', 'Admin', '0123456789', 'A2/47a, Ấp 1-Xã Pú Hồng-Huyện Điện Biên Đông-Điện Biên', 1, '2022-10-22 15:02:25', '2022-11-22 17:30:14'),
 ('34cb5', 29000, 'qwe', 1, 'Trả bằng thẻ ngân hàng', 'phuong', '0123456778', 'A2/47a, Ấp 1-Xã Vĩnh Thuận Tây-Huyện Vị Thuỷ-Hậu Giang', 1, '2022-09-22 15:03:05', '2022-11-22 17:30:20'),

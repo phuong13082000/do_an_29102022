@@ -35,8 +35,8 @@
                                             </td>
                                             <td>{{$product->title}}</td>
                                             <td>{{$product->number}}</td>
-                                            <td>{{ number_format($product->price, 0, '', ',');}}</td>
-                                            <td>{{ number_format($product->price_sale, 0, '', ',');}}</td>
+                                            <td>{{ number_format($product->price, 0, '', ',')}}</td>
+                                            <td>{{ number_format($product->price_sale, 0, '', ',')}}</td>
                                             <td><a href="{{url('admin/add-gallery/'.$product->id)}}">Add Gallery</a></td>
                                             <td>{{$product->reBrand->title}}</td>
                                             <td>{{$product->reCategory->title}}</td>
