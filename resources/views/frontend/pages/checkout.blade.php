@@ -152,14 +152,13 @@
 
             </div>
     </div>
-    </div>
 @endsection
 
 @section('scripts')
     <script type="text/javascript">
 
         const TOKEN_GHN = 'ba8ec0ca-586b-11ed-b824-262f869eb1a7';
-        const ID_GHN = 3404895;
+        const ID_GHN = {{env('ID_GHN')}};
 
         load_province();
 
@@ -167,10 +166,9 @@
         function load_province() {
             var provinces = {
                 "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
-                "method": "GET",
-                "timeout": 0,
-                "headers": {"token": TOKEN_GHN},
+                "method": "GET", "timeout": 0, "headers": {"token": TOKEN_GHN},
             };
+
             $.ajax(provinces).done(function (province) {
                 let data_province = province.data;
                 let length_province;
@@ -197,9 +195,7 @@
                 var id_province = $(this).find(":selected").val();
                 var districts = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=" + id_province + "",
-                    "method": "GET",
-                    "timeout": 0,
-                    "headers": {"token": TOKEN_GHN},
+                    "method": "GET", "timeout": 0, "headers": {"token": TOKEN_GHN},
                 };
                 $.ajax(districts).done(function (district) {
                     let data_district = district.data;
@@ -227,9 +223,7 @@
 
                 var wards = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + id_district + "",
-                    "method": "GET",
-                    "timeout": 0,
-                    "headers": {"token": TOKEN_GHN},
+                    "method": "GET", "timeout": 0, "headers": {"token": TOKEN_GHN},
                 };
                 $.ajax(wards).done(function (ward) {
                     let data_ward = ward.data;
@@ -262,9 +256,7 @@
             var form_district = 1450; //q8-tphcm
             var service_fee = {
                 "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=" + ID_GHN + "&from_district=" + form_district + "&to_district=" + id_district + "",
-                "method": "GET",
-                "timeout": 0,
-                "headers": {"token": TOKEN_GHN},
+                "method": "GET", "timeout": 0, "headers": {"token": TOKEN_GHN},
             };
             $.ajax(service_fee).done(function (response) {
                 for (let w = 0; w < response['data']['length']; w++) {
@@ -290,9 +282,7 @@
 
                 var calculatorFee = {
                     "url": "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=" + service_id + "&insurance_value=" + price_product + "&coupon=&from_district_id=" + from_district_id + "&to_district_id=" + district_id + "&to_ward_code=" + ward_code + "&height=" + height + "&length=" + length + "&weight=" + weight + "&width=" + width + "",
-                    "method": "GET",
-                    "timeout": 0,
-                    "headers": {"token": TOKEN_GHN, "shop_id": ID_GHN},
+                    "method": "GET", "timeout": 0, "headers": {"token": TOKEN_GHN, "shop_id": ID_GHN},
                 };
                 $.ajax(calculatorFee).done(function (response) {
                     var fee = response['data']['total'];

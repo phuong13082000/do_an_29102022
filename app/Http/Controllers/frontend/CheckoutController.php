@@ -18,10 +18,13 @@ class CheckoutController extends Controller
         $list_brand = Brand::take(5)->get();
 
         if (Session::get('id')){
+
             $title = 'Checkout';
+
             return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
         }
         $title = 'Giỏ hàng';
+
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 
