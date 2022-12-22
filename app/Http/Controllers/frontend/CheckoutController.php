@@ -15,10 +15,9 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
 
         if (Session::get('id')){
-
             $title = 'Checkout';
 
             return view('frontend.pages.checkout')->with(compact('title', 'list_brand'));
@@ -72,7 +71,7 @@ class CheckoutController extends Controller
 
     public function handcash()
     {
-        $list_brand = Brand::take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
         $title = 'Thanh toán';
 
         return view('frontend.pages.handcash')->with(compact('title', 'list_brand'));

@@ -4,42 +4,25 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Repositories\CommentRepository;
-use App\Repositories\CustomerRepository;
-use App\Repositories\OrderDetailRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Comment;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    protected $commentRepository, $productRepository, $orderRepository, $orderDetailRepository, $customerRepository;
-
-    public function __construct(
-        CommentRepository     $commentRepository,
-        ProductRepository     $productRepository,
-        OrderDetailRepository $orderDetailRepository,
-        OrderRepository       $orderRepository,
-        CustomerRepository    $customerRepository
-    )
-    {
-        $this->commentRepository = $commentRepository;
-        $this->productRepository = $productRepository;
-        $this->orderDetailRepository = $orderDetailRepository;
-        $this->orderRepository = $orderRepository;
-        $this->customerRepository = $customerRepository;
-    }
-
     public function getHome()
     {
         $title = 'Dashboard';
-        $count_message_db = $this->commentRepository->countCommentAdmin();
-        $count_order = $this->orderRepository->countOrder();
-        $count_customer = $this->customerRepository->countCustomer();
-        $count_product = $this->productRepository->countProduct();
+        $count_message_db = Comment::where('admin_id', NULL)->count();
+        $count_order = Order::count();
+        $count_customer = Customer::count();
+        $count_product = Product::count();
 
-        $data_order = $this->orderRepository->findOrderStatus2();
-        $data_orderDetail = $this->orderDetailRepository->getAll();
+        $data_order = Order::where('status', 2)->get();
+        $data_orderDetail = OrderDetail::all();
         $count_priceShip = 0;
         $count_priceOrder = 0;
         foreach ($data_order as $order) {
@@ -53,8 +36,14 @@ class AdminController extends Controller
             }
         }
 
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
         return view('admin.pages.home')
             ->with(compact('count_priceOrder', 'count_priceShip', 'title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
@@ -63,8 +52,14 @@ class AdminController extends Controller
     public function profile_admin()
     {
         $title = 'Profile';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
         $admin_detail = Admin::where('name', 'Admin')->first();
         return view('admin.pages.profile')->with(compact('title', 'count_message', 'messages', 'admin_detail'));

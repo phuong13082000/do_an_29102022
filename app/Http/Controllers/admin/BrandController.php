@@ -4,33 +4,33 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
-use App\Repositories\BrandRepository;
-use App\Repositories\CommentRepository;
+use App\Models\Brand;
+use App\Models\Comment;
 use App\Services\BrandService;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    protected $brandRepository, $brandService, $commentRepository;
+    protected $brandService;
 
-    public function __construct(
-        BrandRepository   $brandRepository,
-        BrandService      $brandService,
-        CommentRepository $commentRepository,
-    )
+    public function __construct(BrandService $brandService,)
     {
-        $this->brandRepository = $brandRepository;
         $this->brandService = $brandService;
-        $this->commentRepository = $commentRepository;
     }
 
     public function index()
     {
         $title = 'Brand';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $listBrand = $this->brandRepository->getAll();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $listBrand = Brand::all();
 
         return view('admin.pages.brand.index')->with(compact('title', 'listBrand', 'count_message', 'messages'));
     }
@@ -55,10 +55,16 @@ class BrandController extends Controller
     public function edit($id)
     {
         $title = 'Edit Brand';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $brand = $this->brandRepository->findID($id);
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $brand = Brand::find($id);
 
         return view('admin.pages.brand.form')->with(compact('title', 'brand', 'count_message', 'messages'));
     }

@@ -3,21 +3,24 @@
 namespace App\Services;
 
 use App\Models\Comment;
-use App\Repositories\CommentRepository;
 
 class CommentService
 {
-    public function __construct(CommentRepository $commentRepository)
-    {
-        $this->commentRepository = $commentRepository;
-    }
-
     public function showCommmentDetail($request)
     {
         $productId = $request['product_id'];
 
-        $comments = $this->commentRepository->getCommentIndex($productId);
-        $commentReplys = $this->commentRepository->getCommentParrentIndex($productId);
+        $comments = Comment::with('reCustomer')
+            ->where('status', 0)
+            ->where('admin_id', NULL)
+            ->where('product_id', $productId)
+            ->get();
+
+        $commentReplies = Comment::with('reAdmin')
+            ->where('status', 0)
+            ->where('customer_id', NULL)
+            ->where('product_id', $productId)
+            ->get();
 
         $output = '';
         foreach ($comments as $comment) {
@@ -34,7 +37,7 @@ class CommentService
                     </div>
                 </div>
             </div> ';
-            foreach ($commentReplys as $commentReply) {
+            foreach ($commentReplies as $commentReply) {
                 if ($commentReply->comment_parent_id == $comment->id) {
                     $output .= '
             <div class="ms-5 mt-2">
@@ -57,7 +60,7 @@ class CommentService
 
     public function allowComment($request)
     {
-        $comment = $this->commentRepository->findID($request['comment_id']);
+        $comment = Comment::find($request['comment_id']);
         $comment->status = $request['comment_status'];
         $comment->save();
     }
@@ -85,17 +88,17 @@ class CommentService
 
     public function deleteComment($request)
     {
-        $comment_parent = $this->commentRepository->commentParrent($request['comment_id']);
+        $comment_parent = Comment::where('comment_parent_id', $request['comment_id'])->get();
         foreach ($comment_parent as $parrent) {
             $parrent->delete();
         }
-        $comments = $this->commentRepository->findID($request['comment_id']);
+        $comments = Comment::find($request['comment_id']);
         $comments->delete();
     }
 
     public function deleteReplyComment($request)
     {
-        $comments = $this->commentRepository->findID($request['comment_parent_id']);
+        $comments = Comment::find($request['comment_parent_id']);
         $comments->delete();
     }
 }

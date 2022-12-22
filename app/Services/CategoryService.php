@@ -2,32 +2,27 @@
 
 namespace App\Services;
 
-use App\Repositories\CategoryRepository;
+use App\Models\Category;
 
 class CategoryService
 {
-    public function __construct(CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
-
     public function create($request)
     {
-        $attributes = $request->all();
+        $data = $request->all();
 
         $categoryName = $request['title'];
-        $categories = $this->categoryRepository->findByName($categoryName);
+        $categories = Category::where('title', $categoryName)->get();
         $count = count($categories);
         if ($count > 0) {
             return false;
         } else {
-            return $this->categoryRepository->create($attributes);
+            return Category::create($data);
         }
     }
 
     public function update($request, $id)
     {
-        $categoryId = $this->categoryRepository->findID($id);
+        $categoryId = Category::find($id);
         $categoryId->title = $request['title'];
         $categoryId->status = $request['status'];
         $categoryId->save();
@@ -35,7 +30,7 @@ class CategoryService
 
     public function updateStatus($request)
     {
-        $brand = $this->categoryRepository->findID($request['id']);
+        $brand = Category::find($request['id']);
         $brand->status = $request['status'];
         $brand->save();
     }

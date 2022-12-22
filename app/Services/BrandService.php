@@ -2,34 +2,28 @@
 
 namespace App\Services;
 
-use App\Repositories\BrandRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Brand;
+use App\Models\Product;
 
 class BrandService
 {
-    public function __construct(BrandRepository $brandRepository, ProductRepository $productRepository)
-    {
-        $this->brandRepository = $brandRepository;
-        $this->productRepository = $productRepository;
-    }
-
     public function create($request)
     {
-        $attributes = $request->all();
+        $data = $request->all();
 
         $brandName = $request['title'];
-        $brands = $this->brandRepository->findByName($brandName);
+        $brands = Brand::where('title', $brandName)->get();
         $count = count($brands);
         if ($count > 0) {
             return false;
         } else {
-            return $this->brandRepository->create($attributes);
+            return Brand::create($data);
         }
     }
 
     public function update($request, $id)
     {
-        $brandId = $this->brandRepository->findID($id);
+        $brandId = Brand::find($id);
         $brandId->title = $request['title'];
         $brandId->status = $request['status'];
         $brandId->save();
@@ -38,15 +32,15 @@ class BrandService
 
     public function updateStatus($request)
     {
-        $brand = $this->brandRepository->findID($request['id']);
+        $brand = Brand::find($request['id']);
         $brand->status = $request['status'];
         $brand->save();
     }
 
     public function checkProductBrand($id)
     {
-        $brand = $this->brandRepository->findID($id);
-        $check_brand = $this->productRepository->findBrandFromProductById($id);
+        $brand = Brand::find($id);
+        $check_brand = Product::where('brand_id', $id)->first();
 
         if ($check_brand) {
             return true;

@@ -2,17 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Comment;
 use App\Models\Product;
-use App\Repositories\CommentRepository;
-use App\Repositories\ProductRepository;
 
 class ProductService
 {
-    public function __construct(ProductRepository $productRepository, ImageService $imageService, CommentRepository $commentRepository)
+    public function __construct(ImageService $imageService)
     {
-        $this->productRepository = $productRepository;
         $this->imageService = $imageService;
-        $this->commentRepository = $commentRepository;
     }
 
     public function create($request)
@@ -50,7 +47,7 @@ class ProductService
     public function update($request, $id)
     {
         $data = $request->all();
-        $product = $this->productRepository->findID($id);
+        $product = Product::find($id);
         $product->title = $data['title'];
         $product->number = $data['number'];
         $product->price = $data['price'];
@@ -87,12 +84,12 @@ class ProductService
 
     public function delete($id)
     {
-        $product = $this->productRepository->findID($id);
+        $product = Product::find($id);
         if (file_exists('../public/uploads/product/' . $product->image)) {
             unlink('../public/uploads/product/' . $product->image);
         }
 
-        $comments = $this->commentRepository->findCommentByProductId($id);
+        $comments = Comment::where('product_id', $id)->get();
         $count_comment = $comments->count();
         if ($count_comment <= 0) {
             foreach ($comments as $comment) {
@@ -105,7 +102,7 @@ class ProductService
 
     public function updateStatus($request)
     {
-        $product = $this->productRepository->findID($request['id']);
+        $product = Product::find($request['id']);
         $product->status = $request['status'];
         $product->save();
     }

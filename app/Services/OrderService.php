@@ -2,33 +2,23 @@
 
 namespace App\Services;
 
-use App\Repositories\CustomerRepository;
-use App\Repositories\OrderDetailRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
 
 class OrderService
 {
-    public function __construct(
-        OrderRepository       $orderRepository,
-        CustomerRepository    $customerRepository,
-        OrderDetailRepository $orderDetailRepository,
-        ProductRepository     $productRepository,
-    )
-    {
-        $this->orderRepository = $orderRepository;
-        $this->customerRepository = $customerRepository;
-        $this->orderDetailRepository = $orderDetailRepository;
-        $this->productRepository = $productRepository;
-    }
-
     public function updateStatusOrder($request)
     {
         $data = $request->all();
         $id = $data['id'];
         $status = $data['status'];
-        $order = $this->orderRepository->findID($id);
-        $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($id);
+        $order = Order::find($id);
+        $order_details = OrderDetail::with('reProduct')
+            ->where('order_id', $id)
+            ->get();
+
         if ($order->status == 1 && $status == 2) {
             $order->status = $status;
             $order->save();
@@ -39,7 +29,7 @@ class OrderService
 
             foreach ($order_details as $order_detail) {
                 $id_product = $order_detail->product_id;
-                $product = $this->productRepository->findID($id_product);
+                $product = Product::find($id_product);
                 $product->number = $product->number + $order_detail->number;
                 $product->save();
             }
@@ -51,11 +41,13 @@ class OrderService
 
     public function printOrderConvert($id)
     {
-        $order = $this->orderRepository->findID($id);
+        $order = Order::find($id);
         $customer_id = $order->customer_id;
 
-        $customer = $this->customerRepository->findID($customer_id);
-        $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($id);
+        $customer = Customer::find($customer_id);
+        $order_details = OrderDetail::with('reProduct')
+            ->where('order_id', $id)
+            ->get();
 
         $output = '
         <style>

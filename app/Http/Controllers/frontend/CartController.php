@@ -3,24 +3,17 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Product;
-use App\Repositories\BrandRepository;
 use Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    protected $brandRepository;
-
-    public function __construct(BrandRepository $brandRepository)
-    {
-        $this->brandRepository = $brandRepository;
-    }
-
     public function show_cart()
     {
         $title = 'Giỏ hàng';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 
@@ -34,7 +27,7 @@ class CartController extends Controller
         $data['name'] = $chitiet_sanpham->title;
         $data['qty'] = $soluong; //số lượng chọn
         $data['price'] = $chitiet_sanpham->price_sale ?: $chitiet_sanpham->price;
-        $data['weight'] = $chitiet_sanpham->number; //soluong tổng
+        $data['weight'] = $chitiet_sanpham->number; //số lượng tổng
         $data['options']['image'] = $chitiet_sanpham->image;
         $data['options']['height'] = $chitiet_sanpham->height;
         $data['options']['length'] = $chitiet_sanpham->length;

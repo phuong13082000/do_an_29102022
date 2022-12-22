@@ -3,20 +3,18 @@
 namespace App\Services;
 
 use App\Models\Slider;
-use App\Repositories\SliderRepository;
 
 class SliderService
 {
-    public function __construct(SliderRepository $sliderRepository, ImageService $imageService)
+    public function __construct(ImageService $imageService)
     {
-        $this->sliderRepository = $sliderRepository;
         $this->imageService = $imageService;
     }
 
     public function create($request)
     {
         $sliderName = $request['title'];
-        $sliders = $this->sliderRepository->findByName($sliderName);
+        $sliders = Slider::where('title', $sliderName)->get();
         $count = count($sliders);
         if ($count > 0) {
             return false;
@@ -35,7 +33,7 @@ class SliderService
 
     public function update($request, $id)
     {
-        $sliderId = $this->sliderRepository->findID($id);
+        $sliderId = Slider::find($id);
         $sliderId->title = $request['title'];
         $sliderId->product_id = $request['product_id'];
         $sliderId->status = $request['status'];

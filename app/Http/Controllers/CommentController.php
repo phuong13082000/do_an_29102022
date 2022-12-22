@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    protected $commentService;
-    protected $commentRepository;
+    protected $commentService, $commentRepository;
 
     public function __construct(CommentRepository $commentRepository, CommentService $commentService)
     {

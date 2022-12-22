@@ -5,25 +5,17 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Repositories\CommentRepository;
-use App\Repositories\GalleryRepository;
+use App\Models\Comment;
 use App\Services\GalleryService;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    protected $commentRepository, $galleryRepository, $galleryService, $imageService;
+    protected $galleryService, $imageService;
 
-    public function __construct(
-        CommentRepository $commentRepository,
-        GalleryRepository $galleryRepository,
-        GalleryService    $galleryService,
-        ImageService      $imageService,
-    )
+    public function __construct(GalleryService $galleryService, ImageService $imageService)
     {
-        $this->commentRepository = $commentRepository;
-        $this->galleryRepository = $galleryRepository;
         $this->galleryService = $galleryService;
         $this->imageService = $imageService;
     }
@@ -31,8 +23,14 @@ class GalleryController extends Controller
     public function gallery_index($id)
     {
         $title = 'Gallery';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');

@@ -3,20 +3,18 @@
 namespace App\Services;
 
 use App\Models\Gallery;
-use App\Repositories\GalleryRepository;
 
 class GalleryService
 {
-    public function __construct(GalleryRepository $galleryRepository, ImageService $imageService)
+    public function __construct(ImageService $imageService)
     {
-        $this->galleryRepository = $galleryRepository;
         $this->imageService = $imageService;
     }
 
     public function selectGallery($request)
     {
         $productId = $request['pro_id'];
-        $galleries = $this->galleryRepository->findProductId($productId);
+        $galleries = Gallery::where('product_id', $productId)->get();
         $galleryCount = $galleries->count();
 
         $output = '<form>
@@ -76,7 +74,7 @@ class GalleryService
 
     public function updateNameGallery($request)
     {
-        $gallery = $this->galleryRepository->findID($request['gall_id']);
+        $gallery = Gallery::find($request['gall_id']);
         $gallery->title = $request['gall_text'];
         $gallery->save();
     }
@@ -88,7 +86,7 @@ class GalleryService
         if ($get_image) {
             $new_image = $this->imageService->saveImageGallery($get_image);
 
-            $gallery = $this->galleryRepository->findID($request['gall_id']);
+            $gallery = Gallery::find($request['gall_id']);
             unlink('../public/uploads/gallery/' . $gallery->title);
 
             $gallery->title = $new_image;
@@ -100,7 +98,7 @@ class GalleryService
 
     public function deleteGallery($request)
     {
-        $gallery =$this->galleryRepository->findID($request['gall_id']);
+        $gallery = Gallery::find($request['gall_id']);
         unlink('../public/uploads/gallery/' . $gallery->title);
         $gallery->delete();
     }

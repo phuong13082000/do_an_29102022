@@ -6,18 +6,12 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
-use App\Repositories\CustomerRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerService
 {
-    public function __construct(CustomerRepository $customerRepository)
-    {
-        $this->customerRepository = $customerRepository;
-    }
-
     public function orderProfileDetail($request)
     {
         $order = Order::where('id', $request['order_id'])->first();
@@ -141,7 +135,7 @@ class CustomerService
         $password_new_1 = $request['password_new'];
         $password_new_2 = $request['re_password_new'];
 
-        $customer = $this->customerRepository->findID($id);
+        $customer = Customer::find($id);
         $check_password = Hash::check($request['password'], $customer->password ?? '');
 
         if ($check_password && $password_new_1 == $password_new_2) {
@@ -159,14 +153,14 @@ class CustomerService
             return false;
         }
 
-        $customer = $this->customerRepository->findID($id);
+        $customer = Customer::find($id);
         $customer->fullname = $request['name'];
         $customer->phone = $request['phone'];
         $customer->email = $request['email'];
         $customer->address = $request['address'];
         $customer->save();
 
-        $user = $this->customerRepository->findEmail($request['email']);
+        $user = Customer::where('email', $request['email'])->first();
 
         Session::put('id', $user->id);
         Session::put('name', $user->fullname);
@@ -178,7 +172,7 @@ class CustomerService
 
     public function loginCustomer($request)
     {
-        $customer = $this->customerRepository->findEmail($request['email_login']);
+        $customer = Customer::where('email', $request['email_login'])->first();
         $check_password = Hash::check($request['password_login'], $customer->password ?? '');
 
         if ($customer && $check_password) {
@@ -203,7 +197,7 @@ class CustomerService
         $customer->password = Hash::make($request['password']);
         $customer->save();
 
-        $user = $this->customerRepository->findEmail($request['email']);
+        $user = Customer::where('email', $request['email'])->first();
 
         Session::put('id', $user->id);
         Session::put('name', $user->fullname);

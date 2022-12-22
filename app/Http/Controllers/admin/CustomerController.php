@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Comment;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Repositories\BrandRepository;
-use App\Repositories\CommentRepository;
-use App\Repositories\CustomerRepository;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -15,17 +14,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
-    protected $commentRepository, $brandRepository, $customerRepository, $customerService;
+    protected $customerService;
 
-    public function __construct(
-        CommentRepository  $commentRepository,
-        BrandRepository    $brandRepository,
-        CustomerRepository $customerRepository, CustomerService $customerService
-    )
+    public function __construct(CustomerService $customerService)
     {
-        $this->commentRepository = $commentRepository;
-        $this->brandRepository = $brandRepository;
-        $this->customerRepository = $customerRepository;
         $this->customerService = $customerService;
     }
 
@@ -33,10 +25,16 @@ class CustomerController extends Controller
     public function show_customer()
     {
         $title = 'Customer';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $listCustomer = $this->customerRepository->getAll();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $listCustomer = Customer::all();
 
         return view('admin.pages.customer.index')->with(compact('title', 'listCustomer', 'count_message', 'messages'));
     }
@@ -55,7 +53,9 @@ class CustomerController extends Controller
     public function dangnhap()
     {
         $title = 'Login';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)
+            ->take(5)
+            ->get();
 
         return view('frontend.pages.login')->with(compact('title', 'list_brand'));
     }
@@ -63,7 +63,9 @@ class CustomerController extends Controller
     public function dangki()
     {
         $title = 'Register';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)
+            ->take(5)
+            ->get();
 
         return view('frontend.pages.register')->with(compact('title', 'list_brand'));
     }
@@ -71,10 +73,13 @@ class CustomerController extends Controller
     public function profile()
     {
         $title = 'Profile';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
 
-        $customer = $this->customerRepository->findID(Session::get('id'));
-        $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
+        $customer = Customer::find(Session::get('id'));
+
+        $history_orders = Order::where('customer_id', Session::get('id'))
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
     }
@@ -141,8 +146,12 @@ class CustomerController extends Controller
 
     public function callback_facebook()
     {
-        $provider = Socialite::driver('facebook')->user();
-        $account_before = Customer::where('provider', 'facebook')->where('facebook_id', $provider->getId())->first();
+        $provider = Socialite::driver('facebook')
+            ->user();
+
+        $account_before = Customer::where('provider', 'facebook')
+            ->where('facebook_id', $provider->getId())
+            ->first();
 
         if (!$account_before) {
             Customer::create([
@@ -152,9 +161,12 @@ class CustomerController extends Controller
                 'facebook_id' => $provider->id
             ]);
         }
-        $account_after = Customer::where('provider', 'facebook')->where('facebook_id', $provider->getId())->first();
+        $account_after = Customer::where('provider', 'facebook')
+            ->where('facebook_id', $provider->getId())
+            ->first();
 
-        $account_name = Customer::where('facebook_id', $account_after->facebook_id)->first();
+        $account_name = Customer::where('facebook_id', $account_after->facebook_id)
+            ->first();
 
         Session::put('id', $account_name->id);
         Session::put('name', $account_name->fullname);
@@ -163,8 +175,13 @@ class CustomerController extends Controller
 
     public function callback_google()
     {
-        $provider = Socialite::driver('google')->stateless()->user();
-        $account_before = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
+        $provider = Socialite::driver('google')
+            ->stateless()
+            ->user();
+
+        $account_before = Customer::where('provider', 'google')
+            ->where('google_id', $provider->getId())
+            ->first();
 
         if (!$account_before) {
             Customer::create([
@@ -174,9 +191,12 @@ class CustomerController extends Controller
                 'google_id' => $provider->id
             ]);
         }
-        $account_after = Customer::where('provider', 'google')->where('google_id', $provider->getId())->first();
+        $account_after = Customer::where('provider', 'google')
+            ->where('google_id', $provider->getId())
+            ->first();
 
-        $account_name = Customer::where('google_id', $account_after->google_id)->first();
+        $account_name = Customer::where('google_id', $account_after->google_id)
+            ->first();
 
         Session::put('id', $account_name->id);
         Session::put('name', $account_name->fullname);

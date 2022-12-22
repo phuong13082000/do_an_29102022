@@ -4,35 +4,34 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\CategoryRepository;
-use App\Repositories\CommentRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Product;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $commentRepository, $categoryRepository, $categoryService, $productRepository;
+    protected $categoryService;
 
-    public function __construct(
-        CommentRepository  $commentRepository,
-        CategoryRepository $categoryRepository, CategoryService $categoryService,
-        ProductRepository  $productRepository,
-    )
+    public function __construct(CategoryService $categoryService)
     {
-        $this->commentRepository = $commentRepository;
-        $this->categoryRepository = $categoryRepository;
         $this->categoryService = $categoryService;
-        $this->productRepository = $productRepository;
     }
 
     public function index()
     {
         $title = 'Category';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $listCategory = $this->categoryRepository->getAll();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $listCategory = Category::all();
 
         return view('admin.pages.category.index')->with(compact('title', 'listCategory', 'count_message', 'messages'));
     }
@@ -57,10 +56,16 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $title = 'Edit Category';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $category = $this->categoryRepository->findID($id);
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $category = Category::find($id);
 
         return view('admin.pages.category.form')->with(compact('title', 'category', 'count_message', 'messages'));
     }
@@ -75,8 +80,8 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $categoryId = $this->categoryRepository->findID($id);
-        $checkCategory = $this->productRepository->findCategoryFromProductById($id);
+        $categoryId = Category::find($id);
+        $checkCategory = Product::where('category_id', $id)->first();
 
         if ($checkCategory) {
             return redirect()->route('category.index')->with('error', 'Category đang có sản phẩm');
