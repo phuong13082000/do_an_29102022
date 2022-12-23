@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\OrderDetailRepository;
-use App\Repositories\OrderRepository;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -11,17 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class PayPalPaymentController extends Controller
 {
-    protected $orderService, $orderRepository, $orderDetailRepository;
+    protected $orderService;
 
-    public function __construct(
-        OrderRepository       $orderRepository,
-        OrderService          $orderService,
-        OrderDetailRepository $orderDetailRepository,
-    )
+    public function __construct(OrderService $orderService)
     {
-        $this->orderRepository = $orderRepository;
         $this->orderService = $orderService;
-        $this->orderDetailRepository = $orderDetailRepository;
     }
 
     public function createTransaction()
@@ -31,15 +25,22 @@ class PayPalPaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
-        $order = $this->orderRepository->findIDWhereCustomerId(Session::get('id'));
-        $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($order->id);
+        $order = Order::where('customer_id', Session::get('id'))
+            ->where('status', 1)
+            ->where('payment_method', 'Trả bằng thẻ ngân hàng')
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        $order_details = OrderDetail::with('reProduct')
+            ->where('order_id', $order->id)
+            ->get();
 
         $total = 0;
-        foreach ($order_details as $order_detail){
-            $subtotal = $order_detail->price*$order_detail->number;
-            $total+=$subtotal;
+        foreach ($order_details as $order_detail) {
+            $subtotal = $order_detail->price * $order_detail->number;
+            $total += $subtotal;
         }
-        $fee_ship = ($total + $order->price_ship)/25000;
+        $fee_ship = ($total + $order->price_ship) / 25000;
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
