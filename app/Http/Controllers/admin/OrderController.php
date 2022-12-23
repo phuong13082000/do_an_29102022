@@ -3,40 +3,38 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\CommentRepository;
-use App\Repositories\CustomerRepository;
-use App\Repositories\OrderDetailRepository;
-use App\Repositories\OrderRepository;
+use App\Models\Comment;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
-    protected $commentRepository, $orderService, $orderRepository, $orderDetailRepository, $customerRepository;
+    protected $orderService;
 
-    public function __construct(
-        CommentRepository     $commentRepository,
-        OrderRepository       $orderRepository,
-        OrderService          $orderService,
-        OrderDetailRepository $orderDetailRepository,
-        CustomerRepository    $customerRepository,
-    )
+    public function __construct(OrderService $orderService)
     {
-        $this->commentRepository = $commentRepository;
-        $this->orderRepository = $orderRepository;
         $this->orderService = $orderService;
-        $this->orderDetailRepository = $orderDetailRepository;
-        $this->customerRepository = $customerRepository;
     }
 
     public function view_order()
     {
         $title = 'Order';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $orders = $this->orderRepository->getOrderWithCustomer();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $orders = Order::with('reCustomer')
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return view('admin.pages.order.index')->with(compact('title', 'orders', 'count_message', 'messages'));
     }
@@ -44,16 +42,24 @@ class OrderController extends Controller
     public function view_order_detail($id)
     {
         $title = 'Order Detail';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $order_details = $this->orderDetailRepository->getOrderDetailWithProduct($id);
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
-        $order = $this->orderRepository->findID($id);
+        $order_details = OrderDetail::with('reProduct')
+            ->where('order_id', $id)
+            ->get();
+
+        $order = Order::find($id);
         $customer_id = $order->customer_id;
         $order_status = $order->status;
 
-        $customer = $this->customerRepository->findID($customer_id);
+        $customer = Customer::find($customer_id);
 
         return view('admin.pages.order.show')->with(compact('order_details', 'customer', 'order_details', 'order_status', 'order', 'title', 'count_message', 'messages'));
     }

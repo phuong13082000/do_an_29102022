@@ -3,34 +3,35 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Product;
-use App\Repositories\CommentRepository;
-use App\Repositories\SliderRepository;
+use App\Models\Slider;
 use App\Services\SliderService;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-    protected $commentRepository, $sliderRepository, $sliderService;
+    protected $sliderService;
 
-    public function __construct(
-        CommentRepository $commentRepository,
-        SliderRepository  $sliderRepository,
-        SliderService     $sliderService,
-    )
+    public function __construct(SliderService $sliderService)
     {
-        $this->commentRepository = $commentRepository;
-        $this->sliderRepository = $sliderRepository;
         $this->sliderService = $sliderService;
     }
 
     public function index()
     {
         $title = 'Slider';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $list_Slider = $this->sliderRepository->getSliderWithProduct();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $list_Slider = Slider::with('reProduct')
+            ->get();
 
         return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_message', 'messages'));
     }
@@ -38,8 +39,14 @@ class SliderController extends Controller
     public function create()
     {
         $title = 'Create Slider';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
         $list_products = Product::pluck('title', 'id');
 
@@ -61,11 +68,17 @@ class SliderController extends Controller
     public function edit($id)
     {
         $title = 'Edit Slider';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
         $list_products = Product::pluck('title', 'id');
-        $slider = $this->sliderRepository->findID($id);
+        $slider = Slider::find($id);
 
         return view('admin.pages.slider.form')->with(compact('title', 'slider', 'count_message', 'messages', 'list_products'));
     }
@@ -80,7 +93,7 @@ class SliderController extends Controller
 
     public function destroy($id)
     {
-        $slider = $this->sliderRepository->findID($id);
+        $slider = Slider::find($id);
 
         if (file_exists('../public/uploads/slider/' . $slider->image)) {
             unlink('../public/uploads/slider/' . $slider->image);

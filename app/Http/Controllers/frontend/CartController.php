@@ -13,7 +13,10 @@ class CartController extends Controller
     public function show_cart()
     {
         $title = 'Giỏ hàng';
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)
+            ->take(5)
+            ->get();
+
         return view('frontend.pages.cart')->with(compact('title', 'list_brand'));
     }
 

@@ -4,49 +4,54 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Repositories\BrandRepository;
-use App\Repositories\CategoryRepository;
-use App\Repositories\CommentRepository;
-use App\Repositories\ProductRepository;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $productRepository, $productService, $commentRepository, $categoryRepository, $brandRepository;
+    protected $productService;
 
-    public function __construct(
-        ProductRepository  $productRepository, ProductService $productService,
-        CommentRepository  $commentRepository,
-        BrandRepository    $brandRepository,
-        CategoryRepository $categoryRepository
-    )
+    public function __construct(ProductService $productService)
     {
-        $this->productRepository = $productRepository;
         $this->productService = $productService;
-        $this->commentRepository = $commentRepository;
-        $this->brandRepository = $brandRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     public function index()
     {
         $title = 'Product';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $listProduct = $this->productRepository->getAll();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $listProduct = Product::with('reBrand', 'reCategory')
+            ->get();
+
         return view('admin.pages.product.index')->with(compact('title', 'listProduct', 'count_message', 'messages'));
     }
 
     public function create()
     {
         $title = 'Create Product';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $list_brand = $this->brandRepository->getBrandProduct();
-        $list_category = $this->categoryRepository->getCategoryProduct();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $list_brand = Brand::pluck('title', 'id');
+        $list_category = Category::pluck('title', 'id');
 
         return view('admin.pages.product.form')->with(compact('title', 'list_brand', 'list_category', 'count_message', 'messages'));
     }
@@ -66,13 +71,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $title = 'Edit Product';
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
 
-        $list_brand = $this->brandRepository->getBrandProduct();
-        $list_category = $this->categoryRepository->getCategoryProduct();
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
 
-        $product = $this->productRepository->findID($id);
+        $list_brand = Brand::pluck('title', 'id');
+        $list_category = Category::pluck('title', 'id');
+
+        $product = Product::find($id);
 
         return view('admin.pages.product.form')->with(compact('title', 'product', 'list_brand', 'list_category', 'count_message', 'messages'));
     }

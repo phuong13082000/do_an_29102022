@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Brand;
 use App\Models\Customer;
-use App\Repositories\BrandRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,13 +13,6 @@ use Illuminate\Support\Str;
 
 class MailController extends Controller
 {
-    protected $brandRepository;
-
-    public function __construct(BrandRepository $brandRepository)
-    {
-        $this->brandRepository = $brandRepository;
-    }
-
     public function admin_forget_password()
     {
         $title = 'Quên mật khẩu';
@@ -96,14 +89,20 @@ class MailController extends Controller
     public function user_forgot_password()
     {
         $title = 'Quên mật khẩu';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)
+            ->take(5)
+            ->get();
+
         return view('frontend.pages.forgot-password')->with(compact('title', 'list_brand'));
     }
 
     public function user_update_new_password()
     {
         $title = 'Cập nhật mật khẩu mới';
-        $list_brand = $this->brandRepository->getListBrandIndex();
+        $list_brand = Brand::where('status', 0)
+            ->take(5)
+            ->get();
+
         return view('frontend.pages.new-password')->with(compact('title', 'list_brand'));
     }
 

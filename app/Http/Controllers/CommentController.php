@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\CommentRepository;
+use App\Models\Comment;
 use App\Services\CommentService;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    protected $commentService, $commentRepository;
+    protected $commentService;
 
-    public function __construct(CommentRepository $commentRepository, CommentService $commentService)
+    public function __construct(CommentService $commentService)
     {
-        $this->commentRepository = $commentRepository;
         $this->commentService = $commentService;
     }
 
@@ -20,9 +19,19 @@ class CommentController extends Controller
     public function show_comment()
     {
         $title = 'Comment';
-        $list_Comment = $this->commentRepository->getAll();
-        $count_message = $this->commentRepository->countComment();
-        $messages = $this->commentRepository->getMessage();
+        $count_message = Comment::where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->count();
+
+        $messages = Comment::with('reCustomer')
+            ->where('status', 1)
+            ->where('comment_parent_id', NULL)
+            ->get();
+
+        $list_Comment = Comment::with('reProduct', 'reCustomer')
+            ->orderBy('status', 'DESC')
+            ->get();
+
         return view('admin.pages.comment.index')->with(compact('title', 'list_Comment', 'count_message', 'messages'));
     }
 
