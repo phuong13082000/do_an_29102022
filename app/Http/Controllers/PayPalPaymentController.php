@@ -27,13 +27,10 @@ class PayPalPaymentController extends Controller
     {
         $order = Order::where('customer_id', Session::get('id'))
             ->where('status', 1)
-            ->where('payment_method', 'Trả bằng thẻ ngân hàng')
-            ->orderBy('created_at', 'DESC')
-            ->first();
+            ->where('payment_method', 'Trả bằng thẻ ngân hàng')->orderBy('created_at', 'DESC')->first();
 
         $order_details = OrderDetail::with('reProduct')
-            ->where('order_id', $order->id)
-            ->get();
+            ->where('order_id', $order->id)->get();
 
         $total = 0;
         foreach ($order_details as $order_detail) {
@@ -70,15 +67,9 @@ class PayPalPaymentController extends Controller
                     return redirect()->away($links['href']);
                 }
             }
-
-            return redirect()
-                ->route('handcash')
-                ->with('error', 'Something went wrong.');
-
+            return redirect()->route('handcash')->with('error', 'Something went wrong.');
         } else {
-            return redirect()
-                ->route('handcash')
-                ->with('error', $response['message'] ?? 'Something went wrong.');
+            return redirect()->route('handcash')->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }
 
@@ -90,20 +81,14 @@ class PayPalPaymentController extends Controller
         $response = $provider->capturePaymentOrder($request['token']);
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            return redirect()
-                ->route('handcash')
-                ->with('success', 'Transaction complete.');
+            return redirect()->route('handcash')->with('success', 'Transaction complete.');
         } else {
-            return redirect()
-                ->route('handcash')
-                ->with('error', $response['message'] ?? 'Something went wrong.');
+            return redirect()->route('handcash')->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }
 
     public function cancelTransaction(Request $request)
     {
-        return redirect()
-            ->route('handcash')
-            ->with('error', $response['message'] ?? 'You have canceled the transaction.');
+        return redirect()->route('handcash')->with('error', $response['message'] ?? 'You have canceled the transaction.');
     }
 }

@@ -20,17 +20,13 @@ class CommentController extends Controller
     {
         $title = 'Comment';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
-        $list_Comment = Comment::with('reProduct', 'reCustomer')
-            ->orderBy('status', 'DESC')
-            ->get();
+        $list_Comment = Comment::with('reProduct', 'reCustomer')->orderBy('status', 'DESC')->get();
 
         return view('admin.pages.comment.index')->with(compact('title', 'list_Comment', 'count_message', 'messages'));
     }

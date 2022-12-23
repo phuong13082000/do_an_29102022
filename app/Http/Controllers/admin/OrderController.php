@@ -24,17 +24,13 @@ class OrderController extends Controller
     {
         $title = 'Order';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
-        $orders = Order::with('reCustomer')
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $orders = Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();
 
         return view('admin.pages.order.index')->with(compact('title', 'orders', 'count_message', 'messages'));
     }
@@ -43,17 +39,14 @@ class OrderController extends Controller
     {
         $title = 'Order Detail';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $order_details = OrderDetail::with('reProduct')
-            ->where('order_id', $id)
-            ->get();
+            ->where('order_id', $id)->get();
 
         $order = Order::find($id);
         $customer_id = $order->customer_id;

@@ -24,13 +24,11 @@ class GalleryController extends Controller
     {
         $title = 'Gallery';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');

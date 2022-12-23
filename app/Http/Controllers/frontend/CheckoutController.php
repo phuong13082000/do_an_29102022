@@ -15,9 +15,7 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        $list_brand = Brand::where('status', 0)
-            ->take(5)
-            ->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
 
         if (Session::get('id')){
             $title = 'Checkout';

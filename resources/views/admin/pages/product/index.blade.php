@@ -38,8 +38,12 @@
                                             <td>{{ number_format($product->price, 0, '', ',')}}</td>
                                             <td>{{ number_format($product->price_sale, 0, '', ',')}}</td>
                                             <td><a href="{{url('admin/add-gallery/'.$product->id)}}">Add Gallery</a></td>
-                                            <td>{{$product->reBrand->title}}</td>
-                                            <td>{{$product->reCategory->title}}</td>
+                                            <td>
+                                                <span class="badge badge-info">{{$product->reBrand->title}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-primary">{{$product->reCategory->title}}</span>
+                                            </td>
                                             <td>
                                                 <form method="POST">
                                                     @csrf
@@ -48,14 +52,14 @@
                                             </td>
                                             <td>
                                                 <div class="row">
-                                                    <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-product_{{$product->id}}">View</button>
+                                                    <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-product_{{$product->id}}"><i class="fa fa-eye"></i></button>
 
-                                                    <a href="{{route('product.edit', [$product->id])}}" class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="{{route('product.edit', [$product->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
 
                                                     <form action="{{route('product.destroy', [$product->id])}}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button onclick="return confirm('Bạn có muốn xóa Product này?');" class="btn btn-sm btn-danger">Delete</button>
+                                                        <button onclick="return confirm('Bạn có muốn xóa Product này?');" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                                                     </form>
                                                 </div>
                                             </td>

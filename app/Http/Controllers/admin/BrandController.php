@@ -13,7 +13,7 @@ class BrandController extends Controller
 {
     protected $brandService;
 
-    public function __construct(BrandService $brandService,)
+    public function __construct(BrandService $brandService)
     {
         $this->brandService = $brandService;
     }
@@ -22,13 +22,11 @@ class BrandController extends Controller
     {
         $title = 'Brand';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $listBrand = Brand::all();
 
@@ -56,13 +54,11 @@ class BrandController extends Controller
     {
         $title = 'Edit Brand';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $brand = Brand::find($id);
 

@@ -22,16 +22,13 @@ class SliderController extends Controller
     {
         $title = 'Slider';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
-        $list_Slider = Slider::with('reProduct')
-            ->get();
+        $list_Slider = Slider::with('reProduct')->get();
 
         return view('admin.pages.slider.index')->with(compact('title', 'list_Slider', 'count_message', 'messages'));
     }
@@ -40,13 +37,11 @@ class SliderController extends Controller
     {
         $title = 'Create Slider';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $list_products = Product::pluck('title', 'id');
 
@@ -69,13 +64,11 @@ class SliderController extends Controller
     {
         $title = 'Edit Slider';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $list_products = Product::pluck('title', 'id');
         $slider = Slider::find($id);

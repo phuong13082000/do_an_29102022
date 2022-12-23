@@ -24,16 +24,13 @@ class ProductController extends Controller
     {
         $title = 'Product';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
-        $listProduct = Product::with('reBrand', 'reCategory')
-            ->get();
+        $listProduct = Product::with('reBrand', 'reCategory')->get();
 
         return view('admin.pages.product.index')->with(compact('title', 'listProduct', 'count_message', 'messages'));
     }
@@ -42,13 +39,11 @@ class ProductController extends Controller
     {
         $title = 'Create Product';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');
@@ -72,13 +67,11 @@ class ProductController extends Controller
     {
         $title = 'Edit Product';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $list_brand = Brand::pluck('title', 'id');
         $list_category = Category::pluck('title', 'id');

@@ -26,13 +26,11 @@ class CustomerController extends Controller
     {
         $title = 'Customer';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $listCustomer = Customer::all();
 
@@ -53,9 +51,7 @@ class CustomerController extends Controller
     public function dangnhap()
     {
         $title = 'Login';
-        $list_brand = Brand::where('status', 0)
-            ->take(5)
-            ->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
 
         return view('frontend.pages.login')->with(compact('title', 'list_brand'));
     }
@@ -63,9 +59,7 @@ class CustomerController extends Controller
     public function dangki()
     {
         $title = 'Register';
-        $list_brand = Brand::where('status', 0)
-            ->take(5)
-            ->get();
+        $list_brand = Brand::where('status', 0)->take(5)->get();
 
         return view('frontend.pages.register')->with(compact('title', 'list_brand'));
     }
@@ -77,9 +71,7 @@ class CustomerController extends Controller
 
         $customer = Customer::find(Session::get('id'));
 
-        $history_orders = Order::where('customer_id', Session::get('id'))
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
 
         return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
     }
@@ -146,12 +138,10 @@ class CustomerController extends Controller
 
     public function callback_facebook()
     {
-        $provider = Socialite::driver('facebook')
-            ->user();
+        $provider = Socialite::driver('facebook')->user();
 
         $account_before = Customer::where('provider', 'facebook')
-            ->where('facebook_id', $provider->getId())
-            ->first();
+            ->where('facebook_id', $provider->getId())->first();
 
         if (!$account_before) {
             Customer::create([
@@ -162,8 +152,7 @@ class CustomerController extends Controller
             ]);
         }
         $account_after = Customer::where('provider', 'facebook')
-            ->where('facebook_id', $provider->getId())
-            ->first();
+            ->where('facebook_id', $provider->getId())->first();
 
         $account_name = Customer::where('facebook_id', $account_after->facebook_id)
             ->first();
@@ -175,13 +164,10 @@ class CustomerController extends Controller
 
     public function callback_google()
     {
-        $provider = Socialite::driver('google')
-            ->stateless()
-            ->user();
+        $provider = Socialite::driver('google')->stateless()->user();
 
         $account_before = Customer::where('provider', 'google')
-            ->where('google_id', $provider->getId())
-            ->first();
+            ->where('google_id', $provider->getId())->first();
 
         if (!$account_before) {
             Customer::create([
@@ -192,11 +178,9 @@ class CustomerController extends Controller
             ]);
         }
         $account_after = Customer::where('provider', 'google')
-            ->where('google_id', $provider->getId())
-            ->first();
+            ->where('google_id', $provider->getId())->first();
 
-        $account_name = Customer::where('google_id', $account_after->google_id)
-            ->first();
+        $account_name = Customer::where('google_id', $account_after->google_id)->first();
 
         Session::put('id', $account_name->id);
         Session::put('name', $account_name->fullname);

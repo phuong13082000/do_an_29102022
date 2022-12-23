@@ -68,7 +68,7 @@
                                         </td>
                                         <td>
                                             @if(!$comment->comment_parent_id)
-                                                <a href="#" type="button" class="btn btn-success btn_delete_bl" data-comment_id="{{$comment->id}}">Xóa bình luận</a>
+                                                <a href="#" type="button" class="btn btn-danger btn_delete_bl" data-comment_id="{{$comment->id}}"><i class="fa fa-trash"></i></a>
                                             @endif
                                         </td>
                                     </tr>

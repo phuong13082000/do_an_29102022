@@ -34,12 +34,12 @@
                                         </td>
                                         <td>
                                             <div class="row">
-                                                <a href="{{route('category.edit', [$category->id])}}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="{{route('category.edit', [$category->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
 
                                                 <form action="{{route('category.destroy', [$category->id])}}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <button onclick="return confirm('Bạn có muốn xóa thể loại này?');" class="btn btn-sm btn-danger">Xóa</button>
+                                                    <button onclick="return confirm('Bạn có muốn xóa thể loại này?');" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                                                 </form>
                                             </div>
                                         </td>

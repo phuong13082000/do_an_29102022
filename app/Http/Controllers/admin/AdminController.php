@@ -37,13 +37,11 @@ class AdminController extends Controller
         }
 
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         return view('admin.pages.home')
             ->with(compact('count_priceOrder', 'count_priceShip', 'title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
@@ -53,13 +51,11 @@ class AdminController extends Controller
     {
         $title = 'Profile';
         $count_message = Comment::where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->count();
+            ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
-            ->where('comment_parent_id', NULL)
-            ->get();
+            ->where('comment_parent_id', NULL)->get();
 
         $admin_detail = Admin::where('name', 'Admin')->first();
         return view('admin.pages.profile')->with(compact('title', 'count_message', 'messages', 'admin_detail'));
