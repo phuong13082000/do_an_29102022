@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="d-grid gap-2 mb-3">
-                            {!! Form::submit('Đăng kí', ['class'=>'btn btn-success btn_signup']) !!}
+                            {!! Form::submit('Đăng kí', ['class'=>'btn btn-primary btn_signup']) !!}
                         </div>
 
                         {!! Form::close() !!}

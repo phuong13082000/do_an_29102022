@@ -1,7 +1,9 @@
 @extends('layout.user')
 
 @section('index')
+
     @include('frontend.includes.slider')
+
     @include('frontend.includes.alert')
 
     <style>
@@ -155,8 +157,8 @@
                         <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product->id) !!}
                         <div class="text-center">
-                            <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                            <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
                         </div>
                         {!! Form::close() !!}
                     </td>
@@ -190,8 +192,8 @@
                         <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
                         {!! Form::hidden('productid_hidden', $product_sale->id) !!}
                         <div class="text-center">
-                            <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                            <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
                         </div>
                         {!! Form::close() !!}
                     </td>

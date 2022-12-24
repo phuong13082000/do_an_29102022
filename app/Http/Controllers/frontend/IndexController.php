@@ -14,7 +14,7 @@ class IndexController extends Controller
     public function index()
     {
         $title = "Điện thoại di động";
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
         $list_category = Category::where('status', 0)->get();
 
         $list_product = Product::where('number', '>', 2)
@@ -28,12 +28,17 @@ class IndexController extends Controller
             ->where('number', '>', 2)
             ->where('status', 0)->take(10)->get();
 
+        //slider
         $first_slider = Slider::with('reProduct')
             ->where('status', 0)->orderBy('id', 'ASC')->first();
 
-        $list_slider = Slider::with('reProduct')
-            ->where('id', '>', $first_slider->id)
-            ->where('status', 0)->take(2)->get();
+        if ($first_slider) {
+            $list_slider = Slider::with('reProduct')
+                ->where('id', '>', $first_slider->id)
+                ->where('status', 0)->take(2)->get();
+        } else {
+            $list_slider = NULL;
+        }
 
         return view('frontend.pages.index')->with(compact('title', 'list_brand', 'list_product', 'list_product_sale', 'list_slider', 'first_slider', 'list_recommend', 'list_category'));
     }
@@ -67,28 +72,28 @@ class IndexController extends Controller
             <td>
                 <img src="../public/uploads/product/' . $product->image . '" class="img-thumbnail border-0 zoom" alt="' . $product->title . '">
                 <h5 class="mt-2">' . $product->title . '</h5>';
-            if ($product->number) {
-                if ($product->price_sale) {
-                    $output .= '
-                            <del>' . number_format($product->price, 0, '', ',') . ' VND</del>
-                            <b style="color: red"> -' . round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) . '%</b>
-                            <br><b>' . number_format($product->price_sale, 0, '', ',') . ' VND</b>';
+                if ($product->number) {
+                    if ($product->price_sale) {
+                        $output .= '
+                                <del>' . number_format($product->price, 0, '', ',') . ' VND</del>
+                                <b style="color: red"> -' . round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) . '%</b>
+                                <br><b>' . number_format($product->price_sale, 0, '', ',') . ' VND</b>';
+                    } else {
+                        $output .= '
+                                <b>' . number_format($product->price, 0, '', ',') . ' VND</b>';
+                    }
                 } else {
                     $output .= '
-                            <b>' . number_format($product->price, 0, '', ',') . ' VND</b>';
+                                <b style="color: red">Hết Hàng</b>';
                 }
-            } else {
-                $output .= '
-                            <b style="color: red">Hết Hàng</b>';
-            }
             $output .= '
                 <form method="POST" action="' . url('/save-cart') . '" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input name="qty" type="hidden" min="1" max="' . $product->number . '" class="cart_product_qty_' . $product->id . '" value="1"/>
                     <input type="hidden" name="productid_hidden" value="' . $product->id . '"/>
                     <div class="text-center">
-                        <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-primary">Chi tiết</a>
+                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
                     </div>
                 </form>
             </td>';
@@ -99,7 +104,6 @@ class IndexController extends Controller
             } else {
                 $output .= '';
             }
-
         }
         $output .= '</tr>
             </table>
@@ -111,7 +115,7 @@ class IndexController extends Controller
     {
         $brand = Brand::find($id);
         $title = $brand->title;
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
         $list_product = Product::where('brand_id', $id)->where('status', 0)->get();
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -121,7 +125,7 @@ class IndexController extends Controller
     {
         $category = Category::find($id);
         $title = $category->title;
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
         $list_product = Product::where('category_id', $id)->where('status', 0)->get();
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -129,7 +133,7 @@ class IndexController extends Controller
 
     public function price($value)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         if ($value == 'duoi-2-trieu') {
             $title = 'Điện thoại dưới 2 triệu';
@@ -176,7 +180,7 @@ class IndexController extends Controller
 
     public function ram($value)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         if ($value == '2-gb') {
             $title = 'Điện thoại 2 GB Ram';
@@ -220,7 +224,7 @@ class IndexController extends Controller
 
     public function dung_luong($value)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         if ($value == '32-gb') {
             $title = 'Điện thoại 32 GB Ram';
@@ -264,7 +268,7 @@ class IndexController extends Controller
 
     public function pin_sac($value)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         if ($value == 'pin-khung-tren-5000-mah') {
             $title = 'Pin trên 5000 mAh';
@@ -290,7 +294,7 @@ class IndexController extends Controller
 
     public function tinh_nang($value)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         if ($value == 'khang-nuoc-bui') {
             $title = 'Kháng nước, Kháng bụi';
@@ -322,7 +326,7 @@ class IndexController extends Controller
 
     public function search(Request $request)
     {
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
         $title = $request['tukhoa'];
 
         $list_product = Product::where('title', 'LIKE', '%' . $title . '%')
@@ -359,7 +363,7 @@ class IndexController extends Controller
     public function supermarket()
     {
         $title = 'Supermarket';
-        $list_brand = Brand::where('status', 0)->take(5)->get();
+        $list_brand = Brand::where('status', 0)->take(10)->get();
 
         $list_all_category = Category::where('status', 0)->get();
 

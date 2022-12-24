@@ -5,15 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-    <!---------Seo--------->
-{{--    <meta name="description" content="{{$meta_desc ?? ''}}">--}}
-{{--    <meta name="keywords" content="{{$meta_keywords ?? ''}}"/>--}}
-{{--    <meta name="robots" content="INDEX,FOLLOW"/>--}}
-{{--    <link rel="canonical" href="{{$url_canonical ?? ''}}"/>--}}
-{{--    <meta name="author" content="">--}}
-{{--    <link rel="icon" type="image/x-icon" href=""/>--}}
     <title>{{$title ?? ''}}</title>
-    <!--//-------Seo--------->
 
     <link type="text/css" rel="stylesheet" href="{{asset('frontend/bootstrap5.1.3/css/bootstrap.css')}}">
     <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/owl.carousel.css')}}">
