@@ -91,13 +91,11 @@
                                     <div class="row">
                                         <div class="col-md-3 col-sm-6 col-12">
                                             <div class="info-box">
-                                                <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                                                <span class="info-box-icon bg-info"><i class="far fa-flag"></i></span>
 
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">All Price Ship</span>
-                                                    <span class="info-box-number">
-                                                        {{ number_format($count_priceShip, 0, '') }} VND
-                                                    </span>
+                                                    <span class="info-box-number">{{ number_format($count_priceShip, 0, '') }} VND</span>
                                                 </div>
                                             </div>
                                         </div>
