@@ -158,7 +158,7 @@
     <script type="text/javascript">
 
         const TOKEN_GHN = 'ba8ec0ca-586b-11ed-b824-262f869eb1a7';
-        const ID_GHN = {{env('ID_GHN')}};
+        const ID_GHN = 3404895;
 
         load_province();
 
