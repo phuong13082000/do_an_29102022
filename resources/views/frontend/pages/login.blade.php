@@ -52,3 +52,35 @@
     </div>
 @endsection
 
+
+@section('scripts')
+    <script type="text/javascript">
+
+        <!--validate-login-->
+        $(function () {
+            $("#login_form").validate({
+                rules: {
+                    email: {
+                        email: true
+                    },
+                },
+                messages: {
+                    email: {
+                        email: "<div style='color: red;'>Wrong format email</div>",
+                    },
+                },
+                errorElement: "div",
+                errorPlacement: function (error, element) {
+                    error.addClass("invalid-feedback");
+                    error.insertAfter(element);
+                },
+                highlight: function (element) {
+                    $(element).removeClass('is-valid').addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+        });
+    </script>
+@endsection

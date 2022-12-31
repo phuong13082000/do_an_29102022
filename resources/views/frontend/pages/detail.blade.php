@@ -56,46 +56,16 @@
 
                         <div class="card-body">
                             <table class="table table-striped">
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Màn hình</td>
-                                    <td>{{$product->manhinh}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Màu sắc</td>
-                                    <td>{{$product->mausac}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Camera sau</td>
-                                    <td>{{$product->camera_sau}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Camera trước</td>
-                                    <td>{{$product->camera_truoc}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">CPU</td>
-                                    <td>{{$product->cpu}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Bộ nhớ</td>
-                                    <td>{{$product->bonho}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Ram</td>
-                                    <td>{{$product->ram}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Kết nối</td>
-                                    <td>{{$product->ketnoi}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Pin sạc</td>
-                                    <td>{{$product->pin_sac}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px; font-weight: bold">Tiện ích</td>
-                                    <td>{{$product->tienich}}</td>
-                                </tr>
+                                <tr><td style="width: 150px; font-weight: bold">Màn hình</td><td>{{$product->manhinh}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Màu sắc</td><td>{{$product->mausac}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Camera sau</td><td>{{$product->camera_sau}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Camera trước</td><td>{{$product->camera_truoc}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">CPU</td><td>{{$product->cpu}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Bộ nhớ</td><td>{{$product->bonho}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Ram</td><td>{{$product->ram}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Kết nối</td><td>{{$product->ketnoi}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Pin sạc</td><td>{{$product->pin_sac}}</td></tr>
+                                <tr><td style="width: 150px; font-weight: bold">Tiện ích</td><td>{{$product->tienich}}</td></tr>
                             </table>
 
                         </div>
@@ -145,10 +115,8 @@
                             <div id="thongbao-comment"></div>
                             <form action="#">
                                 @csrf
-                                <input type="hidden" name="comment_customer_id" class="comment_customer_id"
-                                       value="{{Session::get('id')}}">
-                                <input type="hidden" name="comment_product_id" class="comment_product_id"
-                                       value="{{$product->id}}">
+                                <input type="hidden" name="comment_customer_id" class="comment_customer_id" value="{{Session::get('id')}}">
+                                <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$product->id}}">
                                 <div class="mt-3">
                                     <textarea name="title" class="form-control title" rows="3"></textarea>
                                 </div>
@@ -213,7 +181,7 @@
                 slideMargin: 0,
                 enableDrag: false,
                 currentPagerPosition: 'left',
-                adaptiveHeight: true,
+                adaptiveHeight: false,
                 onSliderLoad: function (el) {
                     el.lightGallery({
                         selector: '#imageGallery .lslide'

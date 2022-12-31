@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-floating mb-4">
-                            {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Mật khẩu']) !!}
+                            {!! Form::password('password', ['class'=>'form-control password', 'placeholder'=>'Mật khẩu']) !!}
                             {!! Form::label('Mật khẩu', []) !!}
                         </div>
 
@@ -49,4 +49,60 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+
+        <!--validate-register-->
+        $(function () {
+            $("#register_form").validate({
+                rules: {
+                    fullname: {
+                        required: true, minlength: 2
+                    },
+                    email: {
+                        required: true, email: true
+                    },
+                    phone: {
+                        required: true, number: true, minlength: 10, maxlength: 10
+                    },
+                    password: {
+                        required: true, minlength: 1
+                    },
+                    password_confirm: {
+                        required: true, minlength: 1, equalTo: ".password"
+                    },
+                },
+                messages: {
+                    fullname: {
+                        required: "<div style='color: red;'>Please enter some data</div>", minlength: "<div style='color: red;'>Full name min 10 character</div>"
+                    },
+                    email: {
+                        required: "<div style='color: red;'>Please enter some data</div>", email: "<div style='color: red;'>Wrong format email",
+                    },
+                    phone: {
+                        required: "<div style='color: red;'>Please enter some data</div>", number: "<div style='color: red;'>Please enter number</div>", minlength: "<div style='color: red;'>Phone length 10 number</div>", maxlength: "<div style='color: red;'>Phone length 10 number</div>",
+                    },
+                    password: {
+                        required: "<div style='color: red;'>Please enter some data</div>", minlength: "<div style='color: red;'>Password length 6 character</div>",
+                    },
+                    password_confirm: {
+                        required: "<div style='color: red;'>Please enter some data</div>", minlength: "<div style='color: red;'>Password length 6 character</div>", equalTo: "<div style='color: red;'>Wrong Password</div>"
+                    },
+                },
+                errorElement: "div",
+                errorPlacement: function (error, element) {
+                    error.addClass("invalid-feedback");
+                    error.insertAfter(element);
+                },
+                highlight: function (element) {
+                    $(element).removeClass('is-valid').addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+        });
+    </script>
 @endsection
