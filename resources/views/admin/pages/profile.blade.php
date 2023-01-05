@@ -45,7 +45,6 @@
 
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -65,27 +64,22 @@
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url'=>'admin/change-password-admin/'.$admin_detail->admin_id, 'method'=>'POST', 'role'=>'form']) !!}
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('password', ['class'=>'form-control']) !!}
-                        {!! Form::label('password', 'Password old', []) !!}
-                    </div>
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('password_new', 'Password new', []) !!}
-                    </div>
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('re_password_new', 'Re-Password new', []) !!}
-                    </div>
-
-                    <div class="modal-footer justify-content-between">
-                        {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-
+                        <div class="form-floating mb-4">
+                            {!! Form::password('password', ['class'=>'form-control']) !!}
+                            {!! Form::label('password', 'Password old', []) !!}
+                        </div>
+                        <div class="form-floating mb-4">
+                            {!! Form::password('password_new', ['class'=>'form-control']) !!}
+                            {!! Form::label('password_new', 'Password new', []) !!}
+                        </div>
+                        <div class="form-floating mb-4">
+                            {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
+                            {!! Form::label('re_password_new', 'Re-Password new', []) !!}
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     {!! Form::close() !!}
 
                 </div>

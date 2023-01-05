@@ -3,31 +3,26 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">
-
             @if(!isset($product))
                 {!! Form::open(['route'=>'product.store', 'method'=>'POST', 'id'=>'formproduct-create', 'enctype'=>'multipart/form-data']) !!}
             @else
                 {!! Form::open(['route'=>['product.update', $product->id], 'id'=>'formproduct-edit', 'method'=>'PUT','enctype'=>'multipart/form-data']) !!}
             @endif
-
             <div class="mb-3">
                 <a href="{{ route('product.index') }}" type="button" class="btn btn-default">Back</a>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
-
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
                                 {!! Form::label('title', 'Name', []) !!}
                                 {!! Form::text('title', isset($product) ? $product->title : '', ['class'=>'form-control']) !!}
                             </div>
-
                             <div class="form-group">
                                 <label for="exampleInputFile">Image</label>
                                 <div class="input-group">
@@ -56,7 +51,6 @@
                                         {!! Form::number('price', isset($product) ? $product->price : '', ['class'=>'form-control']) !!}
                                     </div>
                                 </div>
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         {!! Form::label('price_sale', 'Price Sale', []) !!}
@@ -72,7 +66,6 @@
                                         {!! Form::select('brand_id', $list_brand, isset($product) ? $product->brand_id : '', ['class'=>'form-control' ,'id'=>'inputGroupSelect01']) !!}
                                     </div>
                                 </div>
-
                                 <div class="col-sm-6">
                                     <div class="input-group">
                                         {!! Form::label('category_id', 'Thể loại', ['class'=>'input-group', 'for'=>'inputGroupSelect02']) !!}
@@ -102,24 +95,20 @@
                         <div class="card-header">
                             <h3 class="card-title">Thông số vật lý</h3>
                         </div>
-
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
                                 {!! Form::label('height', 'Chiều cao', []) !!}
                                 {!! Form::number('height', isset($product) ? $product->height : '', ['class'=>'form-control']) !!}
                             </div>
-
                             <div class="form-group">
                                 {!! Form::label('length', 'Chiều dày', []) !!}
                                 {!! Form::number('length', isset($product) ? $product->length : '', ['class'=>'form-control']) !!}
                             </div>
-
                             <div class="form-group">
                                 {!! Form::label('weight', 'Trọng lượng', []) !!}
                                 {!! Form::number('weight', isset($product) ? $product->weight : '', ['class'=>'form-control']) !!}
                             </div>
-
                             <div class="form-group">
                                 {!! Form::label('width', 'Chiều rộng', []) !!}
                                 {!! Form::number('width', isset($product) ? $product->width : '', ['class'=>'form-control']) !!}
@@ -127,15 +116,14 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+
                 </div>
 
                 <div class="col-md-6">
-
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Thông tin chi tiết</h3>
                         </div>
-
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
@@ -195,14 +183,11 @@
 
                         </div>
                         <!-- /.card-body -->
-
                     </div>
 
                     {!! Form::close() !!}
                 </div>
             </div>
-
-
         </div>
     </div>
 

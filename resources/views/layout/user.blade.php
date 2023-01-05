@@ -13,8 +13,8 @@
     <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/gallery/prettify.css')}}">
     <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/gallery/lightgallery.min.css')}}">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.0/css/lightgallery-bundle.min.css" integrity="sha512-nUqPe0+ak577sKSMThGcKJauRI7ENhKC2FQAOOmdyCYSrUh0GnwLsZNYqwilpMmplN+3nO3zso8CWUgu33BDag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <style>

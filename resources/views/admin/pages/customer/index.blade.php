@@ -35,9 +35,7 @@
                                         <td>{{$customer->address}}</td>
                                         <td>{{$customer->google_id}}</td>
                                         <td>{{$customer->facebook_id}}</td>
-                                        <td>
-                                            <span class="badge badge-info">{{$customer->provider}}</span>
-                                        </td>
+                                        <td><span class="badge badge-info">{{$customer->provider}}</span></td>
                                         <td>{{$customer->status == 0 ? 'Hoạt động' : 'Hủy'}}</td>
                                         <td></td>
                                     </tr>
@@ -50,5 +48,4 @@
             </div>
         </div>
     </section>
-
 @endsection

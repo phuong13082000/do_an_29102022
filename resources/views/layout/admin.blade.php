@@ -10,26 +10,12 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
-
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-    <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{asset('admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-
-    <!-- JQVMap -->
     <link rel="stylesheet" href="{{asset('admin/plugins/jqvmap/jqvmap.min.css')}}">
-
-    <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin/css/adminlte.min.css')}}">
-
-    <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-
-    <!-- summernote -->
     <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
-
-    <!-- DataTables -->
     <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
@@ -83,32 +69,15 @@
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-
 <script>$.widget.bridge('uibutton', $.ui.button)</script>
-
-<!-- Bootstrap 4 -->
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Sparkline -->
 <script src="{{asset('admin/plugins/sparklines/sparkline.js')}}"></script>
-
-<!-- JQVMap -->
 <script src="{{asset('admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
 <script src="{{asset('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-
-<!-- jQuery Knob Chart -->
 <script src="{{asset('admin/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-
-<!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-
-<!-- Summernote -->
 <script src="{{asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
-
-<!-- overlayScrollbars -->
 <script src="{{asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
-
-<!-- DataTables  & Plugins -->
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -121,16 +90,10 @@
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-
-<!-- jquery-validation -->
 <script src="{{asset('admin/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('admin/plugins/jquery-validation/additional-methods.min.js')}}"></script>
-
-<!-- AdminLTE App -->
 <script src="{{asset('admin/js/adminlte.js')}}"></script>
-
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script src="{{asset('admin/js/main.js')}}"></script>
 
 @yield('script_admin')

@@ -29,7 +29,7 @@
                                         <td>
                                             <form method="POST">
                                                 @csrf
-                                                {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $brand->status ?? '', ['class'=>'form-select brand-status ', 'id'=>$brand->id]) !!}
+                                                {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], $brand->status ?? '', ['class'=>'custom-select brand-status ', 'id'=>$brand->id]) !!}
                                             </form>
                                         </td>
                                         <td>
@@ -59,30 +59,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modallable">Add Brand</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
+
                 <div class="modal-body">
                     {!! Form::open(['route'=>'brand.store', 'method'=>'POST', 'id'=>'formbrand', 'role'=>'form']) !!}
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('title', 'Name', []) !!}
-                        {!! Form::text('title', '', ['class'=>'form-control']) !!}
-                    </div>
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('status', 'Status', []) !!}
-                        {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], '', ['class'=>'form-control']) !!}
-                    </div>
-
-                    <div class="modal-footer justify-content-between">
-                        {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-
+                        <div class="form-group mb-3">
+                            {!! Form::label('title', 'Name', []) !!}
+                            {!! Form::text('title', '', ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group mb-3">
+                            {!! Form::label('status', 'Status', []) !!}
+                            {!! Form::select('status', ['0'=>'Hiện', '1'=>'Ẩn'], '', ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     {!! Form::close() !!}
-
                 </div>
             </div>
         </div>

@@ -38,27 +38,20 @@
                                             <ul>
                                                 @foreach ($list_Comment as $comment_reply )
                                                     @if($comment_reply->comment_parent_id == $comment->id)
-                                                        <li>
-                                                            Trả lời: {{$comment_reply->title}}
+                                                        <li>Trả lời: {{$comment_reply->title}}
                                                             <a href="#" type="button" class="btn btn-default btn_delete_tl" data-comment_parent_id="{{$comment_reply->id}}">Xóa</a>
-
                                                         </li>
                                                     @endif
                                                 @endforeach
                                             </ul>
 
                                             @if ($comment->status==0 && $comment->admin_id == NULL)
-                                                <br><textarea class="form-control reply_comment_{{$comment->id}}" rows="3"></textarea>
-                                                <br>
+                                                <br><textarea class="form-control reply_comment_{{$comment->id}}" rows="3"></textarea><br>
                                                 <button class="btn btn-default btn-reply-comment" data-product_id="{{$comment->product_id}}" data-comment_id="{{$comment->id}}">Trả lời</button>
                                             @endif
 
                                         </td>
-                                        <td>
-                                            <a href="{{url('/detail/'.$comment->reProduct->id)}}" target="_blank">
-                                                {{$comment->reProduct->title}}
-                                            </a>
-                                        </td>
+                                        <td><a href="{{url('/detail/'.$comment->reProduct->id)}}" target="_blank">{{$comment->reProduct->title}}</a></td>
                                         <td>
                                             @if($comment->customer_id == NULL )
                                                 Admin
@@ -74,16 +67,6 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Status</th>
-                                    <th>Title</th>
-                                    <th>Answer</th>
-                                    <th>Product</th>
-                                    <th>Customer</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -91,5 +74,4 @@
             </div>
         </div>
     </section>
-
 @endsection

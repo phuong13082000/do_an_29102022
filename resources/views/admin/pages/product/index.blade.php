@@ -30,20 +30,14 @@
                                     <tbody>
                                     @foreach ($listProduct as $product)
                                         <tr>
-                                            <td>
-                                                <img width="100px" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}">
-                                            </td>
+                                            <td><img width="100px" src="{{asset('uploads/product/'.$product->image)}}" alt="{{$product->image}}"></td>
                                             <td>{{$product->title}}</td>
                                             <td>{{$product->number}}</td>
                                             <td>{{ number_format($product->price, 0, '', ',')}}</td>
                                             <td>{{ number_format($product->price_sale, 0, '', ',')}}</td>
                                             <td><a href="{{url('admin/add-gallery/'.$product->id)}}"><i class="nav-icon far fa-image"></i> Gallery</a></td>
-                                            <td>
-                                                <span class="badge badge-info">{{$product->reBrand->title}}</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-primary">{{$product->reCategory->title}}</span>
-                                            </td>
+                                            <td><span class="badge badge-info">{{$product->reBrand->title}}</span></td>
+                                            <td><span class="badge badge-primary">{{$product->reCategory->title}}</span></td>
                                             <td>
                                                 <form method="POST">
                                                     @csrf

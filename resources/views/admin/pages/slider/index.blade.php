@@ -27,15 +27,9 @@
                                     <tbody>
                                     @foreach ($list_Slider as $key => $slider )
                                         <tr>
-                                            <td>
-                                                <img width="500" src="{{asset('uploads/slider/'.$slider->image)}}" alt="{{$slider->image}}">
-                                            </td>
+                                            <td><img width="500" src="{{asset('uploads/slider/'.$slider->image)}}" alt="{{$slider->image}}"></td>
                                             <td>{{$slider->title}}</td>
-                                            <td>
-                                                <a href="{{url('/detail/'.$slider->reProduct->id)}}" target="_blank">
-                                                    {{$slider->reProduct->title}}
-                                                </a>
-                                            </td>
+                                            <td><a href="{{url('/detail/'.$slider->reProduct->id)}}" target="_blank">{{$slider->reProduct->title}}</a></td>
                                             <td>
                                                 @if ($slider->status==0)
                                                     <span class="text text-success"><i class="fa fa-thumbs-up"></i></span>
@@ -55,18 +49,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>URL</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>

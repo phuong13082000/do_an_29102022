@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="mt-3">Thông tin đăng nhập</div>
-
     <div class="table-responsive">
         <table class="table table-striped b-t b-light">
             <thead>
@@ -24,12 +23,10 @@
             </tbody>
         </table>
     </div>
-
     <br>
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">Thông tin vận chuyển hàng</div>
-
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
@@ -62,7 +59,6 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">Liệt kê chi tiết đơn hàng</div>
-
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
@@ -123,7 +119,6 @@
                                         <input type="hidden" name="id_order" value="{{$order->id}}">
                                     </select>
                                 </form>
-
                             @else
                                 <form>
                                     @csrf
@@ -135,9 +130,7 @@
                                         <input type="hidden" name="id_order" value="{{$order->id}}">
                                     </select>
                                 </form>
-
                             @endif
-
                         </td>
                     </tr>
                     </tbody>
@@ -147,15 +140,12 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="don-hang" tabindex="-1" aria-labelledby="modallable"
-         aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="don-hang" tabindex="-1" aria-labelledby="modallable" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modallable">Đơn Hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <h1 class="text-center">Hoá đơn</h1>
@@ -243,12 +233,10 @@
                         <tbody>
                         </tbody>
                     </table>
-
                     <div class="modal-footer justify-content-between">
                         <a target="_blank" type="button" class="btn btn-default" href="{{url('admin/print-order/'.$orders->order_id)}}">In đơn hàng</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-
                 </div>
             </div>
         </div>

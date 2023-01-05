@@ -1,7 +1,5 @@
-<!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-    <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -12,10 +10,8 @@
 
     </ul>
 
-    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-        <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
@@ -27,11 +23,11 @@
                     @endif
                 </span>
             </a>
+
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 @if($messages)
                     @foreach($messages as $message)
                         <a href="{{url('admin/comment')}}" class="dropdown-item">
-                            <!-- Message Start -->
                             <div class="media">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">{{$message->reCustomer->fullname}}</h3>
@@ -39,7 +35,6 @@
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{$message->created_at}}</p>
                                 </div>
                             </div>
-                            <!-- Message End -->
                         </a>
 
                         <div class="dropdown-divider"></div>
@@ -50,11 +45,8 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-            </a>
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button"><i class="fas fa-expand-arrows-alt"></i></a>
         </li>
 
     </ul>
 </nav>
-<!-- /.navbar -->

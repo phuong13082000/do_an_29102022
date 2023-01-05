@@ -4,14 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}"><!-- CSRF Token -->
-
     <title>{{$title}}</title>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}"><!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('admin/css/adminlte.min.css')}}"><!-- Theme style -->
-
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -44,6 +40,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Confirm Password">
                     <div class="input-group-append">
@@ -52,11 +49,13 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Đổi mật khẩu</button>
                     </div>
                 </div>
+
             </form>
 
             <p class="mt-3 mb-1">
@@ -65,10 +64,8 @@
         </div>
     </div>
 </div>
-
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script><!-- jQuery -->
 <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- Bootstrap 4 -->
 <script src="{{asset('admin/js/adminlte.js')}}"></script><!-- AdminLTE App -->
-
 </body>
 </html>

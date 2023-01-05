@@ -12,21 +12,17 @@
                     </div>
 
                     {!! Form::open(['route'=>['category.update', $category->id], 'method'=>'PUT', 'id'=>'formcategory', 'role'=>'form']) !!}
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('title', 'Name', []) !!}
-                        {!! Form::text('title', isset($category) ? $category->title : '', ['class'=>'form-control']) !!}
-                    </div>
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('status', 'Status', []) !!}
-                        {!! Form::select('status', ['0'=>'Hiển thị', '1'=>'Không hiển thị'], isset($category) ? $category->status : '', ['class'=>'form-control']) !!}
-                    </div>
-
-                    <div class="mb-3">
-                        {!! Form::submit('Update', ['class'=>'btn btn-success']) !!}
-                    </div>
-
+                        <div class="form-group mb-3">
+                            {!! Form::label('title', 'Name', []) !!}
+                            {!! Form::text('title', isset($category) ? $category->title : '', ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group mb-3">
+                            {!! Form::label('status', 'Status', []) !!}
+                            {!! Form::select('status', ['0'=>'Hiển thị', '1'=>'Không hiển thị'], isset($category) ? $category->status : '', ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="mb-3">
+                            {!! Form::submit('Update', ['class'=>'btn btn-success']) !!}
+                        </div>
                     {!! Form::close() !!}
                 </div>
             </div>
