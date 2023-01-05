@@ -10,19 +10,18 @@
         $customer_phone = Session::get('phone');
         $customer_gender = Session::get('gender');
     @endphp
-
     @if(Cart::count() != 0)
         <div class="container">
             <div class="mt-3">
-                <div class="table-responsive border border-dark rounded cart_info">
+                <div class="table-responsive border border-dark rounded">
                     <table class="table table-condensed">
                         <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Hình ảnh</td>
-                            <td class="description">Tên sản phẩm</td>
-                            <td class="price">Đơn giá</td>
-                            <td class="quantity">Số lượng</td>
-                            <td class="total">Tổng</td>
+                        <tr>
+                            <td>Hình ảnh</td>
+                            <td>Tên sản phẩm</td>
+                            <td>Đơn giá</td>
+                            <td>Số lượng</td>
+                            <td>Tổng</td>
                             <td></td>
                         </tr>
                         </thead>
@@ -32,23 +31,20 @@
                                 <td><img src="{{asset('uploads/product/'.$content->options->image)}}" width="90" alt="{{$content->name}}"/></td>
                                 <td><h4>{{$content->name}}</a></h4></td>
                                 <td><p>{{number_format($content->price).' '.'vnđ'}}</p></td>
-
                                 <td>
                                     <div>
                                         {!! Form::open(['url'=>'/update-cart-quantity', 'method'=>'POST']) !!}
-                                        <label>
-                                            <input name="cart_quantity" type="number" min="1" max="{{$content->weight}}" class="cart_quantity_input" value="{{$content->qty}}">
-                                        </label>
-                                        {!! Form::submit('Cập nhật', ['class'=>'btn btn-sm btn-default border-dark']) !!}
-                                        <input type="hidden" value="{{$content->rowId}}" name="rowId_cart" class="form-control">
+                                            <label>
+                                                <input name="cart_quantity" type="number" min="1" max="{{$content->weight}}" class="cart_quantity_input" value="{{$content->qty}}">
+                                            </label>
+                                            {!! Form::submit('Cập nhật', ['class'=>'btn btn-sm btn-default border-dark']) !!}
+                                            <input type="hidden" value="{{$content->rowId}}" name="rowId_cart" class="form-control">
                                         {!! Form::close() !!}
                                     </div>
                                 </td>
 
                                 <td><p class="cart_total_price">{{ number_format($content->price * $content->qty).' '.'vnđ'}}</p></td>
-
                                 <td><a class="cart_quantity_delete" href="{{url('/delete-to-cart/'.$content->rowId)}}"><i class="fa fa-times"></i></a></td>
-
                             </tr>
                         @endforeach
                         </tbody>
@@ -65,16 +61,12 @@
                                         <a class="btn btn-secondary" href="{{url('/')}}"><< Trở lại mua sắm</a>
                                         <a type="button" href="{{ url('dang-nhap') }}" class="btn btn-primary">Đăng nhập >></a>
                                     @endif
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </div>
     @else
         <div class="container">

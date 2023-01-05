@@ -17,7 +17,6 @@
                         <img width="100%" src="{{asset('uploads/gallery/'.$gallery->image)}}" alt="{{$gallery->title}}"/>
                     </li>
                 @endforeach
-
             </ul>
         </div>
 
@@ -27,8 +26,7 @@
                 @if($product->price_sale)
                     Giá: <br> <b style="color: red">{{ number_format($product->price_sale, 0, '') }} VND</b>
                     <del>&nbsp;{{ number_format($product->price, 0, '') }} VND</del>
-                    <b style="color: red">
-                        -{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b><br>
+                    <b style="color: red">-{{ round(100 - ($product->price_sale / $product->price * 100), PHP_ROUND_HALF_UP) }}%</b><br>
                 @else
                     <b>Giá: <br> {{ number_format($product->price, 0, '') }} VND</b><br>
                 @endif
@@ -81,7 +79,6 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">Mô Tả</button>
             </li>
-
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Bình Luận</button>
             </li>

@@ -1,9 +1,7 @@
 @extends('layout.user')
 
 @section('index')
-
     @include('frontend.includes.slider')
-
     @include('frontend.includes.alert')
 
     <style>
@@ -11,11 +9,9 @@
             transition: transform .2s; /* Animation */
             margin: 0 auto;
         }
-
         .zoom:hover {
             transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
         }
-
         td:hover {
             box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2)
         }
@@ -133,6 +129,7 @@
     </div>
 
     <h3 class="text-center mb-3 mt-3">Sản phẩm mới nhất</h3>
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
@@ -152,14 +149,14 @@
                             <b style="color: red">Hết Hàng</b>
                         @endif
 
-                        {{--soluong--}}
+                        soluong
                         {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
-                        <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
-                        {!! Form::hidden('productid_hidden', $product->id) !!}
-                        <div class="text-center">
-                            <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
-                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
-                        </div>
+                            <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
+                            {!! Form::hidden('productid_hidden', $product->id) !!}
+                            <div class="text-center">
+                                <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
+                            </div>
                         {!! Form::close() !!}
                     </td>
                 @endforeach
@@ -189,12 +186,12 @@
 
                         {{--soluong--}}
                         {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
-                        <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
-                        {!! Form::hidden('productid_hidden', $product_sale->id) !!}
-                        <div class="text-center">
-                            <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
-                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
-                        </div>
+                            <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
+                            {!! Form::hidden('productid_hidden', $product_sale->id) !!}
+                            <div class="text-center">
+                                <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
+                            </div>
                         {!! Form::close() !!}
                     </td>
                 @endforeach

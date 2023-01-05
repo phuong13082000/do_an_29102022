@@ -7,9 +7,7 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="card mb-3 mt-3 accordion">
-                <div class="card-header fw-bold text-uppercase accordion-button" data-bs-toggle="collapse" data-bs-target="#filterCategory" aria-expanded="true" aria-controls="filterCategory">
-                    Thể loại
-                </div>
+                <div class="card-header fw-bold text-uppercase accordion-button" data-bs-toggle="collapse" data-bs-target="#filterCategory" aria-expanded="true" aria-controls="filterCategory">Thể loại</div>
                 <ul class="list-group list-group-flush show" id="filterCategory">
                     @foreach($list_all_category as $category)
                         <li class="list-group-item"><a href="#" class="text-decoration-none stretched-link">{{$category->title}}</a></li>
@@ -18,9 +16,7 @@
             </div>
 
             <div class="card mb-3 mt-3 accordion">
-                <div class="card-header fw-bold text-uppercase accordion-button" data-bs-toggle="collapse" data-bs-target="#filterPrice" aria-expanded="true" aria-controls="filterPrice">
-                    Giá Tiền
-                </div>
+                <div class="card-header fw-bold text-uppercase accordion-button" data-bs-toggle="collapse" data-bs-target="#filterPrice" aria-expanded="true" aria-controls="filterPrice">Giá Tiền</div>
                 <ul class="list-group list-group-flush show" id="filterPrice">
                     <li class="list-group-item"><a class="text-decoration-none stretched-link" href="{{route('price', 'duoi-2-trieu')}}">Dưới 2 triệu</a></li>
                     <li class="list-group-item"><a class="text-decoration-none stretched-link" href="{{route('price', 'tu-2-den-4-trieu')}}">Từ 2 đến 4 triệu</a></li>
@@ -39,7 +35,6 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">Lưới</button>
                 </li>
-
                 <li class="nav-item" role="presentation">
                     <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Danh sách</button>
                 </li>
@@ -75,12 +70,12 @@
 
                                                 {{--soluong--}}
                                                 {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
-                                                <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
-                                                {!! Form::hidden('productid_hidden', $product->id) !!}
-                                                <div class="text-center">
-                                                    <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                                                    <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i></button>
-                                                </div>
+                                                    <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
+                                                    {!! Form::hidden('productid_hidden', $product->id) !!}
+                                                    <div class="text-center">
+                                                        <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i></button>
+                                                    </div>
                                                 {!! Form::close() !!}
                                             </td>
                                             @php
@@ -108,7 +103,6 @@
                 <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="container">
                         <div class="mt-3">
-
                             <div class="table-responsive">
                                 <table class="table table-condensed">
                                     <thead>
@@ -140,12 +134,12 @@
                                             <td>
                                                 {{--soluong--}}
                                                 {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
-                                                <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
-                                                {!! Form::hidden('productid_hidden', $product->id) !!}
-                                                <div class="text-center">
-                                                    <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                                                    <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i></button>
-                                                </div>
+                                                    <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
+                                                    {!! Form::hidden('productid_hidden', $product->id) !!}
+                                                    <div class="text-center">
+                                                        <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart"></i></button>
+                                                    </div>
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>
@@ -163,5 +157,4 @@
             </div>
         </div>
     </div>
-
 @endsection

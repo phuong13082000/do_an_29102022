@@ -7,8 +7,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4"></div>
+
                 <div class="col-sm-4">
-                    <div class="login-form"><!--login form-->
+                    <div class="login-form">
                         <h2 class="text-center mb-4">Quên mật khẩu</h2>
                         {!! Form::open(['url'=>'/recover-password', 'method'=>'POST']) !!}
                             <div class="form-floating mb-4">
@@ -19,9 +20,9 @@
                                 {!! Form::submit('Lấy lại mật khẩu', ['class'=>'btn btn-primary']) !!}
                             </div>
                         {!! Form::close() !!}
-
-                    </div><!--/login form-->
+                    </div>
                 </div>
+
                 <div class="col-sm-4"></div>
             </div>
         </div>

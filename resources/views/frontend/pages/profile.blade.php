@@ -132,27 +132,22 @@
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url'=>'change-password-user', 'method'=>'POST', 'id'=>'form_change-password', 'role'=>'form']) !!}
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('password', ['class'=>'form-control']) !!}
-                        {!! Form::label('password', 'Mật khẩu cũ', []) !!}
-                    </div>
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('password_new', 'Mật khẩu mới', []) !!}
-                    </div>
-
-                    <div class="form-floating mb-4">
-                        {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
-                        {!! Form::label('re_password_new', 'Nhập lại mật khẩu mới', []) !!}
-                    </div>
-
-                    <div class="modal-footer justify-content-between">
-                        {!! Form::submit('Add', ['class'=>'btn btn-success btn-change-password']) !!}
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-
+                        <div class="form-floating mb-4">
+                            {!! Form::password('password', ['class'=>'form-control']) !!}
+                            {!! Form::label('password', 'Mật khẩu cũ', []) !!}
+                        </div>
+                        <div class="form-floating mb-4">
+                            {!! Form::password('password_new', ['class'=>'form-control']) !!}
+                            {!! Form::label('password_new', 'Mật khẩu mới', []) !!}
+                        </div>
+                        <div class="form-floating mb-4">
+                            {!! Form::password('re_password_new', ['class'=>'form-control']) !!}
+                            {!! Form::label('re_password_new', 'Nhập lại mật khẩu mới', []) !!}
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            {!! Form::submit('Add', ['class'=>'btn btn-success btn-change-password']) !!}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     {!! Form::close() !!}
 
                 </div>
@@ -169,13 +164,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                <div id="detail_order"></div>
-
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-
+                    <div id="detail_order"></div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -201,12 +193,7 @@
                 $.ajax({
                     url: "{{url('/update-profile')}}",
                     method: "POST",
-                    data: {
-                        name:name,
-                        email:email,
-                        phone:phone,
-                        address:address
-                    },
+                    data: {name:name, email:email, phone:phone, address:address},
                     success: function (response) {
                         window.location.reload();
                     }
