@@ -94,7 +94,7 @@
                                                 <span class="info-box-icon bg-info"><i class="far fa-flag"></i></span>
 
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text">All Price Ship</span>
+                                                    <span class="info-box-text">Tổng tiền ship</span>
                                                     <span class="info-box-number">{{ number_format($count_priceShip, 0, '') }} VND</span>
                                                 </div>
                                             </div>
@@ -104,9 +104,21 @@
                                                 <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
 
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text">All Price Order</span>
+                                                    <span class="info-box-text">Tổng thu nhập</span>
                                                     <span class="info-box-number">
                                                         {{ number_format($count_priceOrder, 0, '') }} VND
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Tổng thu nhập tháng {{ $from_month }}</span>
+                                                    <span class="info-box-number">
+                                                        {{ number_format($count_priceOrder_month, 0, '') }} VND
                                                     </span>
                                                 </div>
                                             </div>

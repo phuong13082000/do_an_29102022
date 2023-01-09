@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -16,35 +17,51 @@ class AdminController extends Controller
     public function getHome()
     {
         $title = 'Dashboard';
-        $count_message_db = Comment::where('admin_id', NULL)->count();
-        $count_order = Order::count();
-        $count_customer = Customer::count();
-        $count_product = Product::count();
+        $data['count_message_db'] = Comment::where('admin_id', NULL)->count();
+        $data['count_order'] = Order::count();
+        $data['count_customer'] = Customer::count();
+        $data['count_product'] = Product::count();
 
         $data_order = Order::where('status', 2)->get();
         $data_orderDetail = OrderDetail::all();
-        $count_priceShip = 0;
-        $count_priceOrder = 0;
+
+        $data['count_priceShip'] = 0;
+        $data['count_priceOrder'] = 0;
         foreach ($data_order as $order) {
-            $count_priceShip += $order->price_ship;
+            $data['count_priceShip'] += $order->price_ship;
 
             foreach ($data_orderDetail as $orderDetail) {
                 if ($orderDetail->order_id == $order->id) {
-                    $count_priceOrder += $orderDetail->price;
+                    $data['count_priceOrder'] += $orderDetail->price;
+
+                }
+            }
+        }
+        $data['from_month'] = Carbon::now('Asia/Ho_Chi_Minh')->month;
+
+        $data_order = Order::where('created_at', '>=', Carbon::now('Asia/Ho_Chi_Minh')->firstOfMonth()->toDateTimeString())->where('status', 2)->get();
+        $data['count_priceShip_month'] = 0;
+        $data['count_priceOrder_month'] = 0;
+        foreach ($data_order as $order) {
+            $data['count_priceShip_month'] += $order->price_ship;
+
+            foreach ($data_orderDetail as $orderDetail) {
+                if ($orderDetail->order_id == $order->id) {
+                    $data['count_priceOrder_month'] += $orderDetail->price;
 
                 }
             }
         }
 
-        $count_message = Comment::where('status', 1)
+        $data['count_message'] = Comment::where('status', 1)
             ->where('comment_parent_id', NULL)->count();
 
         $messages = Comment::with('reCustomer')
             ->where('status', 1)
             ->where('comment_parent_id', NULL)->get();
 
-        return view('admin.pages.home')
-            ->with(compact('count_priceOrder', 'count_priceShip', 'title', 'count_message', 'messages', 'count_order', 'count_customer', 'count_product', 'count_message_db'));
+        return view('admin.pages.home', $data)
+            ->with(compact('title', 'messages'));
     }
 
     public function profile_admin()
