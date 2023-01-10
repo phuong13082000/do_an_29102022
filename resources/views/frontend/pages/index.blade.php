@@ -151,13 +151,12 @@
                             <b style="color: red">Hết Hàng</b>
                         @endif
 
-                        soluong
                         {!! Form::open(['url' => '/save-cart', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
                             <input name="qty" type="hidden" min="1" max="{{$product->number}}" class="cart_product_qty_{{$product->id}}" value="1"/>
                             {!! Form::hidden('productid_hidden', $product->id) !!}
                             <div class="text-center">
-                                <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
+                                <a href="{{route('detail',$product->id)}}" class="btn btn-sm btn-primary w-25">Chi tiết</a>
+                                <button type="submit" class="btn btn-sm btn-danger w-25"><i class="fa fa-shopping-cart"></i></button>
                             </div>
                         {!! Form::close() !!}
                     </td>
@@ -191,8 +190,8 @@
                             <input name="qty" type="hidden" min="1" max="{{$product_sale->number}}" class="cart_product_qty_{{$product_sale->id}}" value="1"/>
                             {!! Form::hidden('productid_hidden', $product_sale->id) !!}
                             <div class="text-center">
-                                <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-primary">Chi tiết</a>
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
+                                <a href="{{route('detail',$product_sale->id)}}" class="btn btn-sm btn-primary w-25">Chi tiết</a>
+                                <button type="submit" class="btn btn-sm btn-danger w-25"><i class="fa fa-shopping-cart"></i></button>
                             </div>
                         {!! Form::close() !!}
                     </td>

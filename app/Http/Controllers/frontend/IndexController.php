@@ -87,8 +87,8 @@ class IndexController extends Controller
                     <input name="qty" type="hidden" min="1" max="' . $product->number . '" class="cart_product_qty_' . $product->id . '" value="1"/>
                     <input type="hidden" name="productid_hidden" value="' . $product->id . '"/>
                     <div class="text-center">
-                        <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-primary">Chi tiết</a>
-                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-shopping-cart"></i></button>
+                        <a href="' . route('detail', $product->id) . '" class="btn btn-sm btn-primary w-25">Chi tiết</a>
+                        <button type="submit" class="btn btn-sm btn-danger w-25"><i class="fa fa-shopping-cart"></i></button>
                     </div>
                 </form>
             </td>';
