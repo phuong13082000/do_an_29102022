@@ -23,7 +23,20 @@ class OrderService
             $order->status = $status;
             $order->save();
             return true;
+
         } elseif ($order->status == 2 && $status == 3) {
+            $order->status = $status;
+            $order->save();
+
+            foreach ($order_details as $order_detail) {
+                $id_product = $order_detail->product_id;
+                $product = Product::find($id_product);
+                $product->number = $product->number + $order_detail->number;
+                $product->save();
+            }
+            return true;
+
+        }elseif ($order->status == 1 && $status == 3) {
             $order->status = $status;
             $order->save();
 

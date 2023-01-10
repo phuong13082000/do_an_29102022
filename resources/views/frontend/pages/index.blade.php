@@ -122,6 +122,8 @@
                     <option value="0" selected>Tất cả</option>
                     <option value="1">Giá thấp đến cao</option>
                     <option value="2">Giá cao đến thấp</option>
+                    <option value="3">Iphone</option>
+                    <option value="4">Samsung</option>
                 </select>
             </label>
         </div>

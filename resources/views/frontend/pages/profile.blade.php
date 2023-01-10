@@ -80,7 +80,7 @@
             <h2 class="text-center mb-4">Lịch sử đơn hàng</h2>
 
             <div class="table-responsive">
-                <table id="example1" class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Người nhận</th>
@@ -91,7 +91,86 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($history_orders as $order)
+                    @foreach ($history_orders_status1 as $order)
+                        <tr>
+                            <td>{{$order->name_nguoinhan}}</td>
+                            <td>{{$order->payment_method}}</td>
+                            <td>
+                                @if($order->status==1)
+                                    Chưa xử lý
+                                @elseif($order->status==2)
+                                    Đã xử lý-Đã giao hàng
+                                @else
+                                    Hủy đơn hàng-tạm giữ
+                                @endif
+                            </td>
+                            <td>{{$order->created_at}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn_detail" data-bs-toggle="modal" data-bs-target="#detail" data-order_code="{{$order->id}}">Chi tiết</button>
+
+                                @if($order->status==1)
+                                    <a href="#" type="button" class="btn btn-danger btn_cancel" data-order_id="{{$order->id}}">Hủy đơn hàng</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Người nhận</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($history_orders_status2 as $order)
+                        <tr>
+                            <td>{{$order->name_nguoinhan}}</td>
+                            <td>{{$order->payment_method}}</td>
+                            <td>
+                                @if($order->status==1)
+                                    Chưa xử lý
+                                @elseif($order->status==2)
+                                    Đã xử lý-Đã giao hàng
+                                @else
+                                    Hủy đơn hàng-tạm giữ
+                                @endif
+                            </td>
+                            <td>{{$order->created_at}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn_detail" data-bs-toggle="modal" data-bs-target="#detail" data-order_code="{{$order->id}}">Chi tiết</button>
+
+                                @if($order->status==1)
+                                    <a href="#" type="button" class="btn btn-danger btn_cancel" data-order_id="{{$order->id}}">Hủy đơn hàng</a>
+                                @endif
+                            </td>
+                        </tr>
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Người nhận</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($history_orders_status3 as $order)
                         <tr>
                             <td>{{$order->name_nguoinhan}}</td>
                             <td>{{$order->payment_method}}</td>

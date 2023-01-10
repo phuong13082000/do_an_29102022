@@ -71,9 +71,11 @@ class CustomerController extends Controller
 
         $customer = Customer::find(Session::get('id'));
 
-        $history_orders = Order::where('customer_id', Session::get('id'))->orderBy('created_at', 'DESC')->get();
+        $history_orders_status1 = Order::where('customer_id', Session::get('id'))->where('status', 1)->orderBy('created_at', 'DESC')->get();
+        $history_orders_status2 = Order::where('customer_id', Session::get('id'))->where('status', 2)->orderBy('created_at', 'DESC')->get();
+        $history_orders_status3 = Order::where('customer_id', Session::get('id'))->where('status', 3)->orderBy('created_at', 'DESC')->get();
 
-        return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders'));
+        return view('frontend.pages.profile')->with(compact('title', 'list_brand', 'customer', 'history_orders_status1', 'history_orders_status2', 'history_orders_status3'));
     }
 
     public function profile_order_detail(Request $request)

@@ -17,25 +17,17 @@ class IndexController extends Controller
         $list_brand = Brand::where('status', 0)->take(10)->get();
         $list_category = Category::where('status', 0)->get();
 
-        $list_product = Product::where('number', '>', 2)
-            ->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
+        $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(4)->get();
 
-        $list_product_sale = Product::where('price_sale', '!=', '0')
-            ->where('number', '>', 2)
-            ->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
+        $list_product_sale = Product::where('price_sale', '!=', '0')->where('number', '>', 2)->where('status', 0)->orderBy('price_sale', 'ASC')->take(4)->get();
 
-        $list_recommend = Product::orderBy('updated_at', 'DESC')
-            ->where('number', '>', 2)
-            ->where('status', 0)->take(10)->get();
+        $list_recommend = Product::orderBy('updated_at', 'DESC')->where('number', '>', 2)->where('status', 0)->take(10)->get();
 
         //slider
-        $first_slider = Slider::with('reProduct')
-            ->where('status', 0)->orderBy('id', 'ASC')->first();
+        $first_slider = Slider::with('reProduct')->where('status', 0)->orderBy('id', 'ASC')->first();
 
         if ($first_slider) {
-            $list_slider = Slider::with('reProduct')
-                ->where('id', '>', $first_slider->id)
-                ->where('status', 0)->take(2)->get();
+            $list_slider = Slider::with('reProduct')->where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
         } else {
             $list_slider = NULL;
         }
@@ -49,16 +41,19 @@ class IndexController extends Controller
             ->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
 
         if ($request['value_loc'] == 0) {
-            $list_product = Product::where('number', '>', 2)
-                ->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('created_at', 'DESC')->take(8)->get();
 
         } elseif ($request['value_loc'] == 1) {
-            $list_product = Product::where('number', '>', 2)
-                ->where('status', 0)->orderBy('price', 'ASC')->take(8)->get();
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'ASC')->take(8)->get();
 
         } elseif ($request['value_loc'] == 2) {
-            $list_product = Product::where('number', '>', 2)
-                ->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();
+            $list_product = Product::where('number', '>', 2)->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();
+
+        } elseif ($request['value_loc'] == 3) {
+            $list_product = Product::where('number', '>', 2)->where('title', 'LIKE', '%IPhone%')->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();
+
+        }elseif ($request['value_loc'] == 4) {
+            $list_product = Product::where('number', '>', 2)->where('title', 'LIKE', '%Samsung%')->where('status', 0)->orderBy('price', 'DESC')->take(8)->get();
         }
 
         $output = '
@@ -137,42 +132,26 @@ class IndexController extends Controller
 
         if ($value == 'duoi-2-trieu') {
             $title = 'Điện thoại dưới 2 triệu';
-            $list_product = Product::where('price', '<', 2000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '<', 2000000)->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'tu-2-den-4-trieu') {
             $title = 'Điện thoại từ 2 đến 4 triệu';
-            $list_product = Product::where('price', '>=', 2000000)
-                ->where('price', '<', 4000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '>=', 2000000)->where('price', '<', 4000000)->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'tu-4-den-7-trieu') {
             $title = 'Điện thoại từ 4 đến 7 triệu';
-            $list_product = Product::where('price', '>=', 4000000)
-                ->where('price', '<', 7000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '>=', 4000000)->where('price', '<', 7000000)->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'tu-7-den-13-trieu') {
             $title = 'Điện thoại từ 7 đến 13 triệu';
-            $list_product = Product::where('price', '>=', 7000000)
-                ->where('price', '<', 13000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '>=', 7000000)->where('price', '<', 13000000)->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'tu-13-den-20-trieu') {
             $title = 'Điện thoại từ 13 đến 20 triệu';
-            $list_product = Product::where('price', '>=', 13000000)
-                ->where('price', '<=', 20000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '>=', 13000000)->where('price', '<=', 20000000)->where('number', '>', 2)->where('status', 0)->get();
         } else {
             $title = 'Điện thoại trên 20 triệu';
-            $list_product = Product::where('price', '>', 20000000)
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('price', '>', 20000000)->where('number', '>', 2)->where('status', 0)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -184,39 +163,27 @@ class IndexController extends Controller
 
         if ($value == '2-gb') {
             $title = 'Điện thoại 2 GB Ram';
-            $list_product = Product::where('ram', '2GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '2GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '3-gb') {
             $title = 'Điện thoại 3 GB Ram';
-            $list_product = Product::where('ram', '3GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '3GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '4-gb') {
             $title = 'Điện thoại 4 GB Ram';
-            $list_product = Product::where('ram', '4GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '4GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '6-gb') {
             $title = 'Điện thoại 6 GB Ram';
-            $list_product = Product::where('ram', '6GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '6GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '8-gb') {
             $title = 'Điện thoại 8 GB Ram';
-            $list_product = Product::where('ram', '8GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '8GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } else {
             $title = 'Điện thoại trên 12 GB Ram';
-            $list_product = Product::where('ram', '12GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('ram', '12GB')->where('number', '>', 2)->where('status', 0)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -228,39 +195,27 @@ class IndexController extends Controller
 
         if ($value == '32-gb') {
             $title = 'Điện thoại 32 GB Ram';
-            $list_product = Product::where('bonho', '32GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '32GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '64-gb') {
             $title = 'Điện thoại 64 GB ';
-            $list_product = Product::where('bonho', '64GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '64GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '128-gb') {
             $title = 'Điện thoại 128 GB';
-            $list_product = Product::where('bonho', '128GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '128GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '256-gb') {
             $title = 'Điện thoại 256 GB ';
-            $list_product = Product::where('bonho', '256GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '256GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == '512-gb') {
             $title = 'Điện thoại 512 GB';
-            $list_product = Product::where('bonho', '512GB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '512GB')->where('number', '>', 2)->where('status', 0)->get();
 
         } else {
             $title = 'Điện thoại trên 1 TB';
-            $list_product = Product::where('bonho', '1TB')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('bonho', '1TB')->where('number', '>', 2)->where('status', 0)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -272,21 +227,15 @@ class IndexController extends Controller
 
         if ($value == 'pin-khung-tren-5000-mah') {
             $title = 'Pin trên 5000 mAh';
-            $list_product = Product::where('pin_sac', 'LIKE', '%' . '5%00 mAh' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('pin_sac', 'LIKE', '%' . '5%00 mAh' . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'sac-nhanh-tren-20w') {
             $title = 'Sạc nhanh trên 20W';
-            $list_product = Product::where('pin_sac', 'LIKE', '%' . '2%W' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('pin_sac', 'LIKE', '%' . '2%W' . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         } else {
             $title = 'Sạc không dây';
-            $list_product = Product::where('pin_sac', 'LIKE', '%' . 'Sạc không dây' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('pin_sac', 'LIKE', '%' . 'Sạc không dây' . '%')->where('number', '>', 2)->where('status', 0)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -298,27 +247,19 @@ class IndexController extends Controller
 
         if ($value == 'khang-nuoc-bui') {
             $title = 'Kháng nước, Kháng bụi';
-            $list_product = Product::where('tienich', 'LIKE', '%' . 'kháng%nước,%bụi' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('tienich', 'LIKE', '%' . 'kháng%nước,%bụi' . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'ho-tro-5g') {
             $title = 'Hỗ trợ 5G';
-            $list_product = Product::where('tienich', 'LIKE', '%' . 'hỗ%trợ%5G' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('tienich', 'LIKE', '%' . 'hỗ%trợ%5G' . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         } elseif ($value == 'bao-mat-khuon-mat-3d') {
             $title = 'Bảo mật khuôn mặt 3D';
-            $list_product = Product::where('tienich', 'LIKE', '%' . 'bảo mật khuôn mặt 3D' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('tienich', 'LIKE', '%' . 'bảo mật khuôn mặt 3D' . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         } else {
             $title = 'Chống rung quang học';
-            $list_product = Product::where('tienich', 'LIKE', '%' . 'chống rung quang học' . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $list_product = Product::where('tienich', 'LIKE', '%' . 'chống rung quang học' . '%')->where('number', '>', 2)->where('status', 0)->get();
         }
 
         return view('frontend.pages.search')->with(compact('title', 'list_brand', 'list_product'));
@@ -329,9 +270,7 @@ class IndexController extends Controller
         $list_brand = Brand::where('status', 0)->take(10)->get();
         $title = $request['tukhoa'];
 
-        $list_product = Product::where('title', 'LIKE', '%' . $title . '%')
-            ->where('number', '>', 2)
-            ->where('status', 0)->get();
+        $list_product = Product::where('title', 'LIKE', '%' . $title . '%')->where('number', '>', 2)->where('status', 0)->get();
 
         return view('frontend.pages.search')->with(compact('list_product', 'list_brand', 'title'));
     }
@@ -341,9 +280,7 @@ class IndexController extends Controller
         $data = $request->all();
 
         if ($data['keywords']) {
-            $product = Product::where('title', 'LIKE', '%' . $data['keywords'] . '%')
-                ->where('number', '>', 2)
-                ->where('status', 0)->get();
+            $product = Product::where('title', 'LIKE', '%' . $data['keywords'] . '%')->where('number', '>', 2)->where('status', 0)->get();
 
             $output = '<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="display:block;">';
 

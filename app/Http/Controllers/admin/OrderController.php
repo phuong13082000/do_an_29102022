@@ -30,9 +30,11 @@ class OrderController extends Controller
             ->where('status', 1)
             ->where('comment_parent_id', NULL)->get();
 
-        $orders = Order::with('reCustomer')->orderBy('created_at', 'DESC')->get();
+        $orders_chuaXuLy = Order::with('reCustomer')->where('status',1)->orderBy('created_at', 'DESC')->get();
+        $orders_XuLy = Order::with('reCustomer')->where('status',2)->orderBy('created_at', 'DESC')->get();
+        $orders_huy = Order::with('reCustomer')->where('status',3)->orderBy('created_at', 'DESC')->get();
 
-        return view('admin.pages.order.index')->with(compact('title', 'orders', 'count_message', 'messages'));
+        return view('admin.pages.order.index')->with(compact('title', 'orders_chuaXuLy', 'orders_XuLy', 'orders_huy', 'count_message', 'messages'));
     }
 
     public function view_order_detail($id)

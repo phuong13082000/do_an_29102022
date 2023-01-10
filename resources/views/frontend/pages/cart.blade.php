@@ -35,7 +35,7 @@
                                     <div>
                                         {!! Form::open(['url'=>'/update-cart-quantity', 'method'=>'POST']) !!}
                                             <label>
-                                                <input name="cart_quantity" type="number" min="1" max="{{$content->weight}}" class="cart_quantity_input" value="{{$content->qty}}">
+                                                <input name="cart_quantity" type="number" min="1" max="500" class="cart_quantity_input" value="{{$content->qty}}">
                                             </label>
                                             {!! Form::submit('Cập nhật', ['class'=>'btn btn-sm btn-default border-dark']) !!}
                                             <input type="hidden" value="{{$content->rowId}}" name="rowId_cart" class="form-control">
