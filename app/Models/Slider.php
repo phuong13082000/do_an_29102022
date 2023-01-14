@@ -10,15 +10,5 @@ class Slider extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = [
-        'title',
-        'image',
-        'product_id',
-        'status',
-    ];
-
-    public function reProduct()
-    {
-        return $this->belongsTo(Product::class, 'product_id');
-    }
+    protected $fillable = ['title', 'image', 'number', 'status'];
 }

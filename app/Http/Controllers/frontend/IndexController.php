@@ -24,10 +24,10 @@ class IndexController extends Controller
         $list_recommend = Product::orderBy('updated_at', 'DESC')->where('number', '>', 2)->where('status', 0)->take(10)->get();
 
         //slider
-        $first_slider = Slider::with('reProduct')->where('status', 0)->orderBy('id', 'ASC')->first();
+        $first_slider = Slider::where('status', 0)->where('number', 1)->first();
 
         if ($first_slider) {
-            $list_slider = Slider::with('reProduct')->where('id', '>', $first_slider->id)->where('status', 0)->take(2)->get();
+            $list_slider = Slider::where('number', '>', 1)->where('status', 0)->get();
         } else {
             $list_slider = NULL;
         }

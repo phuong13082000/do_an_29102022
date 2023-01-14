@@ -3,7 +3,7 @@
         <div class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <a href="{{asset('detail/'.$first_slider->reProduct->id)}}">
+                    <a href="#">
                         <img src="{{asset('uploads/slider/'.$first_slider->image)}}" alt="{{$first_slider->title}}" class="d-block w-100">
                     </a>
                 </div>
@@ -17,14 +17,14 @@
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <a href="{{asset('detail/'.$first_slider->reProduct->id)}}">
+                    <a href="#">
                         <img src="{{asset('uploads/slider/'.$first_slider->image)}}" alt="{{$first_slider->title}}" class="d-block w-100">
                     </a>
                 </div>
 
                 @foreach($list_slider as $slider)
                     <div class="carousel-item">
-                        <a href="{{asset('detail/'.$slider->reProduct->id)}}">
+                        <a href="#">
                             <img src="{{asset('uploads/slider/'.$slider->image)}}" alt="{{$slider->title}}" class="d-block w-100">
                         </a>
                     </div>
