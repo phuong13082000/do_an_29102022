@@ -7,18 +7,10 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
-use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $categoryService;
-
-    public function __construct(CategoryService $categoryService)
-    {
-        $this->categoryService = $categoryService;
-    }
-
     public function index()
     {
         $title = 'Category';
@@ -41,8 +33,16 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $this->categoryService->create($request);
+        $data = $request->all();
 
+        $categoryName = $request['title'];
+        $categories = Category::where('title', $categoryName)->get();
+        $count = count($categories);
+        if ($count > 0) {
+            return false;
+        } else {
+            Category::create($data);
+        }
         return redirect()->route('category.index');
     }
 
@@ -68,11 +68,13 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->categoryService->update($request, $id);
+        $categoryId = Category::find($id);
+        $categoryId->title = $request['title'];
+        $categoryId->status = $request['status'];
+        $categoryId->save();
 
         return redirect()->route('category.index');
     }
-
 
     public function destroy($id)
     {
@@ -89,6 +91,8 @@ class CategoryController extends Controller
 
     public function update_Status_Category(Request $request)
     {
-        $this->categoryService->updateStatus($request);
+        $brand = Category::find($request['id']);
+        $brand->status = $request['status'];
+        $brand->save();
     }
 }

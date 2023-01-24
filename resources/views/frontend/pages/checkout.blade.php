@@ -285,25 +285,14 @@
                 var payment_method = $('#payment_method').val();
                 var note = $('#note').val();
 
-                if (payment_method === 'Trả bằng thẻ ngân hàng') {
-                    $.ajax({
-                        url: "{{url('/confirm-order')}}",
-                        method: "POST",
-                        data: {name_nguoinhan: name_nguoinhan, phone_nguoinhan: phone_nguoinhan, payment_method: payment_method, name_address: name_address, price_ship: price_ship, note: note, _token: _token},
-                        success: function (data) {
-                            window.location.href = "{{route('processTransaction')}}";
-                        }
-                    });
-                } else {
-                    $.ajax({
-                        url: "{{url('/confirm-order')}}",
-                        method: "POST",
-                        data: {name_nguoinhan: name_nguoinhan, phone_nguoinhan: phone_nguoinhan, payment_method: payment_method, name_address: name_address, price_ship: price_ship, note: note, _token: _token},
-                        success: function (data) {
-                            window.location.href = "{{ url('/hand-cash') }}";
-                        }
-                    });
-                }
+                $.ajax({
+                    url: "{{url('/confirm-order')}}",
+                    method: "POST",
+                    data: {name_nguoinhan: name_nguoinhan, phone_nguoinhan: phone_nguoinhan, payment_method: payment_method, name_address: name_address, price_ship: price_ship, note: note, _token: _token},
+                    success: function (data) {
+                        window.location.href = "{{ url('/hand-cash') }}";
+                    }
+                });
             });
         });
 

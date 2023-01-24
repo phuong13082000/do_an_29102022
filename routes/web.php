@@ -15,7 +15,6 @@ use App\Http\Controllers\frontend\CheckoutController;
 use App\Http\Controllers\frontend\DetailController;
 use App\Http\Controllers\frontend\IndexController;
 use App\Http\Controllers\MailController;
-use App\Http\Controllers\PayPalPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/login', [LoginController::class, 'getLogin'])->name('login');
@@ -47,7 +46,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::post('/reply-comment', [CommentController::class, 'reply_comment']);
     Route::post('/delete-comment', [CommentController::class, 'delete_comment']);
     Route::post('/delete-reply-comment', [CommentController::class, 'delete_reply_comment']);
-    Route::post('/update-status-brand', [BrandController::class, 'update_Status_Brand']);
+    Route::post('/update-status-brand', [BrandController::class, 'updateStatusBrand']);
     Route::post('/update-status-category', [CategoryController::class, 'update_Status_Category']);
     Route::post('/update-status-product', [ProductController::class, 'update_Status_Product']);
     Route::post('/change-password-admin/{id}', [AdminController::class, 'change_password_admin']);
@@ -112,12 +111,6 @@ Route::get('/fb-callback', [CustomerController::class, 'callback_facebook']);
 //google
 Route::get('/login-google', [CustomerController::class, 'login_google']);
 Route::get('/google-callback', [CustomerController::class, 'callback_google']);
-
-//paypal
-Route::get('create-transaction', [PayPalPaymentController::class, 'createTransaction'])->name('createTransaction');
-Route::get('process-transaction', [PayPalPaymentController::class, 'processTransaction'])->name('processTransaction');
-Route::get('success-transaction', [PayPalPaymentController::class, 'successTransaction'])->name('successTransaction');
-Route::get('cancel-transaction', [PayPalPaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 //Checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');

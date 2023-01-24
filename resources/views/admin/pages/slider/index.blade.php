@@ -13,23 +13,23 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <a href="{{route('slider.create')}}" type="button" class="btn btn-default">Add Slider</a>
+                                <table id="sliderTable" class="table table-bordered table-striped">
+                                    <a href="{{route('slider.create')}}" type="button" class="btn btn-default mb-3">Add Slider</a>
                                     <thead>
                                     <tr>
                                         <th>Image</th>
                                         <th>Name</th>
-                                        <th>Product</th>
+                                        <th>Number</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($list_Slider as $key => $slider )
+                                    @foreach ($list_Slider as $key => $slider)
                                         <tr>
                                             <td><img width="500" src="{{asset('uploads/slider/'.$slider->image)}}" alt="{{$slider->image}}"></td>
                                             <td>{{$slider->title}}</td>
-                                            <td><a href="{{url('/detail/'.$slider->reProduct->id)}}" target="_blank">{{$slider->reProduct->title}}</a></td>
+                                            <td>{{$slider->number}}</td>
                                             <td>
                                                 @if ($slider->status==0)
                                                     <span class="text text-success"><i class="fa fa-thumbs-up"></i></span>
@@ -59,4 +59,16 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script_admin')
+    <script type="text/javascript">
+        $(function () {
+            $("#sliderTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
 @endsection

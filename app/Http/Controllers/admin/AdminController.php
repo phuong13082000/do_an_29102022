@@ -17,6 +17,7 @@ class AdminController extends Controller
     public function getHome()
     {
         $title = 'Dashboard';
+
         $data['count_message_db'] = Comment::where('admin_id', NULL)->count();
         $data['count_order'] = Order::count();
         $data['count_customer'] = Customer::count();
@@ -67,6 +68,7 @@ class AdminController extends Controller
     public function profile_admin()
     {
         $title = 'Profile';
+
         $count_message = Comment::where('status', 1)
             ->where('comment_parent_id', NULL)->count();
 

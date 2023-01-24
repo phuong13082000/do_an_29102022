@@ -10,8 +10,8 @@
                             <h3 class="card-title">{{$title}}</h3>
                         </div>
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-category"> Add Category</button>
+                            <table id="categoryTable" class="table table-bordered table-striped">
+                                <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-category"> Add Category</button>
                                 <thead>
                                 <tr>
                                     <th>Id</th>
@@ -101,6 +101,33 @@
                     '',
                     'success',
                 )
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#categoryTable").DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#formcategory").validate({
+            rules: {
+                title: {required: true,},
+                action: "required"
+            },
+            messages: {
+                title: {
+                    required: "Please enter some data",
+                },
+                action: "Please provide some data"
             }
         });
     });

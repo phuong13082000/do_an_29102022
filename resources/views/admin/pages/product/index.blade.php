@@ -12,7 +12,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="productTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Image</th>
@@ -101,6 +101,16 @@
 @endsection
 
 @section('script_admin')
+    <script type="text/javascript">
+        $(function () {
+            $("#productTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
     <!-- Update Status -->
     <script type="text/javascript">
         $('.product-status').change(function () {

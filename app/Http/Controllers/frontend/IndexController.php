@@ -65,7 +65,7 @@ class IndexController extends Controller
         foreach ($list_product as $product) {
             $output .= '
             <td>
-                <img src="../public/uploads/product/' . $product->image . '" class="img-thumbnail border-0 zoom" alt="' . $product->title . '">
+                <img src="/uploads/product/' . $product->image . '" class="img-thumbnail border-0 zoom" alt="' . $product->title . '">
                 <h5 class="mt-2">' . $product->title . '</h5>';
                 if ($product->number) {
                     if ($product->price_sale) {

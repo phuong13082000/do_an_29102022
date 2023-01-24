@@ -52,3 +52,27 @@
         </div>
     </div>
 @endsection
+
+@section('script_admin')
+    <script type="text/javascript">
+        $(function () {
+            $("#formslider").validate({
+                rules: {
+                    title: {required: true,},
+                    url: {required: true,},
+                    action: "required"
+                },
+                messages: {
+                    title: {
+                        required: "Please enter some data",
+                    },
+                    url: {
+                        required: "Please enter some data",
+                    },
+                    action: "Please provide some data"
+                }
+            });
+        });
+    </script>
+@endsection
+

@@ -11,8 +11,8 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-brand"> Add Brand</button>
+                            <table id="brandTable" class="table table-bordered table-striped">
+                                <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-brand"> Add Brand</button>
                                 <thead>
                                 <tr>
                                     <th>Id</th>
@@ -84,6 +84,16 @@
 @endsection
 
 @section('script_admin')
+    <script type="text/javascript">
+        $(function () {
+            $("#brandTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
     <!-- Update Brand Status -->
     <script type="text/javascript">
         $('.brand-status').change(function () {
@@ -102,6 +112,23 @@
                         '',
                         'success',
                     )
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#formbrand").validate({
+                rules: {
+                    title: {required: true,},
+                    action: "required"
+                },
+                messages: {
+                    title: {
+                        required: "Please enter some data",
+                    },
+                    action: "Please provide some data"
                 }
             });
         });

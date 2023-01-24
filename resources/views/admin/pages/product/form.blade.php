@@ -35,7 +35,8 @@
                                     </div>
                                 </div>
                                 @if(isset($product))
-                                    <img width="150" src="{{asset('uploads/product/'.$product->image )}}" alt="{{$product->image}}">
+                                    <img width="150" src="{{asset('uploads/product/'.$product->image )}}"
+                                         alt="{{$product->image}}">
                                 @endif
                             </div>
 
@@ -194,10 +195,87 @@
 @endsection
 
 @section('script_admin')
-<script>
-    $(function () {
-        // Summernote
-        $('#summernote').summernote()
-    });
-</script>
+    <script type="text/javascript">
+        $(function () {
+            // Summernote
+            $('#summernote').summernote()
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#formproduct-create").validate({
+                rules: {
+                    title: {required: true,},
+                    image: {required: true,},
+                    number: {required: true,},
+                    price: {required: true,},
+                    price_sale: {required: true,},
+                    manhinh: {required: true,},
+                    mausac: {required: true,},
+                    camera_sau: {required: true,},
+                    camera_truoc: {required: true,},
+                    cpu: {required: true,},
+                    bonho: {required: true,},
+                    ram: {required: true,},
+                    ketnoi: {required: true,},
+                    pin_sac: {required: true,},
+                    tienich: {required: true,},
+                    thongtin_chung: {required: true,},
+                    action: "required"
+                },
+                messages: {
+                    title: {
+                        required: "Please enter some data",
+                    },
+                    image: {
+                        required: "Please enter some data",
+                    },
+                    number: {
+                        required: "Please enter some data",
+                    },
+                    price: {
+                        required: "Please enter some data",
+                    },
+                    price_sale: {
+                        required: "Please enter some data",
+                    },
+                    manhinh: {
+                        required: "Please enter some data",
+                    },
+                    mausac: {
+                        required: "Please enter some data",
+                    },
+                    camera_sau: {
+                        required: "Please enter some data",
+                    },
+                    camera_truoc: {
+                        required: "Please enter some data",
+                    },
+                    cpu: {
+                        required: "Please enter some data",
+                    },
+                    bonho: {
+                        required: "Please enter some data",
+                    },
+                    ram: {
+                        required: "Please enter some data",
+                    },
+                    ketnoi: {
+                        required: "Please enter some data",
+                    },
+                    pin_sac: {
+                        required: "Please enter some data",
+                    },
+                    tienich: {
+                        required: "Please enter some data",
+                    },
+                    thongtin_chung: {
+                        required: "Please enter some data",
+                    },
+                    action: "Please provide some data"
+                }
+            });
+        });
+    </script>
 @endsection
